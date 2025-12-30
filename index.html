@@ -728,6 +728,7 @@
 
     <!-- Floating Socials -->
     <div class="fixed-socials">
+        <span class="social-label">İletişime Geç</span>
         <a href="mailto:zyusuf_16@hotmail.com" class="social-item" title="E-posta">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -751,7 +752,7 @@
                 </path>
             </svg>
         </a>
-        <a href="#" target="_blank" class="social-item" title="Instagram">
+        <a href="https://www.instagram.com/yyusufgull/?hl=tr" target="_blank" class="social-item" title="Instagram">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -766,6 +767,46 @@
         <div class="floating-x">✕</div>
         <div class="floating-x">✕</div>
         <div class="floating-x">✕</div>
+    </div>
+
+    <!-- Digital Twin Feature -->
+    <div id="twin-container">
+        <div id="twin-notification">
+            Merhaba! Ben Yusuf'un dijital ikiziyim. Merak ettiğin bir şeyi sormak ister misin?
+            <div class="notification-arrow"></div>
+        </div>
+        <button id="twin-bubble" title="Dijital İkizimle Konuş">
+            <div class="bubble-icon">
+                <img src="avatar512-1.png" alt="Yusuf Avatar" id="twin-avatar">
+            </div>
+            <div class="bubble-pulse"></div>
+        </button>
+
+        <div id="twin-modal" class="hidden">
+            <div class="twin-header">
+                <div class="twin-info">
+                    <div class="twin-status-dot"></div>
+                    <div class="twin-name">Yusuf</div>
+                    <div class="twin-status">Çevrimiçi</div>
+                </div>
+                <button id="close-twin">✕</button>
+            </div>
+
+            <div id="twin-chat" class="twin-body">
+                <div class="message twin-message">
+                    Merhaba! Ben Yusuf'un dijital ikiziyim. Merak ettiğin bir şeyi sormak ister misin?
+                </div>
+            </div>
+
+            <div class="twin-footer">
+                <div class="twin-options" id="twin-options">
+                    <button class="twin-opt" data-q="neden">Neden seni işe almalıyım?</button>
+                    <button class="twin-opt" data-q="stack">Hangi teknolojilere hakimsin?</button>
+                    <button class="twin-opt" data-q="remote">Uzaktan çalışmaya uygun musun?</button>
+                    <button class="twin-opt" data-q="hedef">Gelecek hedeflerin neler?</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

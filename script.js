@@ -456,5 +456,118 @@ function switchProofTab(tabName) {
     });
 }
 
+// ===== Digital Twin Initialization =====
+function initDigitalTwin() {
+    const twinBubble = document.getElementById('twin-bubble');
+    const twinModal = document.getElementById('twin-modal');
+    const closeTwin = document.getElementById('close-twin');
+    const twinChat = document.getElementById('twin-chat');
+    const twinOptions = document.getElementById('twin-options');
+    const twinNotification = document.getElementById('twin-notification');
+
+    const answers = {
+        neden: "Çünkü ben sadece kod yazmıyorum, projeye bir ruh katıyorum. Sorunları henüz ortaya çıkmadan fark edip çözüm üretiyorum. Sıradan bir çalışan değil, projenin başarısı için en az senin kadar heyecan duyan bir takım arkadaşı arıyorsan doğru yerdesin.",
+        stack: "Öncelikle Modern JavaScript (ES6+), React ve Node.js ekosistemine çok hakimim. Tasarım tarafında CSS/SCSS ile harikalar yaratabilirim. Ayrıca Python ve Veri Analizi konularında da kendimi geliştirmeye devam ediyorum. Her zaman yeni teknolojileri öğrenmeye açığım!",
+        remote: "Evet, kesinlikle! Uzun süredir uzaktan çalışma disiplinine sahibim. Asenkron iletişim araçlarını (Slack, Jira, GitHub vb.) ustalıkla kullanıyorum. Dünyanın neresinde olursan ol, aynı ofisteymişiz gibi verimli çalışabiliriz.",
+        hedef: "Kısa vadede, global projelerde yer alarak teknik yetkinliklerimi en üst seviyeye çıkarmak istiyorum. Uzun vadede ise, teknoloji dünyasında iz bırakacak kendi girişimimi hayata geçirmek ve genç geliştiricilere mentorluk yapmak en büyük hayalim."
+    };
+
+    twinBubble.addEventListener('click', () => {
+        twinModal.classList.toggle('hidden');
+        // Toggle animation based on modal visibility
+        if (twinModal.classList.contains('hidden')) {
+            twinBubble.classList.remove('pausing');
+        } else {
+            twinBubble.classList.add('pausing');
+        }
+
+        if (twinNotification) {
+            twinNotification.style.display = 'none';
+        }
+    });
+
+    closeTwin.addEventListener('click', () => {
+        twinModal.classList.add('hidden');
+        twinBubble.classList.remove('pausing'); // Resume animation when closed
+    });
+
+    twinOptions.addEventListener('click', (e) => {
+        const btn = e.target.closest('.twin-opt');
+        if (!btn) return;
+
+        const question = btn.textContent;
+        const qKey = btn.dataset.q;
+
+        // Add user message
+        addMessage(question, 'user-message');
+
+        // Hide options while twin is "typing"
+        const originalOptions = twinOptions.innerHTML;
+        twinOptions.style.pointerEvents = 'none';
+        twinOptions.style.opacity = '0.5';
+
+        // Add thinking indicator
+        const typingId = addTypingIndicator();
+
+        // Scroll to bottom
+        twinChat.scrollTop = twinChat.scrollHeight;
+
+        // Simulate thinking time
+        setTimeout(() => {
+            removeTypingIndicator(typingId);
+            typeMessage(answers[qKey]);
+            twinOptions.style.pointerEvents = 'all';
+            twinOptions.style.opacity = '1';
+        }, 1500);
+    });
+
+    function addMessage(text, className) {
+        const msg = document.createElement('div');
+        msg.className = `message ${className}`;
+        msg.textContent = text;
+        twinChat.appendChild(msg);
+        twinChat.scrollTop = twinChat.scrollHeight;
+        return msg;
+    }
+
+    function addTypingIndicator() {
+        const indicator = document.createElement('div');
+        indicator.className = 'message twin-message typing';
+        indicator.id = 'typing-indicator';
+        indicator.innerHTML = '<span></span><span></span><span></span>';
+        twinChat.appendChild(indicator);
+        twinChat.scrollTop = twinChat.scrollHeight;
+        return 'typing-indicator';
+    }
+
+    function removeTypingIndicator(id) {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+    }
+
+    function typeMessage(text) {
+        const msg = document.createElement('div');
+        msg.className = 'message twin-message';
+        twinChat.appendChild(msg);
+
+        let i = 0;
+        const speed = 30; // ms per character
+
+        function type() {
+            if (i < text.length) {
+                msg.textContent += text.charAt(i);
+                i++;
+                twinChat.scrollTop = twinChat.scrollHeight;
+                setTimeout(type, speed);
+            }
+        }
+
+        type();
+    }
+}
+
 // ===== Init =====
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+    initDigitalTwin();
+});

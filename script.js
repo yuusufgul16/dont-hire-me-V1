@@ -1,0 +1,402 @@
+// ===== DOM Elements =====
+const elements = {
+    coverflowCards: document.getElementById('coverflow-cards'),
+    cards: document.querySelectorAll('.coverflow-card'),
+    prevBtn: document.getElementById('coverflow-prev'),
+    nextBtn: document.getElementById('coverflow-next'),
+    dotsContainer: document.getElementById('coverflow-dots'),
+    cardsFlipped: document.getElementById('cards-flipped'),
+    progressFill: document.getElementById('progress-fill'),
+    btnYes: document.getElementById('btn-yes'),
+    btnNo: document.getElementById('btn-no'),
+    contactReveal: document.getElementById('contact-reveal'),
+    escapeNumber: document.getElementById('escape-number'),
+    easterEgg: document.getElementById('easter-egg'),
+    closeEasterEgg: document.getElementById('close-easter-egg'),
+    projectCards: document.querySelectorAll('.project-card'),
+    warningBanner: document.getElementById('warning-banner')
+};
+
+// ===== State =====
+let currentIndex = 0;
+let flippedCount = 0;
+let flippedCards = new Set();
+let escapeCount = parseInt(localStorage.getItem('escapeCount') || '47');
+let easterEggShown = false;
+const totalCards = elements.cards.length;
+
+// ===== Initialize =====
+function init() {
+    elements.escapeNumber.textContent = escapeCount;
+
+    // Create dots
+    createDots();
+
+    // Set initial positions
+    updateCoverflow();
+
+    // Card click handlers
+    elements.cards.forEach((card, index) => {
+        card.addEventListener('click', () => {
+            if (index === currentIndex) {
+                flipCard(card, index);
+            } else {
+                goToCard(index);
+            }
+        });
+    });
+
+    // Navigation
+    elements.prevBtn.addEventListener('click', () => navigate(-1));
+    elements.nextBtn.addEventListener('click', () => navigate(1));
+
+    // Keyboard navigation
+    document.addEventListener('keydown', handleKeyboard);
+
+    // Touch/Swipe support
+    initSwipe();
+
+    // CTA button handlers
+    elements.btnYes.addEventListener('click', handleYesClick);
+    elements.btnNo.addEventListener('click', handleNoClick);
+
+    // Easter egg close
+    elements.closeEasterEgg.addEventListener('click', () => {
+        elements.easterEgg.classList.remove('visible');
+    });
+
+    // Scroll animations for projects
+    observeElements();
+
+    // Konami code
+    initKonamiCode();
+
+    // Resize handler for responsive coverflow
+    window.addEventListener('resize', () => {
+        updateCoverflow();
+    });
+}
+
+// ===== Create Dots =====
+function createDots() {
+    elements.dotsContainer.innerHTML = '';
+    for (let i = 0; i < totalCards; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'coverflow-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goToCard(i));
+        elements.dotsContainer.appendChild(dot);
+    }
+}
+
+// ===== Update Coverflow Positions =====
+function updateCoverflow() {
+    const isMobile = window.innerWidth <= 768;
+
+    // Adjust values for mobile
+    const positions = {
+        center: { x: 0, z: 50, r: 0, s: 1 },
+        left1: { x: isMobile ? -140 : -200, z: -100, r: 25, s: isMobile ? 0.6 : 0.7 },
+        right1: { x: isMobile ? 140 : 200, z: -100, r: -25, s: isMobile ? 0.6 : 0.7 },
+        left2: { x: isMobile ? -220 : -350, z: -200, r: 35, s: isMobile ? 0.4 : 0.5 },
+        right2: { x: isMobile ? 220 : 350, z: -200, r: -35, s: isMobile ? 0.4 : 0.5 },
+        hidden: { x: isMobile ? 300 : 500, z: -300, r: 45, s: 0.3 }
+    };
+
+    elements.cards.forEach((card, index) => {
+        const offset = index - currentIndex;
+
+        let translateX = 0;
+        let translateZ = 0;
+        let rotateY = 0;
+        let scale = 1;
+        let opacity = 1;
+        let zIndex = 0;
+
+        if (offset === 0) {
+            translateX = positions.center.x;
+            translateZ = positions.center.z;
+            rotateY = positions.center.r;
+            scale = positions.center.s;
+            opacity = 1;
+            zIndex = 10;
+            card.classList.add('active');
+        } else if (offset === -1) {
+            translateX = positions.left1.x;
+            translateZ = positions.left1.z;
+            rotateY = positions.left1.r;
+            scale = positions.left1.s;
+            opacity = 0.7;
+            zIndex = 5;
+            card.classList.remove('active');
+        } else if (offset === 1) {
+            translateX = positions.right1.x;
+            translateZ = positions.right1.z;
+            rotateY = positions.right1.r;
+            scale = positions.right1.s;
+            opacity = 0.7;
+            zIndex = 5;
+            card.classList.remove('active');
+        } else if (offset === -2) {
+            translateX = positions.left2.x;
+            translateZ = positions.left2.z;
+            rotateY = positions.left2.r;
+            scale = positions.left2.s;
+            opacity = isMobile ? 0 : 0.4;
+            zIndex = 2;
+            card.classList.remove('active');
+        } else if (offset === 2) {
+            translateX = positions.right2.x;
+            translateZ = positions.right2.z;
+            rotateY = positions.right2.r;
+            scale = positions.right2.s;
+            opacity = isMobile ? 0 : 0.4;
+            zIndex = 2;
+            card.classList.remove('active');
+        } else {
+            translateX = offset < 0 ? -positions.hidden.x : positions.hidden.x;
+            translateZ = positions.hidden.z;
+            rotateY = offset < 0 ? positions.hidden.r : -positions.hidden.r;
+            scale = positions.hidden.s;
+            opacity = 0;
+            zIndex = 0;
+            card.classList.remove('active');
+        }
+
+        // Apply position transform to the card wrapper
+        card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) scale(${scale}) rotateY(${rotateY}deg)`;
+        card.style.opacity = opacity;
+        card.style.zIndex = zIndex;
+    });
+
+    // Update dots
+    const dots = elements.dotsContainer.querySelectorAll('.coverflow-dot');
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+    });
+}
+
+// ===== Navigate =====
+function navigate(direction) {
+    currentIndex += direction;
+
+    if (currentIndex < 0) currentIndex = totalCards - 1;
+    if (currentIndex >= totalCards) currentIndex = 0;
+
+    updateCoverflow();
+}
+
+function goToCard(index) {
+    currentIndex = index;
+    updateCoverflow();
+}
+
+// ===== Keyboard Navigation =====
+function handleKeyboard(e) {
+    if (e.key === 'ArrowLeft') {
+        navigate(-1);
+    } else if (e.key === 'ArrowRight') {
+        navigate(1);
+    } else if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        const currentCard = elements.cards[currentIndex];
+        if (currentCard && !currentCard.classList.contains('flipped')) {
+            flipCard(currentCard, currentIndex);
+        }
+    }
+}
+
+// ===== Touch/Swipe Support =====
+function initSwipe() {
+    let startX = 0;
+    const wrapper = document.querySelector('.coverflow-wrapper');
+
+    if (!wrapper) return;
+
+    wrapper.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    wrapper.addEventListener('touchend', (e) => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                navigate(1);
+            } else {
+                navigate(-1);
+            }
+        }
+    }, { passive: true });
+}
+
+// ===== Card Flip =====
+function flipCard(card, index) {
+    if (card.classList.contains('flipped')) return;
+
+    card.classList.add('flipped');
+    flippedCards.add(index);
+    flippedCount = flippedCards.size;
+
+    // Update progress
+    elements.cardsFlipped.textContent = flippedCount;
+    elements.progressFill.style.width = `${(flippedCount / totalCards) * 100}%`;
+
+    // Update dot
+    const dots = elements.dotsContainer.querySelectorAll('.coverflow-dot');
+    if (dots[index]) {
+        dots[index].classList.add('flipped');
+    }
+
+    // Check for easter egg
+    if (flippedCount === totalCards && !easterEggShown) {
+        setTimeout(() => {
+            elements.easterEgg.classList.add('visible');
+            easterEggShown = true;
+        }, 800);
+    }
+}
+
+// ===== CTA Handlers =====
+function handleYesClick() {
+    elements.contactReveal.classList.add('visible');
+    elements.btnYes.style.display = 'none';
+    elements.btnNo.style.display = 'none';
+    createConfetti();
+}
+
+function handleNoClick() {
+    escapeCount++;
+    localStorage.setItem('escapeCount', escapeCount);
+    elements.escapeNumber.textContent = escapeCount;
+
+    elements.btnNo.style.animation = 'shake 0.5s ease';
+
+    const noTexts = [
+        "Emin misiniz?",
+        "Son şansınız!",
+        "Pişman olacaksınız...",
+        "Tamam, kaçın 😢",
+        "👋 Görüşürüz"
+    ];
+
+    const clickCount = parseInt(elements.btnNo.dataset.clickCount || 0);
+    const currentTextIndex = Math.min(clickCount, noTexts.length - 1);
+
+    elements.btnNo.querySelector('span').textContent = noTexts[currentTextIndex];
+    elements.btnNo.dataset.clickCount = clickCount + 1;
+
+    if (currentTextIndex >= noTexts.length - 1) {
+        setTimeout(() => {
+            elements.btnNo.style.opacity = '0.3';
+            elements.btnNo.style.pointerEvents = 'none';
+        }, 500);
+    }
+
+    if (!document.getElementById('shake-styles')) {
+        const style = document.createElement('style');
+        style.id = 'shake-styles';
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                20% { transform: translateX(-10px); }
+                40% { transform: translateX(10px); }
+                60% { transform: translateX(-10px); }
+                80% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    setTimeout(() => {
+        elements.btnNo.style.animation = '';
+    }, 500);
+}
+
+// ===== Confetti Effect =====
+function createConfetti() {
+    const colors = ['#ff0033', '#ffffff', '#ff3366', '#ff6699'];
+
+    for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.cssText = `
+            position: fixed;
+            width: ${Math.random() * 10 + 5}px;
+            height: ${Math.random() * 10 + 5}px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            left: ${Math.random() * 100}vw;
+            top: -20px;
+            opacity: ${Math.random() * 0.5 + 0.5};
+            pointer-events: none;
+            z-index: 10000;
+            animation: confettiFall ${Math.random() * 3 + 2}s linear forwards;
+        `;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+    }
+
+    if (!document.getElementById('confetti-styles')) {
+        const style = document.createElement('style');
+        style.id = 'confetti-styles';
+        style.textContent = `
+            @keyframes confettiFall {
+                to { top: 100vh; transform: rotate(720deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
+
+// ===== Scroll Animations =====
+function observeElements() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    elements.projectCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+}
+
+// ===== Konami Code =====
+function initKonamiCode() {
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === konamiCode[konamiIndex]) {
+            konamiIndex++;
+            if (konamiIndex === konamiCode.length) {
+                document.body.style.filter = 'hue-rotate(180deg)';
+                const msg = document.createElement('div');
+                msg.style.cssText = `
+                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                    background: #000; border: 2px solid #0ff; padding: 40px; border-radius: 20px;
+                    z-index: 100000; text-align: center; box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
+                `;
+                msg.innerHTML = `
+                    <h2 style="color: #0ff; margin-bottom: 15px;">🎮 KONAMI KODU AÇILDI!</h2>
+                    <p style="color: #fff;">Gerçek bir gamer olduğunuz kanıtlandı.</p>
+                    <button onclick="this.parentElement.remove(); document.body.style.filter = '';" 
+                            style="margin-top: 20px; padding: 10px 30px; background: #0ff; border: none; 
+                                   border-radius: 25px; cursor: pointer; font-weight: bold;">Kapat</button>
+                `;
+                document.body.appendChild(msg);
+                konamiIndex = 0;
+            }
+        } else {
+            konamiIndex = 0;
+        }
+    });
+}
+
+// ===== Init =====
+document.addEventListener('DOMContentLoaded', init);

@@ -27,6 +27,12 @@ const totalCards = elements.cards.length;
 
 // ===== Initialize =====
 function init() {
+    // Sayfa yüklendiğinde hash'i temizle ve en üste scroll yap
+    if (window.location.hash) {
+        history.replaceState(null, null, window.location.pathname);
+        window.scrollTo(0, 0);
+    }
+
     elements.escapeNumber.textContent = escapeCount;
 
     // Create dots

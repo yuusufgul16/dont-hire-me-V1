@@ -548,7 +548,7 @@ function initDigitalTwin() {
     };
 
     // ===== Gemini API Configuration =====
-    const GEMINI_API_KEY = "API_KEY_REMOVED";
+    const GEMINI_API_KEY = "AIzaSyAWQfplFA-iEqNIYOCdbdK06Rrm_XOEY-E";
     const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
     // ===== Hazır Cevaplar (Gemini yoksa fallback) =====
@@ -558,6 +558,59 @@ function initDigitalTwin() {
         remote: "Evet, kesinlikle! Uzun süredir uzaktan çalışma disiplinine sahibim. Asenkron iletişim araçlarını (Slack, Jira, GitHub vb.) ustalıkla kullanıyorum. Dünyanın neresinde olursan ol, aynı ofisteymişiz gibi verimli çalışabiliriz.",
         hedef: "Kısa vadede, global projelerde yer alarak teknik yetkinliklerimi en üst seviyeye çıkarmak istiyorum. Uzun vadede ise, teknoloji dünyasında iz bırakacak kendi girişimimi hayata geçirmek ve genç geliştiricilere mentorluk yapmak en büyük hayalim."
     };
+
+    // ===== Özel Sorular için Custom FAQ Kütüphanesi =====
+    const customFAQ = {
+        // Tek kelime anahtarlar kullanarak esnek eşleşme
+        "yaş": "Bu kişisel bir bilgi, ama profesyonel deneyimim hakkında konuşabiliriz! 😊",
+        "evli": "Özel hayatımı paylaşmayı tercih etmiyorum, ama iş hayatımda çok disiplinli ve odaklıyım! 💼",
+        "çocuk": "Kişisel durumum iş performansımı etkilemiyor, %100 profesyonel odağım var! 💪",
+
+        "tanıt": "Matematik mühendisliği mezunuyum ve 1+ yıldır yazılım dünyasındayım. Veri bilimi ile web teknolojilerini birleştirerek kullanıcı deneyimini iyileştirmek benim tutkum. 🚀",
+
+        "güçlü": "Hızlı öğrenme ve adaptasyon yeteneğim çok güçlü. Karmaşık problemleri basit çözümlere dönüştürmekten keyif alırım! 💡",
+        "zayıf": "Bazen aşırı mükemmeliyetçi olabiliyorum. Ama 'done is better than perfect' prensibini daha iyi uyguluyorum artık! 📈",
+
+        "maaş": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
+        "ücret": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
+        "salary": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
+
+        "başla": "İki haftalık notice period'um var ama esnek olabilirim. Acil durumlarda daha erken başlayabiliriz! 📅",
+        "mesai": "Esnek çalışma saatlerine uyum sağlayabilirim. Önemli olan output ve proje başarısı! ⏰",
+
+        "takım": "Takım oyuncusuyum! Pull request review'lar, pair programming benim için rutin. Bilgi paylaşımına inanırım! 🤝",
+        "çatışma": "Önce dinlerim, sonra empati kurarım. Teknik tartışmalarda data-driven yaklaşırım. Ego değil, proje başarısı önemlidir! 🎯",
+
+        "baskı": "Baskı altında daha produktif olurum! Önceliklendirme yapar ve adım adım ilerlerim. Panic yerine plan yaparım! 💪",
+        "stres": "İyi planlama ve düzenli molalar stresimi yönetmeyi kolaylaştırıyor. Ayrıca takım desteği çok önemli! 😊",
+
+        "başarı": "E-ticaret dashboard projesinde sayfa yüklenme süresini %70 azalttım. Mutlu müşteri = mutlu ben! 🎉",
+        "başarısız": "İlk projemde deadline'ı kaçırdık. Ama bu bana 'hayır' demeyi öğretti. Artık realistic planning yapıyorum! 📚",
+        "hata": "İlk projemde scope creep'i önleyemedim. Ama proje yönetimi konusunda çok şey öğrendim! 📚",
+
+        "github": "github.com/yuusufgul16 - Portfolio projelerim ve açık kaynak katkılarım burada! 🐙",
+        "debugging": "Önce problemi reproduce ederim, sonra logs kontrol ederim. Binary search ile scope'u daraltırım. Rubber duck debugging işe yarar! 🦆",
+
+        "ayrıl": "Ayrılmıyorum, gelişiyorum! Yeni teknolojiler ve daha büyük challengelar arıyorum. Kariyer gelişimim odak noktam! 🚀",
+        "teklif": "Birkaç görüşme sürecim var ama önceliğim doğru kültürel uyum ve teknik growth! 🤝",
+
+        "fazla": "Proje deadline'ları için elbette. Ama sürdürülebilir değil, akıllı çalışmak daha önemldir! ⚖️",
+        "işsiz": "Hayır, aktif çalışıyorum. Sadece daha iyi fırsatları değerlendiriyorum! 💼",
+
+        "hayvan": "Köpek balığı! Sürekli hareket halinde, adaptif ve takım halinde güçlü! 🦈😄",
+        "süper": "Zamanı yavaşlatmak! Deadline'lar daha az stresli olur ve her kodu daha iyi debug ederdim! ⚡",
+
+        "hobi": "Açık kaynak projelere katkıda bulunmak, tekno-blog okumak. Kod yazmak hem işim hem hobim! ♟️",
+        "kitap": "Clean Code - Robert C. Martin sürekli yeniden okuyorum! 📚",
+
+        "motivasyon": "Karmaşık bir problemi çözmek ve kullanıcıların 'vay be' demesi beni motive eder! 🎯",
+
+        "ideal": "Innovation'a açık, teknik excellence'a değer veren ve continuous learning kültürü olan şirketler idealim! 🌟",
+        "şirket": "Vizyonunuz ve kullandığınız teknolojiler çok etkileyici! Burada gelişebileceğime inanıyorum! 💎",
+
+        "soru": "Evet! Ekip dinamiği nasıl? Code review süreciniz nedir? Ve kahve mi çay mı içiliyor ofiste? ☕"
+    };
+
 
     twinBubble.addEventListener('click', () => {
         twinModal.classList.toggle('hidden');
@@ -635,6 +688,20 @@ function initDigitalTwin() {
         // Typing indicator
         const typingId = addTypingIndicator();
 
+        // ===== ÖNCELİKLE CUSTOM FAQ KONTROL ET =====
+        const customAnswer = checkCustomFAQ(userMessage);
+        if (customAnswer) {
+            // FAQ'de bulundu, direkt cevabı ver
+            setTimeout(() => {
+                removeTypingIndicator(typingId);
+                typeMessage(customAnswer);
+                twinInput.disabled = false;
+                twinSend.disabled = false;
+                twinInput.focus();
+            }, 800); // Kısa gecikme
+            return;
+        }
+
         try {
             // API key kontrolü
             if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE" || !GEMINI_API_KEY) {
@@ -648,12 +715,20 @@ Aşağıda Yusuf hakkında detaylı bilgiler var. Bu bilgileri kullanarak, Yusuf
 
 ${JSON.stringify(knowledgeBase, null, 2)}
 
-Önemli: 
+KRİTİK KURALLAR: 
+- ASLA selamlaşma yapma (Merhaba, Selam vb. KULLANMA)
+- Direkt soruya cevap ver
+- ÇOK kısa ve öz yaz (maksimum 2-3 cümle)
+- İlk şahıs olarak konuş ("Ben...")
 - Türkçe cevap ver
 - Samimi ama profesyonel ol
-- Kısa ve öz yaz (maksimum 3-4 cümle)
-- İlk şahıs olarak konuş ("Ben...")
-- Emoji kullanabilirsin ama abartma`;
+- Emoji çok az kullan (sadece cümle sonunda 1 tane)
+
+SINIRLAR:
+- SADECE yukarıdaki bilgi kütüphanesindeki bilgileri kullan
+- Kütüphanede olmayan bilgileri ASLA uydurma
+- Eğer sorunun cevabı kütüphanede yoksa: "Bu konuda bilgim yok, Yusuf ile direkt görüşebilirsin."
+- Profesyonel ve iş ile ilgili sorulara odaklan`;
 
             const response = await fetch(GEMINI_API_URL, {
                 method: 'POST',
@@ -669,7 +744,7 @@ ${JSON.stringify(knowledgeBase, null, 2)}
                     }],
                     generationConfig: {
                         temperature: 0.7,
-                        maxOutputTokens: 800,
+                        maxOutputTokens: 1500,
                     }
                 })
             });
@@ -679,10 +754,25 @@ ${JSON.stringify(knowledgeBase, null, 2)}
             }
 
             const data = await response.json();
-            const aiResponse = data.candidates[0].content.parts[0].text;
+
+            // Candidate ve finish_reason kontrolü
+            const candidate = data.candidates[0];
+            const aiResponse = candidate.content.parts[0].text;
+            const finishReason = candidate.finishReason;
 
             removeTypingIndicator(typingId);
             typeMessage(aiResponse);
+
+            // Eğer cevap erken kesildiyse kullanıcıyı bilgilendir
+            if (finishReason === 'MAX_TOKENS') {
+                setTimeout(() => {
+                    addMessage('(Cevap çok uzun olduğu için kısaltıldı. Daha fazla bilgi için Yusuf ile direkt iletişime geçebilirsin!) 💬', 'twin-message');
+                }, 500);
+            } else if (finishReason === 'SAFETY') {
+                setTimeout(() => {
+                    addMessage('(Bu konu hassas olabilir, daha detaylı görüşmek için Yusuf ile iletişime geçebilirsin!) ⚠️', 'twin-message');
+                }, 500);
+            }
 
         } catch (error) {
             console.error('Gemini API Error:', error);
@@ -697,6 +787,20 @@ ${JSON.stringify(knowledgeBase, null, 2)}
             twinSend.disabled = false;
             twinInput.focus();
         }
+    }
+
+    // ===== Custom FAQ Kontrol Fonksiyonu =====
+    function checkCustomFAQ(message) {
+        const lowerMsg = message.toLowerCase();
+
+        // FAQ kütüphanesindeki tüm anahtarları kontrol et
+        for (const [keyword, answer] of Object.entries(customFAQ)) {
+            if (lowerMsg.includes(keyword.toLowerCase())) {
+                return answer;
+            }
+        }
+
+        return null; // Eşleşme yoksa null dön
     }
 
     // ===== Fallback Response System =====

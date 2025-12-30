@@ -502,6 +502,92 @@ body {
     transition: width var(--transition-medium);
 }
 
+/* ===== Proof Tabs ===== */
+.proof-tabs {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.proof-tab {
+    background: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.proof-tab::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-red);
+    transition: width var(--transition-medium);
+}
+
+.proof-tab:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+}
+
+.proof-tab.active {
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+    box-shadow: 0 0 20px var(--accent-red-glow);
+}
+
+.proof-tab.active::before {
+    width: 100%;
+}
+
+/* ===== Proof Content ===== */
+.proof-content {
+    display: none;
+    opacity: 0;
+    animation: fadeOut 0.3s ease;
+}
+
+.proof-content.active {
+    display: block;
+    opacity: 1;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
 /* ===== Projects Section ===== */
 .projects-section {
     background: var(--bg-primary);

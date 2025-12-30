@@ -154,101 +154,205 @@
         </div>
     </section>
 
-    <!-- Section 3: Projects -->
+    <!-- Section 3: Projects & Experience -->
     <section class="section projects-section" id="projects">
         <div class="section-header">
             <h2>Kanıtlar</h2>
-            <p class="section-subtitle">Lafta kalmadı, işte projelerim</p>
+            <p class="section-subtitle">Lafta kalmadı, işte kanıtlarım</p>
         </div>
 
-        <div class="projects-container">
-            <div class="project-card" data-project="kurtulus">
-                <div class="project-header">
-                    <div class="project-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <circle cx="12" cy="12" r="6"></circle>
-                            <circle cx="12" cy="12" r="2"></circle>
-                        </svg>
+        <!-- Tab Buttons -->
+        <div class="proof-tabs">
+            <button class="proof-tab active" data-tab="projects">
+                <span>Projeler</span>
+            </button>
+            <button class="proof-tab" data-tab="experience">
+                <span>Deneyim</span>
+            </button>
+        </div>
+
+        <!-- Projects Tab Content -->
+        <div class="proof-content active" id="projects-content">
+            <div class="projects-container">
+                <div class="project-card" data-project="kurtulus">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="6"></circle>
+                                <circle cx="12" cy="12" r="2"></circle>
+                            </svg>
+                        </div>
+                        <h3>Kurtuluş Oyunu</h3>
+                        <div class="project-toggle">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
                     </div>
-                    <h3>Kurtuluş Oyunu</h3>
-                    <div class="project-toggle">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M12 5v14M5 12h14" />
-                        </svg>
+                    <div class="project-body">
+                        <p>Eratosthenes Kalburu algoritmasını eğlenceli bir oyuna dönüştürdüm. Matematik + Oyun =
+                            Öğrenme
+                        </p>
+                        <div class="project-tags">
+                            <span>JavaScript</span>
+                            <span>Gamification</span>
+                            <span>Eğitim</span>
+                        </div>
                     </div>
                 </div>
-                <div class="project-body">
-                    <p>Eratosthenes Kalburu algoritmasını eğlenceli bir oyuna dönüştürdüm. Matematik + Oyun = Öğrenme
-                    </p>
-                    <div class="project-tags">
-                        <span>JavaScript</span>
-                        <span>Gamification</span>
-                        <span>Eğitim</span>
+
+                <div class="project-card" data-project="endemika">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2v4"></path>
+                                <path d="m4.93 4.93 2.83 2.83"></path>
+                                <path d="M2 12h4"></path>
+                                <path d="m4.93 19.07 2.83-2.83"></path>
+                                <path d="M12 22v-4"></path>
+                                <path d="m19.07 19.07-2.83-2.83"></path>
+                                <path d="M22 12h-4"></path>
+                                <path d="m19.07 4.93-2.83 2.83"></path>
+                                <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                                <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                            </svg>
+                        </div>
+                        <h3>Endemika</h3>
+                        <div class="project-toggle">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p>Salgın simülasyonu ve veri görselleştirme projesi. Karmaşık verileri anlaşılır hikayelere
+                            çevirdim.</p>
+                        <div class="project-tags">
+                            <span>Data Viz</span>
+                            <span>Simülasyon</span>
+                            <span>Python</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-project="youtube">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3>YouTube Yorum Analizi</h3>
+                        <div class="project-toggle">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p>NLP kullanarak YouTube yorumlarını analiz ettim. Duygu analizi ve trend tespiti yaptım.</p>
+                        <div class="project-tags">
+                            <span>NLP</span>
+                            <span>Sentiment</span>
+                            <span>API</span>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="project-card" data-project="endemika">
-                <div class="project-header">
-                    <div class="project-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2v4"></path>
-                            <path d="m4.93 4.93 2.83 2.83"></path>
-                            <path d="M2 12h4"></path>
-                            <path d="m4.93 19.07 2.83-2.83"></path>
-                            <path d="M12 22v-4"></path>
-                            <path d="m19.07 19.07-2.83-2.83"></path>
-                            <path d="M22 12h-4"></path>
-                            <path d="m19.07 4.93-2.83 2.83"></path>
-                            <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-                            <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                        </svg>
+        <!-- Experience Tab Content -->
+        <div class="proof-content" id="experience-content">
+            <div class="projects-container">
+                <div class="project-card" data-experience="tech-company">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <h3>Kıdemli Yazılım Geliştirici</h3>
+                        <div class="project-toggle">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
                     </div>
-                    <h3>Endemika</h3>
-                    <div class="project-toggle">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M12 5v14M5 12h14" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="project-body">
-                    <p>Salgın simülasyonu ve veri görselleştirme projesi. Karmaşık verileri anlaşılır hikayelere
-                        çevirdim.</p>
-                    <div class="project-tags">
-                        <span>Data Viz</span>
-                        <span>Simülasyon</span>
-                        <span>Python</span>
+                    <div class="project-body">
+                        <p>Tech Şirketi A.Ş. | 2021 - Günümüz<br>
+                            Mikroservis mimarisine geçiş projesinde liderlik ettim. Ekip performansını %40 artırdım.</p>
+                        <div class="project-tags">
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>AWS</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="project-card" data-project="youtube">
-                <div class="project-header">
-                    <div class="project-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
+                <div class="project-card" data-experience="startup">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3>Full Stack Developer</h3>
+                        <div class="project-toggle">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
                     </div>
-                    <h3>YouTube Yorum Analizi</h3>
-                    <div class="project-toggle">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M12 5v14M5 12h14" />
-                        </svg>
+                    <div class="project-body">
+                        <p>Startup XYZ | 2019 - 2021<br>
+                            Sıfırdan ürün geliştirdim. 50K+ kullanıcıya ulaşan platform oluşturdum.</p>
+                        <div class="project-tags">
+                            <span>Vue.js</span>
+                            <span>Python</span>
+                            <span>PostgreSQL</span>
+                        </div>
                     </div>
                 </div>
-                <div class="project-body">
-                    <p>NLP kullanarak YouTube yorumlarını analiz ettim. Duygu analizi ve trend tespiti yaptım.</p>
-                    <div class="project-tags">
-                        <span>NLP</span>
-                        <span>Sentiment</span>
-                        <span>API</span>
+
+                <div class="project-card" data-experience="freelance">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Freelance Developer</h3>
+                        <div class="project-toggle">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p>Bağımsız | 2017 - 2019<br>
+                            15+ müşteriye web ve mobil uygulamalar geliştirdim. %100 müşteri memnuniyeti.</p>
+                        <div class="project-tags">
+                            <span>JavaScript</span>
+                            <span>React Native</span>
+                            <span>Firebase</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -282,15 +386,15 @@
             <div class="contact-reveal" id="contact-reveal">
                 <h3>Cesur seçim! 🎉</h3>
                 <div class="contact-links">
-                    <a href="mailto:email@example.com" class="contact-link">
+                    <a href="mailto:zyusuf_16@hotmail.com" class="contact-link">
                         <span class="contact-icon">📧</span>
                         <span>E-posta Gönder</span>
                     </a>
-                    <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">
+                    <a href="https://www.linkedin.com/in/yusufgul/" target="_blank" class="contact-link">
                         <span class="contact-icon">💼</span>
                         <span>LinkedIn</span>
                     </a>
-                    <a href="https://github.com/yourprofile" target="_blank" class="contact-link">
+                    <a href="https://github.com/yuusufgul16" target="_blank" class="contact-link">
                         <span class="contact-icon">🐙</span>
                         <span>GitHub</span>
                     </a>

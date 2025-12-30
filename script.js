@@ -13,7 +13,11 @@ const elements = {
     escapeNumber: document.getElementById('escape-number'),
 
     projectCards: document.querySelectorAll('.project-card'),
-    warningBanner: document.getElementById('warning-banner')
+    warningBanner: document.getElementById('warning-banner'),
+
+    // Proof tabs
+    proofTabs: document.querySelectorAll('.proof-tab'),
+    proofContents: document.querySelectorAll('.proof-content')
 };
 
 // ===== State =====
@@ -81,6 +85,14 @@ function init() {
     // Resize handler for responsive coverflow
     window.addEventListener('resize', () => {
         updateCoverflow();
+    });
+
+    // Proof tabs
+    elements.proofTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetTab = tab.dataset.tab;
+            switchProofTab(targetTab);
+        });
     });
 }
 
@@ -411,6 +423,36 @@ function initKonamiCode() {
         } else {
             konamiIndex = 0;
         }
+    });
+}
+
+// ===== Switch Proof Tab =====
+function switchProofTab(tabName) {
+    // Remove active class from all tabs
+    elements.proofTabs.forEach(tab => {
+        tab.classList.remove('active');
+    });
+
+    // Remove active class from all contents
+    elements.proofContents.forEach(content => {
+        content.classList.remove('active');
+    });
+
+    // Add active class to clicked tab
+    const activeTab = document.querySelector(`.proof-tab[data-tab="${tabName}"]`);
+    if (activeTab) {
+        activeTab.classList.add('active');
+    }
+
+    // Show corresponding content
+    const activeContent = document.getElementById(`${tabName}-content`);
+    if (activeContent) {
+        activeContent.classList.add('active');
+    }
+
+    // Close all project cards when switching tabs
+    elements.projectCards.forEach(card => {
+        card.classList.remove('active');
     });
 }
 

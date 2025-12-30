@@ -1293,20 +1293,20 @@ body {
     bottom: 80px;
     right: 0;
     width: 250px;
-    background: rgba(255, 0, 51, 0.9);
-    color: white;
+    background: #00ff66;
+    color: black;
     padding: 12px 18px;
     border-radius: 15px;
     font-size: 13px;
     font-weight: 500;
     line-height: 1.4;
-    box-shadow: 0 10px 30px rgba(255, 0, 51, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 255, 102, 0.4);
     z-index: 2001;
     pointer-events: none;
     opacity: 0;
     transform: translateY(20px) scale(0.8);
     animation: notificationPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    animation-delay: 2s;
+    animation-delay: 4s;
     /* Sayfa yüklendikten 2 saniye sonra çıksın */
 }
 
@@ -1318,7 +1318,7 @@ body {
     height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-top: 8px solid rgba(255, 0, 51, 0.9);
+    border-top: 8px solid #00ff66;
 }
 
 @keyframes notificationPop {
@@ -1333,13 +1333,13 @@ body {
     height: 60px;
     border-radius: 50%;
     background: var(--bg-secondary);
-    border: 2px solid var(--accent-red);
+    border: 2px solid #00ff66af;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: 0 0 20px var(--accent-red-glow);
+    box-shadow: 0 0 20px rgba(0, 255, 102, 0.726);
     transition: all var(--transition-medium);
     overflow: hidden;
     /* Resmin dışarı taşmaması için */

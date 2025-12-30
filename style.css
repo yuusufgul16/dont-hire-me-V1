@@ -888,7 +888,7 @@ body {
 
 .escape-count {
     position: absolute;
-    bottom: 30px;
+    bottom: 130px;
     color: var(--text-secondary);
     font-size: 14px;
     opacity: 0.7;
@@ -1220,4 +1220,46 @@ body {
 ::selection {
     background: var(--accent-red);
     color: white;
+}
+
+/* ===== Fixed Socials ===== */
+.fixed-socials {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    transition: all var(--transition-medium);
+}
+
+.fixed-socials:hover {
+    border-color: var(--accent-red);
+    box-shadow: 0 0 30px var(--accent-red-glow);
+}
+
+.social-item {
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-item:hover {
+    color: var(--accent-red);
+    transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+    .fixed-socials {
+        bottom: 20px;
+        padding: 8px 15px;
+    }
 }

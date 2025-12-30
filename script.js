@@ -211,6 +211,12 @@ function goToCard(index) {
 
 // ===== Keyboard Navigation =====
 function handleKeyboard(e) {
+    // Input veya textarea'daysa klavye kısayollarını devre dışı bırak
+    const target = e.target;
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        return; // Input alanındaysa hiçbir şey yapma
+    }
+
     if (e.key === 'ArrowLeft') {
         navigate(-1);
     } else if (e.key === 'ArrowRight') {
@@ -542,8 +548,8 @@ function initDigitalTwin() {
     };
 
     // ===== Gemini API Configuration =====
-    const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"; // Buraya API key eklenecek
-    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+    const GEMINI_API_KEY = "API_KEY_REMOVED";
+    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
     // ===== Hazır Cevaplar (Gemini yoksa fallback) =====
     const answers = {
@@ -649,10 +655,11 @@ ${JSON.stringify(knowledgeBase, null, 2)}
 - İlk şahıs olarak konuş ("Ben...")
 - Emoji kullanabilirsin ama abartma`;
 
-            const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+            const response = await fetch(GEMINI_API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'x-goog-api-key': GEMINI_API_KEY
                 },
                 body: JSON.stringify({
                     contents: [{
@@ -662,7 +669,7 @@ ${JSON.stringify(knowledgeBase, null, 2)}
                     }],
                     generationConfig: {
                         temperature: 0.7,
-                        maxOutputTokens: 200,
+                        maxOutputTokens: 800,
                     }
                 })
             });

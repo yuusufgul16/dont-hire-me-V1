@@ -464,7 +464,88 @@ function initDigitalTwin() {
     const twinChat = document.getElementById('twin-chat');
     const twinOptions = document.getElementById('twin-options');
     const twinNotification = document.getElementById('twin-notification');
+    const twinInput = document.getElementById('twin-input');
+    const twinSend = document.getElementById('twin-send');
 
+    // ===== Bilgi Kütüphanesi (Knowledge Base) =====
+    const knowledgeBase = {
+        personalInfo: {
+            name: "Yusuf Gül",
+            title: "Software Developer & Data Analyst",
+            location: "Türkiye",
+            email: "zyusuf_16@hotmail.com",
+            linkedin: "https://www.linkedin.com/in/yusufgul/",
+            github: "https://github.com/yuusufgul16"
+        },
+        education: {
+            university: "Yıldız Teknik Üniversitesi",
+            department: "Matematik Mühendisliği",
+            graduationYear: "2024",
+            gpa: "3.12"
+        },
+        skills: {
+            programming: ["Python", "JavaScript", "SQL", "HTML/CSS", "R"],
+            frameworks: ["React", "Node.js", "Flask", "Django"],
+            tools: ["Git", "Docker", "VS Code", "Jupyter", "Tableau", "Power BI"],
+            databases: ["MySQL", "PostgreSQL", "MongoDB"],
+            dataScience: ["Pandas", "NumPy", "Scikit-learn", "TensorFlow", "Matplotlib", "Seaborn"],
+            soft: ["Problem Solving", "Team Collaboration", "Fast Learning", "Analytical Thinking"]
+        },
+        experience: [
+            {
+                company: "DigitalStack",
+                role: "Frontend Developer",
+                duration: "Kasım 2024 - Devam Ediyor",
+                description: "Modern web uygulamaları geliştirme, React ile component-based mimari kurma"
+            },
+            {
+                company: "DataInk Analytics",
+                role: "Data Analyst (Part-Time)",
+                duration: "Eylül 2024 - Devam Ediyor",
+                description: "Veri analizi ve görselleştirme, iş zekası raporları oluşturma"
+            },
+            {
+                company: "ByteWorks",
+                role: "Full Stack Developer Intern",
+                duration: "Haziran 2024 - Ağustos 2024",
+                description: "E-ticaret platformu geliştirme, API tasarımı"
+            }
+        ],
+        projects: [
+            {
+                name: "E-Commerce Dashboard",
+                description: "Gerçek zamanlı veri görselleştirme ve stok yönetim sistemi",
+                tech: ["React", "Python", "PostgreSQL", "Chart.js"]
+            },
+            {
+                name: "AI Customer Support Bot",
+                description: "Doğal dil işleme ile müşteri destek asistanı",
+                tech: ["Python", "TensorFlow", "Flask", "API Integration"]
+            },
+            {
+                name: "Social Media Analytics Tool",
+                description: "Twitter verilerini analiz eden sentiment analysis aracı",
+                tech: ["Python", "Pandas", "Twitter API", "Matplotlib"]
+            }
+        ],
+        personality: {
+            workStyle: "Detaycı, problem çözücü, sürekli öğrenen",
+            strengths: ["Hızlı adaptasyon", "Analitik düşünme", "Takım çalışması"],
+            passion: "Veri bilimi ile web teknolojilerini birleştirerek kullanıcı deneyimini iyileştirmek",
+            motivation: "Karmaşık problemleri basit, elegant çözümlerle aşmak"
+        },
+        preferences: {
+            workModel: "Hibrit veya Remote (6 aydır remote çalışıyorum)",
+            availability: "Hemen başlayabilirim",
+            interests: ["Web3", "AI/ML", "Data Visualization", "Open Source"]
+        }
+    };
+
+    // ===== Gemini API Configuration =====
+    const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"; // Buraya API key eklenecek
+    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+
+    // ===== Hazır Cevaplar (Gemini yoksa fallback) =====
     const answers = {
         neden: "Çünkü ben sadece kod yazmıyorum, projeye bir ruh katıyorum. Sorunları henüz ortaya çıkmadan fark edip çözüm üretiyorum. Sıradan bir çalışan değil, projenin başarısı için en az senin kadar heyecan duyan bir takım arkadaşı arıyorsan doğru yerdesin.",
         stack: "Öncelikle Modern JavaScript (ES6+), React ve Node.js ekosistemine çok hakimim. Tasarım tarafında CSS/SCSS ile harikalar yaratabilirim. Ayrıca Python ve Veri Analizi konularında da kendimi geliştirmeye devam ediyorum. Her zaman yeni teknolojileri öğrenmeye açığım!",
@@ -520,6 +601,131 @@ function initDigitalTwin() {
             twinOptions.style.opacity = '1';
         }, 1500);
     });
+
+    // ===== Input Event Listeners =====
+    twinSend.addEventListener('click', () => {
+        sendUserMessage();
+    });
+
+    twinInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendUserMessage();
+        }
+    });
+
+    // ===== Gemini API ile Mesaj Gönderme =====
+    async function sendUserMessage() {
+        const userMessage = twinInput.value.trim();
+        if (!userMessage) return;
+
+        // Mesajı ekle
+        addMessage(userMessage, 'user-message');
+        twinInput.value = '';
+
+        // Disable input while processing
+        twinInput.disabled = true;
+        twinSend.disabled = true;
+
+        // Typing indicator
+        const typingId = addTypingIndicator();
+
+        try {
+            // API key kontrolü
+            if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE" || !GEMINI_API_KEY) {
+                throw new Error("API Key not configured");
+            }
+
+            // System prompt oluştur
+            const systemPrompt = `Sen Yusuf Gül'ün dijital ikizi (digital twin) olarak görev yapan bir asistansın. 
+Aşağıda Yusuf hakkında detaylı bilgiler var. Bu bilgileri kullanarak, Yusuf'un karakterine ve tarzına uygun, samimi ve profesyonel cevaplar ver.
+İşe alım sürecinde bir HR yetkilisi veya potansiyel işverenle konuşuyormuş gibi davran.
+
+${JSON.stringify(knowledgeBase, null, 2)}
+
+Önemli: 
+- Türkçe cevap ver
+- Samimi ama profesyonel ol
+- Kısa ve öz yaz (maksimum 3-4 cümle)
+- İlk şahıs olarak konuş ("Ben...")
+- Emoji kullanabilirsin ama abartma`;
+
+            const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `${systemPrompt}\n\nKullanıcı Sorusu: ${userMessage}`
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        maxOutputTokens: 200,
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const aiResponse = data.candidates[0].content.parts[0].text;
+
+            removeTypingIndicator(typingId);
+            typeMessage(aiResponse);
+
+        } catch (error) {
+            console.error('Gemini API Error:', error);
+
+            // Fallback: Basit anahtar kelime eşleştirme
+            removeTypingIndicator(typingId);
+            const fallbackResponse = getFallbackResponse(userMessage);
+            typeMessage(fallbackResponse);
+        } finally {
+            // Re-enable input
+            twinInput.disabled = false;
+            twinSend.disabled = false;
+            twinInput.focus();
+        }
+    }
+
+    // ===== Fallback Response System =====
+    function getFallbackResponse(message) {
+        const lowerMsg = message.toLowerCase();
+
+        // Anahtar kelime eşleştirmeleri
+        if (lowerMsg.includes('neden') || lowerMsg.includes('işe al') || lowerMsg.includes('hire')) {
+            return answers.neden;
+        }
+        if (lowerMsg.includes('teknoloji') || lowerMsg.includes('skill') || lowerMsg.includes('yetenk') || lowerMsg.includes('stack')) {
+            return answers.stack;
+        }
+        if (lowerMsg.includes('remote') || lowerMsg.includes('uzaktan') || lowerMsg.includes('çalış')) {
+            return answers.remote;
+        }
+        if (lowerMsg.includes('hedef') || lowerMsg.includes('gelecek') || lowerMsg.includes('plan')) {
+            return answers.hedef;
+        }
+        if (lowerMsg.includes('maaş') || lowerMsg.includes('ücret') || lowerMsg.includes('salary')) {
+            return "Maaş beklentim deneyim ve pozisyona göre değişmekle birlikte, piyasa standartlarına uygun bir teklifi değerlendirebiliriz. En önemli faktör benim için projenin vizyonu ve gelişim fırsatları! 💼";
+        }
+        if (lowerMsg.includes('proje') || lowerMsg.includes('project')) {
+            return "E-ticaret dashboard'u, AI chatbot ve sosyal medya analiz aracı gibi çeşitli projelerde çalıştım. Her projede farklı teknolojiler kullanarak hem teknik hem de problem çözme becerilerimi geliştirdim. Portfolio'mu GitHub'dan inceleyebilirsin! 🚀";
+        }
+        if (lowerMsg.includes('deneyim') || lowerMsg.includes('tecrübe') || lowerMsg.includes('experience')) {
+            return "DigitalStack'te Frontend Developer ve DataInk Analytics'te Data Analyst olarak çalışıyorum. Ayrıca ByteWorks'te full-stack geliştirme deneyimim de var. Toplamda 1+ yıllık profesyonel tecrübem mevcut. 💪";
+        }
+        if (lowerMsg.includes('eğitim') || lowerMsg.includes('okul') || lowerMsg.includes('üniversite')) {
+            return "Yıldız Teknik Üniversitesi Matematik Mühendisliği'nden 2024'te mezun oldum. Matematik alt yapım sayesinde algoritma ve veri bilimi konularında sağlam bir temele sahibim. 🎓";
+        }
+
+        // Varsayılan cevap
+        return "Bu soruyu henüz tam olarak yanıtlayamıyorum, ama Yusuf ile doğrudan iletişime geçerek daha detaylı bilgi alabilirsin! Ayrıca Gemini API key'i eklenirse daha akıllı cevaplar verebileceğim. 😊";
+    }
+
 
     function addMessage(text, className) {
         const msg = document.createElement('div');

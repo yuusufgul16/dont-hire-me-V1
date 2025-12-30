@@ -1637,10 +1637,81 @@ body {
     }
 }
 
+/* Twin Input Area */
+.twin-input-area {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    align-items: center;
+}
+
+.twin-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.twin-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+.twin-input:focus {
+    border-color: var(--accent-red);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 15px var(--accent-red-glow);
+}
+
+.twin-send {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-red);
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px var(--accent-red-glow);
+}
+
+.twin-send:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 8px 25px var(--accent-red-glow);
+}
+
+.twin-send:active {
+    transform: scale(0.95) rotate(0deg);
+}
+
+.twin-send svg {
+    transform: translateX(1px);
+}
+
 @media (max-width: 480px) {
     #twin-modal {
         width: 300px;
         height: 450px;
         bottom: 70px;
+    }
+
+    .twin-input {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    .twin-send {
+        width: 36px;
+        height: 36px;
     }
 }

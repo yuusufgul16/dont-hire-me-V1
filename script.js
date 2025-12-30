@@ -709,9 +709,9 @@ function initDigitalTwin() {
             }
 
             // System prompt oluştur
-            const systemPrompt = `Sen Yusuf Gül'ün dijital ikizi (digital twin) olarak görev yapan bir asistansın. 
-Aşağıda Yusuf hakkında detaylı bilgiler var. Bu bilgileri kullanarak, Yusuf'un karakterine ve tarzına uygun, samimi ve profesyonel cevaplar ver.
-İşe alım sürecinde bir HR yetkilisi veya potansiyel işverenle konuşuyormuş gibi davran.
+            const systemPrompt = `Sen Yusuf Gül olarak cevap veriyorsun (1. tekil şahıs). 
+Aşağıdaki bilgi kütüphanesini kullanarak, karakterine ve tarzına uygun, samimi ve profesyonel cevaplar ver.
+İşe alım sürecinde bir HR yetkilisi veya potansiyel işverenle konuşuyorsun.
 
 ${JSON.stringify(knowledgeBase, null, 2)}
 
@@ -719,7 +719,7 @@ KRİTİK KURALLAR:
 - ASLA selamlaşma yapma (Merhaba, Selam vb. KULLANMA)
 - Direkt soruya cevap ver
 - ÇOK kısa ve öz yaz (maksimum 2-3 cümle)
-- İlk şahıs olarak konuş ("Ben...")
+- SADECE 1. tekil şahıs kullan ("Ben", "Benim", kendinden bahsederken ASLA "Yusuf" deme)
 - Türkçe cevap ver
 - Samimi ama profesyonel ol
 - Emoji çok az kullan (sadece cümle sonunda 1 tane)
@@ -727,7 +727,7 @@ KRİTİK KURALLAR:
 SINIRLAR:
 - SADECE yukarıdaki bilgi kütüphanesindeki bilgileri kullan
 - Kütüphanede olmayan bilgileri ASLA uydurma
-- Eğer sorunun cevabı kütüphanede yoksa: "Bu konuda bilgim yok, Yusuf ile direkt görüşebilirsin."
+- Eğer sorunun cevabı kütüphanede yoksa: "Bu konuda bilgim yok, benimle direkt görüşebilirsin."
 - Profesyonel ve iş ile ilgili sorulara odaklan`;
 
             const response = await fetch(GEMINI_API_URL, {
@@ -834,7 +834,7 @@ SINIRLAR:
         }
 
         // Varsayılan cevap
-        return "Bu soruyu henüz tam olarak yanıtlayamıyorum, ama Yusuf ile doğrudan iletişime geçerek daha detaylı bilgi alabilirsin! Ayrıca Gemini API key'i eklenirse daha akıllı cevaplar verebileceğim. 😊";
+        return "Bu konuda bilgim yok, benimle direkt görüşebilirsin. 😊";
     }
 
 
@@ -876,10 +876,55 @@ SINIRLAR:
                 i++;
                 twinChat.scrollTop = twinChat.scrollHeight;
                 setTimeout(type, speed);
+            } else {
+                // Sadece "benimle direkt görüşebilirsin" içeren mesajlarda sosyal butonları göster
+                if (text.includes('benimle direkt görüşebilirsin')) {
+                    addSocialButtons(msg);
+                }
             }
         }
 
         type();
+    }
+
+    // ===== Sosyal Medya Butonlarını Ekle =====
+    function addSocialButtons(messageElement) {
+        const socialContainer = document.createElement('div');
+        socialContainer.className = 'twin-social-buttons';
+        socialContainer.innerHTML = `
+            <div class="twin-social-divider">
+                <span>Benimle iletişime geç</span>
+            </div>
+            <div class="twin-social-links">
+                <a href="mailto:zyusuf_16@hotmail.com" class="twin-social-btn" title="E-posta" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/yusufgul/" class="twin-social-btn" title="LinkedIn" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+                <a href="https://github.com/yuusufgul16" class="twin-social-btn" title="GitHub" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/yyusufgull/?hl=tr" class="twin-social-btn" title="Instagram" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a>
+            </div>
+        `;
+        messageElement.appendChild(socialContainer);
+        twinChat.scrollTop = twinChat.scrollHeight;
     }
 }
 

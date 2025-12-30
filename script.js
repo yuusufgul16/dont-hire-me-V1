@@ -11,8 +11,7 @@ const elements = {
     btnNo: document.getElementById('btn-no'),
     contactReveal: document.getElementById('contact-reveal'),
     escapeNumber: document.getElementById('escape-number'),
-    easterEgg: document.getElementById('easter-egg'),
-    closeEasterEgg: document.getElementById('close-easter-egg'),
+
     projectCards: document.querySelectorAll('.project-card'),
     warningBanner: document.getElementById('warning-banner')
 };
@@ -22,7 +21,7 @@ let currentIndex = 0;
 let flippedCount = 0;
 let flippedCards = new Set();
 let escapeCount = parseInt(localStorage.getItem('escapeCount') || '47');
-let easterEggShown = false;
+
 const totalCards = elements.cards.length;
 
 // ===== Initialize =====
@@ -66,13 +65,15 @@ function init() {
     elements.btnYes.addEventListener('click', handleYesClick);
     elements.btnNo.addEventListener('click', handleNoClick);
 
-    // Easter egg close
-    elements.closeEasterEgg.addEventListener('click', () => {
-        elements.easterEgg.classList.remove('visible');
-    });
+
 
     // Scroll animations for projects
     observeElements();
+
+    // Project Accordion
+    elements.projectCards.forEach(card => {
+        card.addEventListener('click', () => toggleProjectCard(card));
+    });
 
     // Konami code
     initKonamiCode();
@@ -254,13 +255,7 @@ function flipCard(card, index) {
         dots[index].classList.add('flipped');
     }
 
-    // Check for easter egg
-    if (flippedCount === totalCards && !easterEggShown) {
-        setTimeout(() => {
-            elements.easterEgg.classList.add('visible');
-            easterEggShown = true;
-        }, 800);
-    }
+
 }
 
 // ===== CTA Handlers =====
@@ -350,6 +345,21 @@ function createConfetti() {
             }
         `;
         document.head.appendChild(style);
+    }
+}
+
+// ===== Project Accordion =====
+function toggleProjectCard(targetCard) {
+    const isActive = targetCard.classList.contains('active');
+
+    // Close all cards
+    elements.projectCards.forEach(card => {
+        card.classList.remove('active');
+    });
+
+    // Toggle target card
+    if (!isActive) {
+        targetCard.classList.add('active');
     }
 }
 

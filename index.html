@@ -8,7 +8,8 @@
     <meta name="description" content="Sıradışı bir başvuru deneyimi. Cesaretiniz varsa devam edin.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:wght@400;700&family=Inter:wght@300;400;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -162,12 +163,24 @@
 
         <div class="projects-container">
             <div class="project-card" data-project="kurtulus">
-                <div class="project-visual">
-                    <div class="project-icon">🎯</div>
-                    <div class="project-glow"></div>
-                </div>
-                <div class="project-info">
+                <div class="project-header">
+                    <div class="project-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="6"></circle>
+                            <circle cx="12" cy="12" r="2"></circle>
+                        </svg>
+                    </div>
                     <h3>Kurtuluş Oyunu</h3>
+                    <div class="project-toggle">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 5v14M5 12h14" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-body">
                     <p>Eratosthenes Kalburu algoritmasını eğlenceli bir oyuna dönüştürdüm. Matematik + Oyun = Öğrenme
                     </p>
                     <div class="project-tags">
@@ -179,12 +192,31 @@
             </div>
 
             <div class="project-card" data-project="endemika">
-                <div class="project-visual">
-                    <div class="project-icon">🦠</div>
-                    <div class="project-glow"></div>
-                </div>
-                <div class="project-info">
+                <div class="project-header">
+                    <div class="project-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v4"></path>
+                            <path d="m4.93 4.93 2.83 2.83"></path>
+                            <path d="M2 12h4"></path>
+                            <path d="m4.93 19.07 2.83-2.83"></path>
+                            <path d="M12 22v-4"></path>
+                            <path d="m19.07 19.07-2.83-2.83"></path>
+                            <path d="M22 12h-4"></path>
+                            <path d="m19.07 4.93-2.83 2.83"></path>
+                            <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                            <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                        </svg>
+                    </div>
                     <h3>Endemika</h3>
+                    <div class="project-toggle">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 5v14M5 12h14" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-body">
                     <p>Salgın simülasyonu ve veri görselleştirme projesi. Karmaşık verileri anlaşılır hikayelere
                         çevirdim.</p>
                     <div class="project-tags">
@@ -196,12 +228,22 @@
             </div>
 
             <div class="project-card" data-project="youtube">
-                <div class="project-visual">
-                    <div class="project-icon">💬</div>
-                    <div class="project-glow"></div>
-                </div>
-                <div class="project-info">
+                <div class="project-header">
+                    <div class="project-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
                     <h3>YouTube Yorum Analizi</h3>
+                    <div class="project-toggle">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 5v14M5 12h14" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-body">
                     <p>NLP kullanarak YouTube yorumlarını analiz ettim. Duygu analizi ve trend tespiti yaptım.</p>
                     <div class="project-tags">
                         <span>NLP</span>
@@ -230,7 +272,7 @@
 
             <div class="cta-buttons">
                 <button class="cta-btn cta-no" id="btn-no">
-                    <span>Hayır, korkarım</span>
+                    <span>Hayır, teşekkürler</span>
                 </button>
                 <button class="cta-btn cta-yes" id="btn-yes">
                     <span>Evet, iletişime geçelim</span>
@@ -261,14 +303,7 @@
         </div>
     </section>
 
-    <!-- Easter Egg Modal -->
-    <div class="easter-egg-modal" id="easter-egg">
-        <div class="easter-egg-content">
-            <h2>🎮 Gizli Başarım Açıldı!</h2>
-            <p>"Cesur Keşifçi" rozetini kazandınız.<br>Tüm kartları çevirdiniz!</p>
-            <button class="close-easter-egg" id="close-easter-egg">Devam Et</button>
-        </div>
-    </div>
+
 
     <!-- Floating Elements -->
     <div class="floating-elements">

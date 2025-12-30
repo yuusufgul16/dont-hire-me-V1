@@ -547,9 +547,9 @@ function initDigitalTwin() {
         }
     };
 
-    // ===== Gemini API Configuration =====
-    const GEMINI_API_KEY = "AIzaSyAWQfplFA-iEqNIYOCdbdK06Rrm_XOEY-E";
-    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+    // ===== Netlify Function URL =====
+    // API key artık Netlify function'ında güvenli şekilde saklanıyor
+    const NETLIFY_FUNCTION_URL = "/.netlify/functions/gemini"; // Production'da: https://yusufgul.netlify.app/.netlify/functions/gemini
 
     // ===== Hazır Cevaplar (Gemini yoksa fallback) =====
     const answers = {
@@ -703,11 +703,6 @@ function initDigitalTwin() {
         }
 
         try {
-            // API key kontrolü
-            if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE" || !GEMINI_API_KEY) {
-                throw new Error("API Key not configured");
-            }
-
             // System prompt oluştur
             const systemPrompt = `Sen Yusuf Gül olarak cevap veriyorsun (1. tekil şahıs). 
 Aşağıdaki bilgi kütüphanesini kullanarak, karakterine ve tarzına uygun, samimi ve profesyonel cevaplar ver.
@@ -730,22 +725,15 @@ SINIRLAR:
 - Eğer sorunun cevabı kütüphanede yoksa: "Bu konuda bilgim yok, benimle direkt görüşebilirsin."
 - Profesyonel ve iş ile ilgili sorulara odaklan`;
 
-            const response = await fetch(GEMINI_API_URL, {
+            // Netlify Function'a istek at (API key artık burada değil!)
+            const response = await fetch(NETLIFY_FUNCTION_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'x-goog-api-key': GEMINI_API_KEY
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    contents: [{
-                        parts: [{
-                            text: `${systemPrompt}\n\nKullanıcı Sorusu: ${userMessage}`
-                        }]
-                    }],
-                    generationConfig: {
-                        temperature: 0.7,
-                        maxOutputTokens: 1500,
-                    }
+                    message: userMessage,
+                    systemPrompt: systemPrompt
                 })
             });
 

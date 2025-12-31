@@ -2,7 +2,7 @@
 
 > Ters psikoloji ile tasarlanmış, interaktif ve sıra dışı bir kişisel tanıtım web sitesi.
 
-![License](https://img.shields.io/badge/license-MIT-red)
+![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-red)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
@@ -17,7 +17,6 @@ Bu proje, geleneksel CV formatlarından sıkılan ve kendini farklı bir şekild
 - 🎯 **Ters Psikoloji Teması** - "Olumsuz" özellikler, çevrildiğinde gerçek yeteneklere dönüşür
 - 📱 **Tam Responsive** - Mobil, tablet ve masaüstü uyumlu
 - ✨ **Glitch Efektleri** - Modern ve dikkat çekici animasyonlar
-- 🎮 **Easter Eggs** - Konami kodu ve gizli başarımlar
 - 🎉 **Confetti Efekti** - İletişime geçme kutlaması
 - ⌨️ **Klavye Navigasyonu** - Ok tuşları ile gezinme
 - 👆 **Touch/Swipe Desteği** - Mobilde parmakla kaydırma
@@ -44,20 +43,6 @@ dont-hire-me/
 
 
 
-## 🎮 Gizli Özellikler
-
-- **Konami Kodu**: ↑↑↓↓←→←→BA tuşlarını sırayla basın
-- **Cesur Keşifçi Rozeti**: Tüm kartları çevirin
-
-## 📱 Responsive Breakpoints
-
-| Ekran | Boyut |
-|-------|-------|
-| Masaüstü | > 1024px |
-| Tablet | 768px - 1024px |
-| Mobil | 480px - 768px |
-| Küçük Mobil | < 480px |
-
 ## 🛠️ Kullanılan Teknolojiler
 
 - **HTML5** - Semantik yapı
@@ -67,7 +52,7 @@ dont-hire-me/
 
 ## 📄 Lisans
 
-Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
+Bu proje [CC BY-NC 4.0](LICENSE) lisansı altındadır. Kişisel kullanım serbesttir, ticari satış yasaktır.
 
 ## 🤝 Katkıda Bulunma
 
@@ -77,9 +62,42 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 4. Branch'inizi push edin (`git push origin feature/yeni-ozellik`)
 5. Pull Request açın
 
-## 📬 İletişim
+## 👨‍💻 Yazar
 
-Sorularınız veya önerileriniz için issue açabilirsiniz.
+**Yusuf Gül**
+
+[![Email](https://img.shields.io/badge/Email-zyusuf__16%40hotmail.com-red?style=flat-square&logo=microsoft-outlook)](mailto:zyusuf_16@hotmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-yusufgul-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/yusufgul/)
+[![GitHub](https://img.shields.io/badge/GitHub-yuusufgul16-black?style=flat-square&logo=github)](https://github.com/yuusufgul16)
+[![Instagram](https://img.shields.io/badge/Instagram-yyusufgull-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/yyusufgull/)
+
+## 🗺️ Roadmap
+
+- [x] Coverflow kart galerisi
+- [x] Responsive tasarım
+- [x] Dijital İkiz (AI chatbot)
+- [ ] Çoklu dil desteği (EN/TR)
+- [ ] Tema değiştirme (Dark/Light)
+
+## ❓ Sık Sorulan Sorular
+
+<details>
+<summary><strong>Bu projeyi kendi CV'im için kullanabilir miyim?</strong></summary>
+
+Evet! CC BY-NC 4.0 lisansı altında açık kaynak. Fork'layıp kendi bilgilerinle düzenleyebilirsin (ticari satış hariç).
+</details>
+
+<details>
+<summary><strong>Dijital İkiz nasıl çalışıyor?</strong></summary>
+
+Google Gemini API kullanarak gerçek zamanlı AI yanıtları üretir. Netlify Functions ile serverless olarak çalışır.
+</details>
+
+<details>
+<summary><strong>Neden "Beni İşe Almayın" teması?</strong></summary>
+
+Ters psikoloji! Geleneksel CV'lerden sıkılan işverenler için dikkat çekici ve akılda kalıcı bir deneyim sunuyor.
+</details>
 
 ---
 

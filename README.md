@@ -23,7 +23,18 @@ Bu proje, geleneksel CV formatlarından sıkılan ve kendini farklı bir şekild
 
 ## 🌐 Canlı Demo
 
-👉 **[dont-hire-me](https://dont-hire-me.netlify.app/)**
+👉 **[dont-hire-me.netlify.app](https://dont-hire-me.netlify.app/)**
+
+## 📸 Ekran Görüntüleri
+
+### Ana Sayfa
+![Ana Sayfa](screenshots/homepage.png)
+
+### Coverflow Kartları
+![Kartlar](screenshots/cards.png)
+
+### Dijital İkiz (AI Chatbot)
+![Chatbot](screenshots/chatbot.png)
 
 ## 📁 Proje Yapısı
 
@@ -49,6 +60,42 @@ dont-hire-me/
 - **CSS3** - Animasyonlar, Flexbox, CSS Grid, CSS Variables
 - **Vanilla JavaScript** - Framework bağımsız, saf JS
 - **Google Fonts** - Bebas Neue, Inter
+- **Netlify Functions** - Serverless API
+- **Google Gemini API** - AI chatbot
+
+## 📝 Geliştirme Süreci
+
+### Aşama 1: Temel Yapı
+- Proje iskeleti oluşturuldu (HTML/CSS/JS)
+- "Beni İşe Almayın" konsepti ve ters psikoloji teması belirlendi
+- Glitch efektli başlık ve temel sayfa düzeni tasarlandı
+
+### Aşama 2: Coverflow Kart Galerisi
+- 3D perspektifli kart yapısı geliştirildi
+- Kartların ön/arka yüz çevirme animasyonu eklendi
+- Klavye navigasyonu (ok tuşları) ve touch/swipe desteği entegre edildi
+
+### Aşama 3: Responsive Tasarım
+- Mobil, tablet ve masaüstü için breakpoint'ler ayarlandı
+- Tüm ekran boyutlarında düzgün görünüm sağlandı
+- Touch cihazlar için optimizasyon yapıldı
+
+### Aşama 4: İçerik Bölümleri
+- "Kanıtlar" sekmeli yapısı oluşturuldu (Projeler/Deneyim)
+- 10 proje kartı ve 7 iş deneyimi eklendi
+- İletişim bölümü ve sosyal medya linkleri entegre edildi
+
+### Aşama 5: Dijital İkiz (AI Chatbot)
+- Floating chat butonu ve chat arayüzü tasarlandı
+- Netlify Functions ile serverless backend oluşturuldu
+- Google Gemini API entegrasyonu yapıldı
+- Sistem prompt'u ile kişiselleştirilmiş AI yanıtları ayarlandı
+
+### Aşama 6: Güvenlik & Deploy
+- API key'leri environment variable'lara taşındı
+- Git geçmişinden hassas bilgiler temizlendi (git filter-repo)
+- Netlify'a deploy edildi
+- CC BY-NC 4.0 lisansı eklendi
 
 ## 📄 Lisans
 

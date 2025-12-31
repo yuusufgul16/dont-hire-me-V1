@@ -24,56 +24,25 @@ Bu proje, geleneksel CV formatlarından sıkılan ve kendini farklı bir şekild
 
 ## 🌐 Canlı Demo
 
-👉 **[dont-hire-me.netlify.app](https://dont-hire-me.netlify.app/)**
+👉 **[dont-hire-me](https://dont-hire-me.netlify.app/)**
 
 ## 📁 Proje Yapısı
 
 ```
 dont-hire-me/
-├── index.html      # Ana HTML dosyası
-├── style.css       # Tüm stiller ve animasyonlar
-├── script.js       # JavaScript işlevselliği
-├── README.md       # Bu dosya
-└── LICENSE         # MIT Lisansı
+├── index.html          # Ana HTML dosyası
+├── style.css           # Tüm stiller ve animasyonlar
+├── script.js           # JavaScript işlevselliği
+├── avatar512-1.png     # Avatar görseli
+├── netlify.toml        # Netlify yapılandırması
+├── netlify/
+│   └── functions/
+│       └── gemini.js   # Gemini API serverless fonksiyonu
+├── README.md           # Bu dosya
+└── LICENSE             # MIT Lisansı
 ```
 
-## 🎨 Özelleştirme
 
-### Kartları Düzenleme
-
-`index.html` dosyasında `.coverflow-card` elementlerini bulun ve içerikleri değiştirin:
-
-```html
-<div class="coverflow-card">
-    <div class="card-inner">
-        <div class="card-front">
-            <div class="card-icon">🔍</div>
-            <h3>Olumsuz Özellik</h3>
-        </div>
-        <div class="card-back">
-            <div class="card-icon">✨</div>
-            <h3>Gerçek Yetenek</h3>
-            <p>Açıklama</p>
-        </div>
-    </div>
-</div>
-```
-
-### Renk Şeması
-
-`style.css` dosyasındaki CSS değişkenlerini düzenleyin:
-
-```css
-:root {
-    --bg-primary: #0a0a0a;
-    --accent-red: #ff0033;
-    --text-primary: #ffffff;
-}
-```
-
-### İletişim Bilgileri
-
-`index.html` dosyasında `.contact-links` bölümünü güncelleyin.
 
 ## 🎮 Gizli Özellikler
 

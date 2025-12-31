@@ -477,73 +477,174 @@ function initDigitalTwin() {
     const knowledgeBase = {
         personalInfo: {
             name: "Yusuf Gül",
-            title: "Software Developer & Data Analyst",
+            title: "Yazılım Geliştirici & Veri Analisti",
             location: "Türkiye",
             email: "zyusuf_16@hotmail.com",
             linkedin: "https://www.linkedin.com/in/yusufgul/",
             github: "https://github.com/yuusufgul16"
         },
         education: {
-            university: "Yıldız Teknik Üniversitesi",
-            department: "Matematik Mühendisliği",
-            graduationYear: "2024",
-            gpa: "3.12"
+            university: "Bilecik Şeyh Edebali Üniversitesi",
+            department: "Yönetim Bilişim Sistemleri",
+            graduationYear: "2024"
+        },
+        military: {
+            status: "Tamamlandı",
+            unit: "1'inci Ordu Tatbikat Kontrol Merkezi Komutanlığı",
+            location: "Pınarhisar",
+            rank: "Onbaşı"
+        },
+        languages: {
+            turkish: "Ana dil",
+            english: "A2 Seviye - Temel düzey, aktif olarak geliştiriyorum. Teknik dokümantasyonu okuyabiliyorum."
         },
         skills: {
             programming: ["Python", "JavaScript", "SQL", "HTML/CSS", "R"],
-            frameworks: ["React", "Node.js", "Flask", "Django"],
-            tools: ["Git", "Docker", "VS Code", "Jupyter", "Tableau", "Power BI"],
-            databases: ["MySQL", "PostgreSQL", "MongoDB"],
-            dataScience: ["Pandas", "NumPy", "Scikit-learn", "TensorFlow", "Matplotlib", "Seaborn"],
-            soft: ["Problem Solving", "Team Collaboration", "Fast Learning", "Analytical Thinking"]
+            tools: ["Git", "VS Code", "Jupyter", "OpenCV", "ggplot2", "wordcloud", "tidytext"],
+            dataScience: ["Pandas", "NumPy", "Matplotlib", "Seaborn", "Metin Madenciliği", "Duygu Analizi"],
+            gameDesign: ["Aseprite", "Pixel Art", "Oyun Tasarımı", "Ses Tasarımı"],
+            soft: ["Problem Çözme", "Takım Çalışması", "Hızlı Öğrenme", "Analitik Düşünme", "Liderlik"]
         },
         experience: [
             {
-                company: "DigitalStack",
-                role: "Frontend Developer",
-                duration: "Kasım 2024 - Devam Ediyor",
-                description: "Modern web uygulamaları geliştirme, React ile component-based mimari kurma"
+                company: "LOOP",
+                role: "Kurucu",
+                duration: "Ekim 2025 - Halen",
+                type: "Kendi İşim",
+                description: "Kendi girişimim üzerinde hobi olarak çalışıyorum. Girişimcilik ve liderlik deneyimi kazanıyorum."
             },
             {
-                company: "DataInk Analytics",
-                role: "Data Analyst (Part-Time)",
-                duration: "Eylül 2024 - Devam Ediyor",
-                description: "Veri analizi ve görselleştirme, iş zekası raporları oluşturma"
+                company: "Yaşam Ağacı",
+                role: "Oyun Tasarımcısı",
+                duration: "Ocak 2024 - Aralık 2024 (1 yıl)",
+                location: "Bilecik, Türkiye",
+                description: "BM Sürdürülebilir Kalkınma Hedefleri temalı mobil eğitim oyunu 'Kurtuluş'un senaryo, tasarım ve test süreçlerinde görev aldım. Teknofest yarı finaline çıktık."
             },
             {
-                company: "ByteWorks",
-                role: "Full Stack Developer Intern",
-                duration: "Haziran 2024 - Ağustos 2024",
-                description: "E-ticaret platformu geliştirme, API tasarımı"
+                company: "Endüstri 4.0 ve Siber Güvenlik Kulübü",
+                role: "Yönetim Kurulu Üyesi & Sosyal Medya Koordinatörü",
+                duration: "Aralık 2023 - Temmuz 2024 (8 ay)",
+                location: "Bilecik, Türkiye",
+                description: "Kulüp yönetimi ve sosyal medya içerik üretimi."
+            },
+            {
+                company: "LC Waikiki",
+                role: "Lojistik Operasyon Elemanı",
+                duration: "Temmuz 2023 - Ağustos 2023 (2 ay)",
+                location: "Yalova",
+                description: "Depo yönetimi ve lojistik operasyon süreçleri."
+            },
+            {
+                company: "Global AI Hub",
+                role: "Mentor",
+                duration: "Ağustos 2022 - Ekim 2022 (3 ay)",
+                description: "Yapay zeka ve Python eğitimlerinde katılımcılara rehberlik ettim."
+            },
+            {
+                company: "ORMO Group",
+                role: "Bilgi İşlem Stajyeri",
+                duration: "Temmuz 2018 (1 ay)",
+                location: "Orhangazi, Bursa",
+                description: "IT support ve ağ yönetimi."
+            },
+            {
+                company: "Orhangazi Belediyesi",
+                role: "Bilgi İşlem Stajyeri",
+                duration: "Temmuz 2017 (1 ay)",
+                location: "Orhangazi, Bursa",
+                description: "Kamu bilgi işlem ve teknik destek."
             }
         ],
         projects: [
             {
-                name: "E-Commerce Dashboard",
-                description: "Gerçek zamanlı veri görselleştirme ve stok yönetim sistemi",
-                tech: ["React", "Python", "PostgreSQL", "Chart.js"]
+                name: "Kurtuluş Oyunu",
+                description: "BM Sürdürülebilir Kalkınma Hedefleri temalı mobil eğitim oyunu. Teknofest yarı finaline çıktık!",
+                role: "Oyun içi görsel ve ses tasarımı, sunum, sosyal medya yönetimi",
+                tech: ["Gamification", "SDG", "Aseprite", "Pixel Art"]
             },
             {
-                name: "AI Customer Support Bot",
-                description: "Doğal dil işleme ile müşteri destek asistanı",
-                tech: ["Python", "TensorFlow", "Flask", "API Integration"]
+                name: "Endemika",
+                description: "Bilecik'in endemik bitkilerini tanıtan web platformu. QR kodlu saha erişimi ve AI ile bitki görsellerini videoya çevirdik.",
+                role: "Araştırma, logo tasarımı, tanıtım videosu",
+                tech: ["Web Geliştirme", "QR Kod", "AI Video", "Proje Yönetimi"]
             },
             {
-                name: "Social Media Analytics Tool",
-                description: "Twitter verilerini analiz eden sentiment analysis aracı",
-                tech: ["Python", "Pandas", "Twitter API", "Matplotlib"]
+                name: "YouTube Metin Madenciliği",
+                description: "YouTube API ile 57.000 yorum topladım, R dili ile metin madenciliği ve duygu analizi yaptım.",
+                tech: ["R", "ggplot2", "wordcloud", "tidytext", "Sentiment Analysis", "Text Mining"]
+            },
+            {
+                name: "Crystal Miner",
+                description: "Eratosthenes Kalburu algoritmasını oyunlaştıran eğitici asal sayı bulma oyunu.",
+                tech: ["HTML", "CSS", "JavaScript", "Gamification", "Math Game"]
+            },
+            {
+                name: "E-Ticaret Projesi (Hermione Candle)",
+                description: "Mum markası için logo tasarımı, sosyal medya yönetimi, SWOT analizi ve Shopier satış takibi.",
+                tech: ["E-Commerce", "Social Media", "Logo Design", "SWOT Analysis"]
+            },
+            {
+                name: "RGB Color Extraction",
+                description: "Python ve OpenCV ile görsellerden baskın renkleri tespit eden uygulama.",
+                tech: ["Python", "OpenCV", "Color Analysis"]
+            },
+            {
+                name: "Instagram Data Extraction",
+                description: "Python ile Instagram hesaplarından veri çeken analiz aracı.",
+                tech: ["Python", "Data Mining", "Social Media Analytics"]
+            },
+            {
+                name: "YZ Geleceği Araştırma Projesi",
+                description: "Alan Turing'den Endüstri 4.0'a yapay zekanın tarihsel gelişimi ve gelecekteki etkileri raporu.",
+                tech: ["Araştırma", "Yapay Zeka", "Endüstri 4.0"]
+            },
+            {
+                name: "Find It (Card Game)",
+                description: "HTML, CSS ve JavaScript ile hafıza kart oyunu. Zamanlayıcı, skor tablosu ve responsive tasarım.",
+                tech: ["HTML", "CSS", "JavaScript", "Game Design"]
+            }
+        ],
+        certifications: [
+            {
+                name: "Bilgisayar İşletmenliği (Operatörlüğü)",
+                issuer: "T.C. Milli Eğitim Bakanlığı",
+                date: "Ekim 2024"
+            },
+            {
+                name: "Python Bootcamp",
+                issuer: "Global AI Hub",
+                date: "Eylül 2022"
+            },
+            {
+                name: "Big Data And Machine Learning on Google Cloud",
+                issuer: "Google",
+                date: "Temmuz 2022"
+            },
+            {
+                name: "Veri Analizi",
+                issuer: "Global AI Hub",
+                date: "Temmuz 2022"
+            },
+            {
+                name: "Python for Machine Learning",
+                issuer: "Global AI Hub",
+                date: "Haziran 2022"
+            },
+            {
+                name: "Dijital Ortamda Bilgi",
+                issuer: "BTK - ICT",
+                date: "Mart 2021"
             }
         ],
         personality: {
             workStyle: "Detaycı, problem çözücü, sürekli öğrenen",
-            strengths: ["Hızlı adaptasyon", "Analitik düşünme", "Takım çalışması"],
-            passion: "Veri bilimi ile web teknolojilerini birleştirerek kullanıcı deneyimini iyileştirmek",
-            motivation: "Karmaşık problemleri basit, elegant çözümlerle aşmak"
+            strengths: ["Hızlı adaptasyon", "Analitik düşünme", "Takım çalışması", "Liderlik"],
+            passion: "Veri bilimi, oyun tasarımı ve web teknolojilerini birleştirerek yaratıcı projeler üretmek",
+            motivation: "Karmaşık problemleri basit, elegant çözümlerle aşmak ve insanlara fayda sağlamak"
         },
         preferences: {
-            workModel: "Hibrit veya Remote (6 aydır remote çalışıyorum)",
-            availability: "Hemen başlayabilirim",
-            interests: ["Web3", "AI/ML", "Data Visualization", "Open Source"]
+            availability: "Görüşmeye açığım",
+            interests: ["Veri Bilimi", "Oyun Tasarımı", "Web Geliştirme", "Yapay Zeka", "Girişimcilik"]
         }
     };
 
@@ -561,59 +662,81 @@ function initDigitalTwin() {
 
     // ===== Özel Sorular için Custom FAQ Kütüphanesi =====
     const customFAQ = {
-        // Tek kelime anahtarlar kullanarak esnek eşleşme
+        // Kişisel Bilgiler
         "yaş": "Bu kişisel bir bilgi, ama profesyonel deneyimim hakkında konuşabiliriz! 😊",
         "evli": "Özel hayatımı paylaşmayı tercih etmiyorum, ama iş hayatımda çok disiplinli ve odaklıyım! 💼",
         "çocuk": "Kişisel durumum iş performansımı etkilemiyor, %100 profesyonel odağım var! 💪",
 
-        "tanıt": "Ben Yusuf Gül, Bilecik Şeyh Edebali Üniversitesi Yönetim Bilişim Sistemleri mezunuyum. Yazılım geliştirme, veri analizi ve oyun tasarımı alanlarında projeler yürütüyorum. 🚀",
-        "yusuf": "Ben Yusuf Gül, Bilecik Şeyh Edebali Üniversitesi Yönetim Bilişim Sistemleri mezunuyum. Yazılım geliştirme, veri analizi ve oyun tasarımı alanlarında projeler yürütüyorum. 🚀",
-        "kimsin": "Ben Yusuf Gül! Yazılım geliştirici ve veri analistiyim. Bu siteyi de ben yaptım, beğendin mi? 😄",
-        "hakkında": "Ben Yusuf Gül, Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. Python, JavaScript, R ile çalışıyorum. Veri bilimi ve web teknolojilerini birleştirmeyi seviyorum! 💡",
-        "anlat": "Ben Yusuf! Yazılım, veri analizi ve oyun tasarımı ile ilgileniyorum. Teknofest yarı finalisti bir projede yer aldım. Detaylar için Projeler sekmesine göz atabilirsin! 🎯",
-        "bilgi ver": "Ben Yusuf Gül, YBS mezunu bir yazılımcıyım. Python, JavaScript, SQL ve R ile projeler geliştiriyorum. Sayfadaki Projeler ve Deneyim sekmelerinden daha fazla bilgi alabilirsin! �",
+        // Dil Becerileri
+        "ingilizce": "İngilizce A2 seviyesindeyim. Temel düzeyde iletişim kurabiliyorum ve aktif olarak geliştiriyorum. Teknik dokümantasyonu okuyabiliyorum! 📚",
+        "english": "İngilizce A2 seviyesindeyim. Temel düzeyde iletişim kurabiliyorum ve aktif olarak geliştiriyorum. Teknik dokümantasyonu okuyabiliyorum! 📚",
+        "dil": "Türkçe ana dilim. İngilizce A2 seviyesinde - temel düzeyde iletişim kurabiliyorum ve aktif olarak geliştiriyorum. Teknik dokümantasyonu okuyabiliyorum! 🌍",
+        "yabancı": "Türkçe ana dilim. İngilizce A2 seviyesinde - temel düzeyde iletişim kurabiliyorum ve aktif olarak geliştiriyorum! 🌍",
 
-        "güçlü": "Hızlı öğrenme ve adaptasyon yeteneğim çok güçlü. Karmaşık problemleri basit çözümlere dönüştürmekten keyif alırım! 💡",
-        "zayıf": "Bazen aşırı mükemmeliyetçi olabiliyorum. Ama 'done is better than perfect' prensibini daha iyi uyguluyorum artık! 📈",
+        // Kendini Tanıtma
+        "tanıt": "Ben Yusuf Gül, Bilecik Şeyh Edebali Üniversitesi Yönetim Bilişim Sistemleri mezunuyum. Yazılım geliştirme, veri analizi ve oyun tasarımı alanlarında projeler yürütüyorum. Şu an LOOP adlı kendi girişimim üzerinde hobi olarak çalışıyorum. 🚀",
+        "yusuf": "Ben Yusuf Gül! BŞEÜ YBS mezunuyum. Python, JavaScript, R ile projeler geliştiriyorum. Kurtuluş oyunu ile Teknofest yarı finaline çıktım! 🎯",
+        "kimsin": "Ben Yusuf Gül, Bilecik Şeyh Edebali Üniversitesi Yönetim Bilişim Sistemleri mezunuyum. Yazılım geliştirme, veri analizi ve oyun tasarımı alanlarında projeler yürütüyorum. Şu an LOOP adlı kendi girişimim üzerinde hobi olarak çalışıyorum. 🚀",
+        "hakkında": "Ben Yusuf Gül, BŞEÜ YBS mezunuyum. Python, JavaScript, R ve SQL ile çalışıyorum. Veri bilimi ve web teknolojilerini birleştirmeyi seviyorum! 💡",
+        "anlat": "Ben Yusuf! Yazılım, veri analizi ve oyun tasarımı ile ilgileniyorum. Kurtuluş oyunu ile Teknofest yarı finaline çıktım. LOOP adlı kendi girişimimi kurdum. Detaylar için Projeler sekmesine göz at! 🎯",
+        "bilgi ver": "Ben Yusuf Gül, YBS mezunu bir yazılımcıyım. Python, JavaScript, SQL ve R ile projeler geliştiriyorum. Global AI Hub'da mentorluk yaptım. Sayfadaki Projeler ve Deneyim sekmelerinden daha fazla bilgi alabilirsin! 📊",
 
-        "maaş": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
+        // Projeler
+        "proje": "Kurtuluş oyunu (Teknofest yarı finalist), Endemika web platformu, YouTube Metin Madenciliği, Crystal Miner oyunu, E-Ticaret projesi ve daha fazlası var! Projeler sekmesine göz at. 🎮",
+        "kurtuluş": "Kurtuluş, BM Sürdürülebilir Kalkınma Hedefleri temalı mobil eğitim oyunu. Teknofest yarı finaline çıktık! Oyun tasarımı, ses ve görsel tasarımını ben yaptım. 🎯",
+        "endemika": "Endemika, Bilecik'in endemik bitkilerini tanıtan web platformu. QR kodlu saha erişimi, AI ile bitki görsellerini videoya çevirdik. Logo tasarımını da ben yaptım! 🌿",
+        "metin": "YouTube API ile 57.000 yorum topladım, R dili ile metin madenciliği ve duygu analizi yaptım. ggplot2 ve wordcloud ile görselleştirdim. 📊",
+        "crystal": "Crystal Miner, Eratosthenes Kalburu algoritmasını oyunlaştıran eğitici bir asal sayı oyunu. HTML/CSS/JS ile geliştirdim. �",
+        "e-ticaret": "Hermione Candle markası için e-ticaret projesi yürüttüm. Logo tasarımı, sosyal medya yönetimi, SWOT analizi ve Shopier satış takibi yaptım. �️",
+        "opencv": "Python ve OpenCV ile görsellerden baskın renkleri tespit eden uygulama geliştirdim. Otomatik renk paletleri oluşturuyor. 🎨",
+        "instagram": "Python ile Instagram hesaplarından veri çeken bir analiz aracı geliştirdim. Takipçi ve gönderi istatistiklerini analiz ediyor. �",
+        "bootcamp": "Global AI Hub Python Bootcamp'te veri analizi ve görselleştirme projeleri geliştirdim. Sonra mentor oldum! �",
+        "yapay zeka": "YZ ve Geleceği adlı araştırma raporumda, Turing'den Endüstri 4.0'a yapay zekanın gelişimini inceledim. 🤖",
+
+        // Deneyim
+        "deneyim": "LOOP kurucusu olarak girişimcilik yapıyorum. Yaşam Ağacı'nda oyun tasarımcısı, Endüstri 4.0 Kulübü'nde yönetim kurulu üyesi, Global AI Hub'da mentor, LC Waikiki'de lojistik operasyon deneyimim var! 💼",
+        "loop": "LOOP benim kendi girişimim! Ekim 2025'ten beri üzerinde çalışıyorum. Girişimcilik, startup ve liderlik deneyimi kazanıyorum. 🚀",
+        "yaşam ağacı": "Yaşam Ağacı'nda 1 yıl boyunca oyun tasarımcısı olarak çalıştım. Kurtuluş oyununun senaryo, tasarım ve test süreçlerinde görev aldım. 🎮",
+        "mentor": "Global AI Hub'da 3 ay mentor olarak çalıştım. Yapay zeka ve Python eğitimlerinde katılımcılara rehberlik ettim. 👨‍🏫",
+        "kulüp": "Endüstri 4.0 ve Siber Güvenlik Kulübü'nde Yönetim Kurulu Üyesi ve Sosyal Medya Koordinatörü olarak görev aldım. 🛡️",
+        "staj": "ORMO Group ve Orhangazi Belediyesi'nde bilgi işlem stajı yaptım. IT support ve ağ yönetimi deneyimi kazandım. 💻",
+        "lc waikiki": "LC Waikiki Yalova deposun'da 2 ay lojistik operasyon elemanı olarak çalıştım. Depo yönetimi ve operasyon süreçlerini öğrendim. 📦",
+        "askerlik": "Askerlik görevimi 1'inci Ordu Tatbikat Kontrol Merkezi Komutanlığı Kırklareli/Pınarhisar'da Onbaşı olarak tamamladım. 🎖️",
+        "asker": "Askerlik görevimi 1'inci Ordu Tatbikat Kontrol Merkezi Komutanlığı Kırklareli/Pınarhisar'da Onbaşı olarak tamamladım. 🎖️",
+
+        // Sertifikalar
+        "sertifika": "MEB Bilgisayar İşletmenliği, Global AI Hub Python Bootcamp, Google Big Data & ML, Veri Analizi, Python for ML ve BTK Dijital Ortamda Bilgi sertifikalarım var! 📜",
+        "meb": "T.C. Milli Eğitim Bakanlığı'ndan Bilgisayar İşletmenliği (Operatörlüğü) sertifikam var. Ekim 2024'te aldım. 🎓",
+        "google": "Google'dan Big Data And Machine Learning on Google Cloud sertifikam var. Temmuz 2022'de aldım. ☁️",
+        "btk": "BTK - ICT'den Dijital Ortamda Bilgi sertifikam var. Mart 2021'de aldım. 🔒",
+        "global ai": "Global AI Hub'dan Python Bootcamp, Veri Analizi ve Python for Machine Learning olmak üzere 3 sertifikam var! �",
+
+        // Eğitim
+        "üniversite": "Bilecik Şeyh Edebali Üniversitesi Yönetim Bilişim Sistemleri bölümünden mezunum. 🎓",
+        "okul": "BŞEÜ Yönetim Bilişim Sistemleri mezunuyum. Yazılım, veri analizi ve iş yönetimi konularında eğitim aldım. 📚",
+        "mezun": "Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. 🎓",
+        "bşeü": "Bilecik Şeyh Edebali Üniversitesi YBS bölümü mezunuyum. 2024 yılında mezun oldum. 🎓",
+
+        // Beceriler
+        "python": "Python'da veri analizi, metin madenciliği, makine öğrenmesi ve otomasyon projeleri geliştirdim. Global AI Hub'da mentor oldum! 🐍",
+        "javascript": "JavaScript ile web uygulamaları ve oyunlar geliştiriyorum. Bu siteyi de JS ile yaptım! 💻",
+        "r": "R dili ile metin madenciliği, duygu analizi ve veri görselleştirme projeleri yaptım. ggplot2 ve tidytext kullanıyorum. �",
+        "sql": "SQL ile veritabanı yönetimi ve veri analizi yapıyorum. 💾",
+        "veri": "Veri analizi, metin madenciliği ve görselleştirme konularında projeler geliştirdim. Python ve R kullanıyorum. 📈",
+
+        // Diğer
+        "güçlü": "Hızlı öğrenme, problem çözme, takım çalışması ve analitik düşünme en güçlü yönlerim! 💡",
+        "zayıf": "Bazen aşırı mükemmeliyetçi olabiliyorum. Ama 'done is better than perfect' prensibini öğrendim! �",
+        "maaş": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! �",
         "ücret": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
-        "salary": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
-
-        "başla": "İki haftalık notice period'um var ama esnek olabilirim. Acil durumlarda daha erken başlayabiliriz! 📅",
-        "mesai": "Esnek çalışma saatlerine uyum sağlayabilirim. Önemli olan output ve proje başarısı! ⏰",
-
-        "takım": "Takım oyuncusuyum! Pull request review'lar, pair programming benim için rutin. Bilgi paylaşımına inanırım! 🤝",
-        "çatışma": "Önce dinlerim, sonra empati kurarım. Teknik tartışmalarda data-driven yaklaşırım. Ego değil, proje başarısı önemlidir! 🎯",
-
-        "baskı": "Baskı altında daha produktif olurum! Önceliklendirme yapar ve adım adım ilerlerim. Panic yerine plan yaparım! 💪",
-        "stres": "İyi planlama ve düzenli molalar stresimi yönetmeyi kolaylaştırıyor. Ayrıca takım desteği çok önemli! 😊",
-
-        "başarı": "E-ticaret dashboard projesinde sayfa yüklenme süresini %70 azalttım. Mutlu müşteri = mutlu ben! 🎉",
-        "başarısız": "İlk projemde deadline'ı kaçırdık. Ama bu bana 'hayır' demeyi öğretti. Artık realistic planning yapıyorum! 📚",
-        "hata": "İlk projemde scope creep'i önleyemedim. Ama proje yönetimi konusunda çok şey öğrendim! 📚",
-
-        "github": "github.com/yuusufgul16 - Portfolio projelerim ve açık kaynak katkılarım burada! 🐙",
-        "debugging": "Önce problemi reproduce ederim, sonra logs kontrol ederim. Binary search ile scope'u daraltırım. Rubber duck debugging işe yarar! 🦆",
-
-        "ayrıl": "Ayrılmıyorum, gelişiyorum! Yeni teknolojiler ve daha büyük challengelar arıyorum. Kariyer gelişimim odak noktam! 🚀",
-        "teklif": "Birkaç görüşme sürecim var ama önceliğim doğru kültürel uyum ve teknik growth! 🤝",
-
-        "fazla": "Proje deadline'ları için elbette. Ama sürdürülebilir değil, akıllı çalışmak daha önemldir! ⚖️",
-        "işsiz": "Hayır, aktif çalışıyorum. Sadece daha iyi fırsatları değerlendiriyorum! 💼",
-
-        "hayvan": "Köpek balığı! Sürekli hareket halinde, adaptif ve takım halinde güçlü! 🦈😄",
-        "süper": "Zamanı yavaşlatmak! Deadline'lar daha az stresli olur ve her kodu daha iyi debug ederdim! ⚡",
-
-        "hobi": "Açık kaynak projelere katkıda bulunmak, tekno-blog okumak. Kod yazmak hem işim hem hobim! ♟️",
-        "kitap": "Clean Code - Robert C. Martin sürekli yeniden okuyorum! 📚",
-
-        "motivasyon": "Karmaşık bir problemi çözmek ve kullanıcıların 'vay be' demesi beni motive eder! 🎯",
-
-        "ideal": "Innovation'a açık, teknik excellence'a değer veren ve continuous learning kültürü olan şirketler idealim! 🌟",
-        "şirket": "Vizyonunuz ve kullandığınız teknolojiler çok etkileyici! Burada gelişebileceğime inanıyorum! 💎",
-
-        "soru": "Evet! Ekip dinamiği nasıl? Code review süreciniz nedir? Ve kahve mi çay mı içiliyor ofiste? ☕"
+        "takım": "Yaptığım stajlarda ve çalıştıgım diğer işlerde-projelerde takım oyuncusuyum! Yaşam Ağacı'nda ve diğer projelerde takımla çalışma, Kulüp'te yönetim deneyimim var! 🤝",
+        "hobi": "Bilgisayar oyunları🎮, bisiklet sürmek, futbol oynamak ve izlemek, elektronik müzik yapmak hobilerim arasında.",
+        "motivasyon": "Karmaşık problemleri çözmek ve projelerimle insanlara fayda sağlamak beni motive eder! 🎯",
+        "teknofest": "Kurtuluş oyunu ile Teknofest yarı finaline çıktık! BM Sürdürülebilir Kalkınma Hedefleri temalı mobil eğitim oyunuydu. 🏆",
+        "github": "github.com/yuusufgul16 - Projelerim ve açık kaynak katkılarım burada! 🐙",
+        "linkedin": "linkedin.com/in/yusufgul - İş deneyimlerim ve bağlantılarım burada! 💼",
+        "iletişim": "Email: zyusuf_16@hotmail.com | LinkedIn: linkedin.com/in/yusufgul | GitHub: github.com/yuusufgul16 📧",
+        "email": "zyusuf_16@hotmail.com adresinden bana ulaşabilirsin! �"
     };
 
 

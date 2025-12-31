@@ -22,35 +22,9 @@ Bu proje, geleneksel CV formatlarından sıkılan ve kendini farklı bir şekild
 - ⌨️ **Klavye Navigasyonu** - Ok tuşları ile gezinme
 - 👆 **Touch/Swipe Desteği** - Mobilde parmakla kaydırma
 
-## 🚀 Kurulum
+## 🌐 Canlı Demo
 
-### Yerel Ortamda Çalıştırma
-
-1. Projeyi klonlayın:
-```bash
-git clone https://github.com/kullaniciadi/dont-hire-me.git
-```
-
-2. Proje klasörüne gidin:
-```bash
-cd dont-hire-me
-```
-
-3. `index.html` dosyasını tarayıcınızda açın veya bir local server başlatın:
-```bash
-# Python ile
-python -m http.server 8000
-
-# Node.js ile
-npx serve
-```
-
-### GitHub Pages ile Yayınlama
-
-1. Repository ayarlarına gidin
-2. **Pages** sekmesini açın
-3. Source olarak **main branch** seçin
-4. Siteniz `https://kullaniciadi.github.io/dont-hire-me` adresinde yayınlanacak
+👉 **[dont-hire-me.netlify.app](https://dont-hire-me.netlify.app/)**
 
 ## 📁 Proje Yapısı
 

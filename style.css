@@ -556,12 +556,14 @@ body {
     display: none;
     opacity: 0;
     animation: fadeOut 0.3s ease;
+    min-height: 500px;
 }
 
 .proof-content.active {
     display: block;
     opacity: 1;
     animation: fadeIn 0.5s ease;
+    min-height: 500px;
 }
 
 @keyframes fadeIn {

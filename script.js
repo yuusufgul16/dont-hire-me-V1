@@ -547,9 +547,9 @@ function initDigitalTwin() {
         }
     };
 
-    // ===== Netlify Function URL =====
-    // API key artık Netlify function'ında güvenli şekilde saklanıyor
-    const NETLIFY_FUNCTION_URL = "/.netlify/functions/gemini"; // Production'da: https://yusufgul.netlify.app/.netlify/functions/gemini
+    // ===== Cloudflare Worker URL =====
+    // API key artık Cloudflare Worker'da güvenli şekilde saklanıyor
+    const API_URL = "https://donthireme.zyusuf-16.workers.dev";
 
     // ===== Hazır Cevaplar (Gemini yoksa fallback) =====
     const answers = {
@@ -566,7 +566,12 @@ function initDigitalTwin() {
         "evli": "Özel hayatımı paylaşmayı tercih etmiyorum, ama iş hayatımda çok disiplinli ve odaklıyım! 💼",
         "çocuk": "Kişisel durumum iş performansımı etkilemiyor, %100 profesyonel odağım var! 💪",
 
-        "tanıt": "Matematik mühendisliği mezunuyum ve 1+ yıldır yazılım dünyasındayım. Veri bilimi ile web teknolojilerini birleştirerek kullanıcı deneyimini iyileştirmek benim tutkum. 🚀",
+        "tanıt": "Ben Yusuf Gül, Bilecik Şeyh Edebali Üniversitesi Yönetim Bilişim Sistemleri mezunuyum. Yazılım geliştirme, veri analizi ve oyun tasarımı alanlarında projeler yürütüyorum. 🚀",
+        "yusuf": "Ben Yusuf Gül, Bilecik Şeyh Edebali Üniversitesi Yönetim Bilişim Sistemleri mezunuyum. Yazılım geliştirme, veri analizi ve oyun tasarımı alanlarında projeler yürütüyorum. 🚀",
+        "kimsin": "Ben Yusuf Gül! Yazılım geliştirici ve veri analistiyim. Bu siteyi de ben yaptım, beğendin mi? 😄",
+        "hakkında": "Ben Yusuf Gül, Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. Python, JavaScript, R ile çalışıyorum. Veri bilimi ve web teknolojilerini birleştirmeyi seviyorum! 💡",
+        "anlat": "Ben Yusuf! Yazılım, veri analizi ve oyun tasarımı ile ilgileniyorum. Teknofest yarı finalisti bir projede yer aldım. Detaylar için Projeler sekmesine göz atabilirsin! 🎯",
+        "bilgi ver": "Ben Yusuf Gül, YBS mezunu bir yazılımcıyım. Python, JavaScript, SQL ve R ile projeler geliştiriyorum. Sayfadaki Projeler ve Deneyim sekmelerinden daha fazla bilgi alabilirsin! �",
 
         "güçlü": "Hızlı öğrenme ve adaptasyon yeteneğim çok güçlü. Karmaşık problemleri basit çözümlere dönüştürmekten keyif alırım! 💡",
         "zayıf": "Bazen aşırı mükemmeliyetçi olabiliyorum. Ama 'done is better than perfect' prensibini daha iyi uyguluyorum artık! 📈",
@@ -725,15 +730,14 @@ SINIRLAR:
 - Eğer sorunun cevabı kütüphanede yoksa: "Bu konuda bilgim yok, benimle direkt görüşebilirsin."
 - Profesyonel ve iş ile ilgili sorulara odaklan`;
 
-            // Netlify Function'a istek at (API key artık burada değil!)
-            const response = await fetch(NETLIFY_FUNCTION_URL, {
+            // Cloudflare Worker'a istek at
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    message: userMessage,
-                    systemPrompt: systemPrompt
+                    message: systemPrompt + "\n\nKullanıcı Sorusu: " + userMessage
                 })
             });
 

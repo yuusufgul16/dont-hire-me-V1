@@ -830,12 +830,16 @@ function initDigitalTwin() {
 
 
     twinBubble.addEventListener('click', () => {
+        const blurOverlay = document.getElementById('twin-blur-overlay');
         twinModal.classList.toggle('hidden');
-        // Toggle animation based on modal visibility
+
+        // Toggle animation and blur overlay based on modal visibility
         if (twinModal.classList.contains('hidden')) {
             twinBubble.classList.remove('pausing');
+            if (blurOverlay) blurOverlay.classList.remove('active');
         } else {
             twinBubble.classList.add('pausing');
+            if (blurOverlay) blurOverlay.classList.add('active');
         }
 
         if (twinNotification) {
@@ -844,8 +848,18 @@ function initDigitalTwin() {
     });
 
     closeTwin.addEventListener('click', () => {
+        const blurOverlay = document.getElementById('twin-blur-overlay');
         twinModal.classList.add('hidden');
-        twinBubble.classList.remove('pausing'); // Resume animation when closed
+        twinBubble.classList.remove('pausing');
+        if (blurOverlay) blurOverlay.classList.remove('active');
+    });
+
+    // Close modal when clicking on blur overlay
+    document.getElementById('twin-blur-overlay')?.addEventListener('click', () => {
+        const blurOverlay = document.getElementById('twin-blur-overlay');
+        twinModal.classList.add('hidden');
+        twinBubble.classList.remove('pausing');
+        if (blurOverlay) blurOverlay.classList.remove('active');
     });
 
     twinOptions.addEventListener('click', (e) => {
@@ -1159,8 +1173,57 @@ CEVAPLAMA KURALLARI:
     }
 }
 
+// ===== Mobile Twin Visibility Control =====
+function initMobileTwinVisibility() {
+    const twinContainer = document.getElementById('twin-container');
+    if (!twinContainer) return;
+
+    function checkTwinVisibility() {
+        // Sadece mobilde çalışsın
+        if (window.innerWidth > 768) {
+            twinContainer.style.display = '';
+            twinContainer.style.opacity = '1';
+            return;
+        }
+
+        const heroSection = document.getElementById('hero');
+        const finalSection = document.getElementById('final');
+
+        if (!heroSection || !finalSection) return;
+
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+
+        const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+        const finalTop = finalSection.offsetTop;
+
+        // Hero section'da veya final section'da ise göster
+        const isInHero = scrollY < heroBottom - (windowHeight * 0.3);
+        const isInFinal = scrollY + windowHeight > finalTop + (windowHeight * 0.3);
+
+        if (isInHero || isInFinal) {
+            twinContainer.style.display = '';
+            twinContainer.style.opacity = '1';
+            twinContainer.style.pointerEvents = 'auto';
+        } else {
+            twinContainer.style.opacity = '0';
+            twinContainer.style.pointerEvents = 'none';
+        }
+    }
+
+    // İlk kontrol
+    checkTwinVisibility();
+
+    // Scroll event
+    window.addEventListener('scroll', checkTwinVisibility, { passive: true });
+
+    // Resize event
+    window.addEventListener('resize', checkTwinVisibility);
+}
+
 // ===== Init =====
 document.addEventListener('DOMContentLoaded', () => {
     init();
     initDigitalTwin();
+    initMobileTwinVisibility();
 });

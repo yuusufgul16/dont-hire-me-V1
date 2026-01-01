@@ -15,6 +15,43 @@
 </head>
 
 <body>
+    <!-- Intro Video Overlay -->
+    <div id="intro-overlay" class="intro-overlay">
+        <!-- Start Button Overlay -->
+        <div id="intro-start-overlay" class="intro-start-overlay">
+            <button id="start-video-btn" class="start-btn">
+                <div class="play-icon-wrapper">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"></path>
+                    </svg>
+                </div>
+                <span>Bu Kişiye 'Hayır' De</span>
+            </button>
+        </div>
+
+        <video id="intro-video" class="intro-video" playsinline>
+            <source src="intro.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+        <div class="video-watermark" id="video-watermark">
+            <span class="logo-rose">ROSE</span><span class="logo-tv">TV</span>
+            <div class="live-indicator">
+                <span class="dot"></span>
+                <span class="text">LIVE</span>
+            </div>
+        </div>
+        <div class="intro-controls hidden">
+            <button id="mute-intro" class="mute-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <span>SESİ KAPAT</span>
+            </button>
+            <button id="skip-intro" class="skip-button">VİDEOYU ATLA</button>
+        </div>
+        <div class="white-flash" id="white-flash"></div>
+    </div>
+
     <!-- Glitch Overlay -->
     <div class="glitch-overlay"></div>
 
@@ -75,6 +112,7 @@
 
     <!-- Section 2: Reasons (Coverflow Cards) -->
     <section class="section reasons-section" id="reasons">
+        <div class="reasons-bg state-default" id="reasons-bg"></div>
         <div class="section-header">
             <h2>Beni işe almayın çünkü...</h2>
             <p class="section-subtitle">Kartları keşfedin ve gerçeği görün</p>

@@ -38,6 +38,316 @@ body {
     overflow-x: hidden;
 }
 
+/* ===== Intro Video Overlay ===== */
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 20000;
+    /* Her şeyin üstünde */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s;
+}
+
+.intro-start-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20005;
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.8) 0%, #000 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.intro-start-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+}
+
+.start-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.4s ease;
+}
+
+.play-icon-wrapper {
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--accent-red);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 30px var(--accent-red-glow);
+}
+
+.play-icon-wrapper::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 1px solid var(--accent-red);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+
+    75%,
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.start-btn:hover .play-icon-wrapper {
+    background: var(--accent-red);
+    transform: scale(1.1);
+}
+
+.start-btn span {
+    font-family: var(--font-display);
+    font-size: 24px;
+    letter-spacing: 5px;
+    transition: all 0.4s ease;
+}
+
+.start-btn:hover span {
+    color: var(--accent-red);
+    letter-spacing: 8px;
+}
+
+.intro-controls {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20001;
+    display: flex;
+    gap: 15px;
+    transition: opacity 0.5s ease;
+}
+
+.intro-controls.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.video-watermark {
+    position: absolute;
+    /* Masaüstü Tam Ekran Ayarı */
+    bottom: 0px;
+    right: 0px;
+    z-index: 20002;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 22px;
+    background: rgba(0, 0, 0, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    font-family: var(--font-display);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.logo-rose {
+    color: #ff3366;
+    /* Rose color */
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.logo-tv {
+    background: #fff;
+    color: #000 !important;
+    padding: 2px 8px;
+    font-size: 1.6rem;
+    font-weight: 900;
+    border-radius: 2px;
+    line-height: 1;
+}
+
+.live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.live-indicator .dot {
+    width: 6px;
+    height: 6px;
+    background: #ff0000;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ff0000;
+    animation: livePulse 1.5s infinite;
+}
+
+.live-indicator .text {
+    color: #fff;
+    font-size: 10px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+@keyframes livePulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.video-playing .video-watermark {
+    opacity: 1;
+}
+
+/* Watermark adjustments for mobile */
+@media (max-width: 800px) {
+    .video-watermark {
+        bottom: calc(50vh - 28.5vw);
+        right: 5px;
+        transform: scale(0.45);
+        /* Mobilde biraz küçültelim */
+        transform-origin: right bottom;
+    }
+}
+
+.intro-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Masaüstünde tam ekran */
+    background: #000;
+}
+
+.mute-button,
+.skip-button {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    font-family: var(--font-body);
+    font-weight: 600;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Mobile adjustments for Intro */
+@media (max-width: 768px) {
+    .start-btn span {
+        font-size: 18px;
+        letter-spacing: 3px;
+    }
+
+    .play-icon-wrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .play-icon-wrapper svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .intro-controls {
+        bottom: 20px;
+        right: 0;
+        left: 0;
+        transform: none;
+        /* Masaüstünden gelen transformu sıfırla */
+        justify-content: center;
+        padding: 0 20px;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .intro-video {
+        object-fit: contain !important;
+        /* Mobilde içeriğin kesilmemesi için contain korundu */
+        background: #000;
+    }
+
+    .mute-button,
+    .skip-button {
+        padding: 10px 15px;
+        font-size: 11px;
+        letter-spacing: 1px;
+        flex: 1;
+        /* Butonların eşit genişlikte olması için */
+        max-width: 160px;
+        justify-content: center;
+    }
+}
+
+.white-flash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20002;
+    transition: opacity 0.4s ease-out;
+}
+
+.white-flash.active {
+    opacity: 1;
+}
+
+/* Scroll lock when intro is active */
+body.intro-active {
+    overflow: hidden !important;
+    height: 100vh;
+}
+
 /* ===== Glitch Overlay ===== */
 .glitch-overlay {
     position: fixed;
@@ -99,6 +409,8 @@ body {
 .section-header {
     text-align: center;
     margin-bottom: 30px;
+    position: relative;
+    z-index: 10;
 }
 
 .section-header h2 {
@@ -318,7 +630,74 @@ body {
 
 /* ===== Reasons Section ===== */
 .reasons-section {
-    background: var(--bg-secondary);
+    background: #050505;
+    overflow: hidden;
+    position: relative;
+}
+
+.reasons-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* scanlines effect globally on reasons background */
+.reasons-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.2) 0px,
+            rgba(0, 0, 0, 0.2) 1px,
+            transparent 1px,
+            transparent 3px);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* State: Default / Retro Stars */
+.reasons-bg.state-default {
+    background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+}
+
+.reasons-bg.state-default::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background-image:
+        radial-gradient(2px 2px at 10% 20%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 30% 50%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 50% 80%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 80% 10%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 90% 40%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 20% 90%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 40% 30%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 60% 70%, #fff 100%, transparent);
+    background-size: 300px 300px;
+    opacity: 0.3;
+    animation: starsRotate 100s linear infinite;
+}
+
+@keyframes starsRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ===== Coverflow Container ===== */
@@ -330,6 +709,8 @@ body {
     width: 100%;
     max-width: 1000px;
     padding: 0 20px;
+    position: relative;
+    z-index: 10;
 }
 
 .coverflow-wrapper {
@@ -454,6 +835,8 @@ body {
     justify-content: center;
     gap: 10px;
     margin-top: 40px;
+    position: relative;
+    z-index: 10;
 }
 
 .coverflow-dot {
@@ -484,6 +867,8 @@ body {
     margin-top: 30px;
     text-align: center;
     color: var(--text-secondary);
+    position: relative;
+    z-index: 10;
 }
 
 .progress-bar {

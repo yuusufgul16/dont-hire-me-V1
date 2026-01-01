@@ -17,7 +17,20 @@ const elements = {
 
     // Proof tabs
     proofTabs: document.querySelectorAll('.proof-tab'),
-    proofContents: document.querySelectorAll('.proof-content')
+    proofContents: document.querySelectorAll('.proof-content'),
+
+    // Reasons Background
+    reasonsBg: document.getElementById('reasons-bg'),
+
+    // Intro Video
+    introOverlay: document.getElementById('intro-overlay'),
+    introVideo: document.getElementById('intro-video'),
+    skipIntroBtn: document.getElementById('skip-intro'),
+    muteIntroBtn: document.getElementById('mute-intro'),
+    introStartOverlay: document.getElementById('intro-start-overlay'),
+    startVideoBtn: document.getElementById('start-video-btn'),
+    introControls: document.querySelector('.intro-controls'),
+    whiteFlash: document.getElementById('white-flash')
 };
 
 // ===== State =====
@@ -30,6 +43,9 @@ const totalCards = elements.cards.length;
 
 // ===== Initialize =====
 function init() {
+    // Intro video başlat
+    initIntroVideo();
+
     // Sayfa yüklendiğinde hash'i temizle ve en üste scroll yap
     if (window.location.hash) {
         history.replaceState(null, null, window.location.pathname);
@@ -272,9 +288,9 @@ function flipCard(card, index) {
     if (dots[index]) {
         dots[index].classList.add('flipped');
     }
-
-
 }
+
+
 
 // ===== CTA Handlers =====
 function handleYesClick() {
@@ -1219,6 +1235,79 @@ function initMobileTwinVisibility() {
 
     // Resize event
     window.addEventListener('resize', checkTwinVisibility);
+}
+
+// ===== Intro Video Control =====
+function initIntroVideo() {
+    const { introOverlay, introVideo, skipIntroBtn, muteIntroBtn, introStartOverlay, startVideoBtn, introControls, whiteFlash } = elements;
+
+    if (!introOverlay || !introVideo || !startVideoBtn) return;
+
+    // Scroll kilitle
+    document.body.classList.add('intro-active');
+
+    let introFinished = false;
+
+    const finishIntro = () => {
+        if (introFinished) return;
+        introFinished = true;
+
+        whiteFlash.classList.add('active');
+
+        setTimeout(() => {
+            introOverlay.classList.add('hidden');
+            document.body.classList.remove('intro-active');
+            introVideo.pause();
+
+            setTimeout(() => {
+                introOverlay.remove();
+            }, 1000);
+        }, 400);
+    };
+
+    // Video'yu Başlat (Kullanıcı Tıklamasıyla)
+    startVideoBtn.addEventListener('click', () => {
+        // Overlay'i kaldır
+        introStartOverlay.classList.add('hidden');
+
+        // Video oynuyor sınıfı ekle (filigran için)
+        introOverlay.classList.add('video-playing');
+
+        // Kontrolleri göster
+        if (introControls) introControls.classList.remove('hidden');
+
+        // Sesli olarak başlat ve ses düzeyini ayarla
+        introVideo.muted = false;
+        introVideo.volume = 0.1; // Ses seviyesini %10'a indirir
+        introVideo.play().catch(error => {
+            console.error("Video oynatılamadı:", error);
+            // Hata olursa yine de devam etmeyi dene
+            finishIntro();
+        });
+    });
+
+    // Ses Aç/Kapat Butonu
+    if (muteIntroBtn) {
+        muteIntroBtn.addEventListener('click', () => {
+            introVideo.muted = !introVideo.muted;
+            const span = muteIntroBtn.querySelector('span');
+            const svg = muteIntroBtn.querySelector('svg');
+
+            if (introVideo.muted) {
+                span.textContent = 'SESİ AÇ';
+                svg.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
+            } else {
+                span.textContent = 'SESİ KAPAT';
+                svg.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
+            }
+        });
+    }
+
+    // Video bitince bitir
+    introVideo.addEventListener('ended', finishIntro);
+
+    // Atla butonu ile bitir
+    skipIntroBtn.addEventListener('click', finishIntro);
 }
 
 // ===== Init =====

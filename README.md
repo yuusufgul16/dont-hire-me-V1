@@ -13,17 +13,18 @@ Bu proje, geleneksel CV formatlarından sıkılan ve kendini farklı bir şekild
 
 ## ✨ Özellikler
 
-- 🎠 **Coverflow Kart Galerisi** - 3D perspektifli, çevrilebilir kartlar
-- 🎯 **Ters Psikoloji Teması** - "Olumsuz" özellikler, çevrildiğinde gerçek yeteneklere dönüşür
-- 📱 **Tam Responsive** - Mobil, tablet ve masaüstü uyumlu
-- ✨ **Glitch Efektleri** - Modern ve dikkat çekici animasyonlar
-- 🎉 **Confetti Efekti** - İletişime geçme kutlaması
-- ⌨️ **Klavye Navigasyonu** - Ok tuşları ile gezinme
-- 👆 **Touch/Swipe Desteği** - Mobilde parmakla kaydırma
+- � **Çoklu Dil Desteği (TR/EN)** - Tüm site ve Dijital İkiz artık her iki dilde de aktif.
+- 🌓 **Tema Desteği** - Modern Dark ve Sleek Light mod seçeneği.
+- 🤖 **Dijital İkiz (AI Chatbot)** - Google Gemini API ile desteklenen, Yusuf hakkında soruları yanıtlayan yapay zeka.
+- �🎠 **Coverflow Kart Galerisi** - 3D perspektifli, çevrilebilir interaktif kartlar.
+- 📄 **Sade CV Modu** - Hızlı ve okunabilir, tek sayfalık minimalist CV görünümü.
+- ⚡ **Skeleton Loading** - İçerik yüklenirken modern ve akıcı bir kullanıcı deneyimi.
+- 📱 **Tam Responsive** - Mobil, tablet ve masaüstü cihazlarla %100 uyumlu.
+- 📊 **Google Analytics 4** - Detaylı etkinlik takibi ve kullanıcı analitiği.
 
 ## 🌐 Canlı Demo
 
-👉 **[dont-hire-me.netlify.app](https://dont-hire-me.netlify.app/)**
+👉 **[Live Demo](URL_HERE)**
 
 ## 📸 Ekran Görüntüleri
 
@@ -40,62 +41,43 @@ Bu proje, geleneksel CV formatlarından sıkılan ve kendini farklı bir şekild
 
 ```
 dont-hire-me/
-├── index.html          # Ana HTML dosyası
-├── style.css           # Tüm stiller ve animasyonlar
-├── script.js           # JavaScript işlevselliği
-├── avatar512-1.png     # Avatar görseli
-├── netlify.toml        # Netlify yapılandırması
-├── netlify/
-│   └── functions/
-│       └── gemini.js   # Gemini API serverless fonksiyonu
-├── README.md           # Bu dosya
-└── LICENSE             # MIT Lisansı
+├── index.html          # Ana HTML yapısı
+├── style.css           # Modern CSS3 tasarımları ve animasyonlar
+├── script.js           # Core JavaScript mantığı ve API entegrasyonu
+├── avatar512-1.png     # Yusuf Gül (Dijital İkiz) Avatarı
+├── LICENSE             # CC BY-NC 4.0 Lisansı
+└── README.md           # Proje dökümantasyonu
 ```
-
-
 
 ## 🛠️ Kullanılan Teknolojiler
 
-- **HTML5** - Semantik yapı
-- **CSS3** - Animasyonlar, Flexbox, CSS Grid, CSS Variables
-- **Vanilla JavaScript** - Framework bağımsız, saf JS
-- **Google Fonts** - Bebas Neue, Inter
-- **Netlify Functions** - Serverless API
-- **Google Gemini API** - AI chatbot
+- **Frontend**: Vanilla JS, HTML5, CSS3 (Custom Variables, Animations, Grid, Flexbox)
+- **AI/ML**: Google Gemini 1.5 Flash
+- **Backend**: Cloudflare Workers (API Proxy & Security)
+- **Analytics**: Google Analytics 4 (GA4)
+- **Deployment**: Custom / GitHub Pages / Vercel
 
 ## 📝 Geliştirme Süreci
 
-### Aşama 1: Temel Yapı
-- Proje iskeleti oluşturuldu (HTML/CSS/JS)
-- "Beni İşe Almayın" konsepti ve ters psikoloji teması belirlendi
-- Glitch efektli başlık ve temel sayfa düzeni tasarlandı
+### Aşama 1: Temel Yapı & Konsept
+- "Beni İşe Almayın" konsepti ve ters psikoloji teması belirlendi.
+- Glitch efektli başlık ve temel sayfa düzeni tasarlandı.
 
-### Aşama 2: Coverflow Kart Galerisi
-- 3D perspektifli kart yapısı geliştirildi
-- Kartların ön/arka yüz çevirme animasyonu eklendi
-- Klavye navigasyonu (ok tuşları) ve touch/swipe desteği entegre edildi
+### Aşama 2: 3D Coverflow & Etkileşim
+- 3D perspektifli kart galerisi ve çevrilebilir kart mekaniği geliştirildi.
+- Klavye ve dokunmatik ekran desteği entegre edildi.
 
-### Aşama 3: Responsive Tasarım
-- Mobil, tablet ve masaüstü için breakpoint'ler ayarlandı
-- Tüm ekran boyutlarında düzgün görünüm sağlandı
-- Touch cihazlar için optimizasyon yapıldı
+### Aşama 3: Dijital İkiz & Yapay Zeka
+- Google Gemini API entegrasyonu Cloudflare Workers üzerinden güvenli hale getirildi.
+- Yusuf'un bilgi kütüphanesi (knowledgeBase) oluşturuldu ve AI yanıtları kişiselleştirildi.
 
-### Aşama 4: İçerik Bölümleri
-- "Kanıtlar" sekmeli yapısı oluşturuldu (Projeler/Deneyim)
-- 10 proje kartı ve 7 iş deneyimi eklendi
-- İletişim bölümü ve sosyal medya linkleri entegre edildi
+### Aşama 4: Dil ve Tema Desteği
+- TR/EN dil anahtarı ve Dark/Light mode özellikleri eklendi.
+- Kullanıcı tercihleri LocalStorage ile kalıcı hale getirildi.
 
-### Aşama 5: Dijital İkiz (AI Chatbot)
-- Floating chat butonu ve chat arayüzü tasarlandı
-- Netlify Functions ile serverless backend oluşturuldu
-- Google Gemini API entegrasyonu yapıldı
-- Sistem prompt'u ile kişiselleştirilmiş AI yanıtları ayarlandı
-
-### Aşama 6: Güvenlik & Deploy
-- API key'leri environment variable'lara taşındı
-- Git geçmişinden hassas bilgiler temizlendi (git filter-repo)
-- Netlify'a deploy edildi
-- CC BY-NC 4.0 lisansı eklendi
+### Aşama 5: Optimizasyon & Performans
+- Skeleton loading ve GA4 etkinlik takibi eklendi.
+- Sade CV modu ile erişilebilirlik artırıldı.
 
 ## 📄 Lisans
 
@@ -116,15 +98,17 @@ Bu proje [CC BY-NC 4.0](LICENSE) lisansı altındadır. Kişisel kullanım serbe
 [![Email](https://img.shields.io/badge/Email-zyusuf__16%40hotmail.com-red?style=flat-square&logo=microsoft-outlook)](mailto:zyusuf_16@hotmail.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-yusufgul-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/yusufgul/)
 [![GitHub](https://img.shields.io/badge/GitHub-yuusufgul16-black?style=flat-square&logo=github)](https://github.com/yuusufgul16)
-[![Instagram](https://img.shields.io/badge/Instagram-yyusufgull-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/yyusufgull/)
 
 ## 🗺️ Roadmap
 
 - [x] Coverflow kart galerisi
-- [x] Responsive tasarım
 - [x] Dijital İkiz (AI chatbot)
-- [ ] Çoklu dil desteği (EN/TR)
-- [ ] Tema değiştirme (Dark/Light)
+- [x] Çoklu dil desteği (EN/TR)
+- [x] Tema değiştirme (Dark/Light)
+- [x] Sade CV görünümü
+- [x] Google Analytics entegrasyonu
+- [ ] PWA (Progressive Web App) desteği
+- [ ] Daha fazla interaktif easter egg
 
 ## ❓ Sık Sorulan Sorular
 
@@ -137,7 +121,7 @@ Evet! CC BY-NC 4.0 lisansı altında açık kaynak. Fork'layıp kendi bilgilerin
 <details>
 <summary><strong>Dijital İkiz nasıl çalışıyor?</strong></summary>
 
-Google Gemini API kullanarak gerçek zamanlı AI yanıtları üretir. Netlify Functions ile serverless olarak çalışır.
+Google Gemini API kullanarak gerçek zamanlı AI yanıtları üretir. Cloudflare Workers ile serverless olarak çalışır.
 </details>
 
 <details>

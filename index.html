@@ -2,6 +2,16 @@
 <html lang="tr">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BCYLW1TFN3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BCYLW1TFN3');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BENİ İŞE ALMAYIN</title>
@@ -15,22 +25,413 @@
 </head>
 
 <body>
+    <!-- Skeleton Loading -->
+    <div id="skeleton-container" class="skeleton-container">
+        <div class="skeleton-content">
+            <!-- Hero Skeleton -->
+            <div class="skeleton-hero">
+                <div class="skeleton skeleton-tag"></div>
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-subtitle"></div>
+                <div class="skeleton skeleton-button"></div>
+            </div>
+
+            <!-- Cards Skeleton -->
+            <div class="skeleton-cards">
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+                <div class="skeleton skeleton-card"></div>
+            </div>
+
+            <!-- Progress Skeleton -->
+            <div class="skeleton-progress">
+                <div class="skeleton skeleton-progress-text"></div>
+                <div class="skeleton skeleton-progress-bar"></div>
+            </div>
+
+            <!-- Loading Text -->
+            <div class="skeleton-loading-text">
+                <span class="skeleton-loading-title">YÜKLENİYOR</span>
+                <div class="skeleton-loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Intro Video Overlay -->
+    <div id="intro-overlay" class="intro-overlay">
+        <!-- Start Button Overlay -->
+        <div id="intro-start-overlay" class="intro-start-overlay">
+            <button id="start-video-btn" class="start-btn">
+                <div class="play-icon-wrapper">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"></path>
+                    </svg>
+                </div>
+                <span data-tr="Bu Kişiye 'Hayır' De" data-en="Say 'No' to This Person">Bu Kişiye 'Hayır' De</span>
+            </button>
+        </div>
+
+        <video id="intro-video" class="intro-video" playsinline>
+            <source src="intro.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+        <div class="video-watermark" id="video-watermark">
+            <span class="logo-rose">ROSE</span><span class="logo-tv">TV</span>
+            <div class="live-indicator">
+                <span class="dot"></span>
+                <span class="text">LIVE</span>
+            </div>
+        </div>
+        <div class="intro-controls hidden">
+            <button id="mute-intro" class="mute-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <span data-tr="SESİ KAPAT" data-en="MUTE">SESİ KAPAT</span>
+            </button>
+            <button id="skip-intro" class="skip-button" data-tr="VİDEOYU ATLA" data-en="SKIP INTRO">VİDEOYU
+                ATLA</button>
+        </div>
+        <div class="white-flash" id="white-flash"></div>
+    </div>
+
     <!-- Glitch Overlay -->
     <div class="glitch-overlay"></div>
 
+    <div class="header-controls">
+        <!-- Language Toggle Button -->
+        <button class="lang-toggle" id="lang-toggle" title="Dil Değiştir / Switch Language">
+            <span class="lang-text">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="theme-toggle" title="Tema Değiştir">
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        </button>
+
+        <!-- CV Mode Toggle Button -->
+        <button class="cv-toggle" id="cv-toggle" title="Sade CV Görünümü">
+            <svg class="cv-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+        </button>
+    </div>
+
+    <!-- CV Mode Overlay -->
+    <div id="cv-overlay" class="cv-overlay hidden">
+        <div class="cv-container">
+            <button class="cv-close" id="cv-close" title="Kapat">×</button>
+
+            <div class="cv-content">
+                <!-- Header -->
+                <header class="cv-header">
+                    <div class="cv-photo">
+                        <img src="avatar512-1.png" alt="Yusuf Gül">
+                    </div>
+                    <div class="cv-title-area">
+                        <h1>Yusuf Gül</h1>
+                        <p class="cv-jobtitle" data-tr="Yazılım Geliştirici & Veri Analisti"
+                            data-en="Software Developer & Data Analyst">Yazılım Geliştirici & Veri Analisti</p>
+                        <div class="cv-contact-row">
+                            <a href="mailto:zyusuf_16@hotmail.com">📧 zyusuf_16@hotmail.com</a>
+                            <a href="https://linkedin.com/in/yusufgul" target="_blank">🔗 linkedin.com/in/yusufgul</a>
+                            <a href="https://github.com/yuusufgul16" target="_blank">💻 github.com/yuusufgul16</a>
+                            <a href="https://dijital.bio/yusufgul" target="_blank">🌐 dijital.bio/yusufgul</a>
+                            <span>📍 Orhangazi - Bursa, Türkiye</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="cv-body">
+                    <!-- Sol Kolon -->
+                    <aside class="cv-sidebar">
+                        <!-- Eğitim -->
+                        <section class="cv-section">
+                            <h2 data-tr="📚 Eğitim" data-en="📚 Education">📚 Eğitim</h2>
+                            <div class="cv-item">
+                                <strong data-tr="Yönetim Bilişim Sistemleri"
+                                    data-en="Management Information Systems">Yönetim Bilişim Sistemleri</strong>
+                                <p data-tr="Bilecik Şeyh Edebali Üniversitesi"
+                                    data-en="Bilecik Seyh Edebali University">Bilecik Şeyh Edebali Üniversitesi</p>
+                                <p data-tr="2020 - 2024 | Not: 3.42" data-en="2020 - 2024 | GPA: 3.42">2020 - 2024 |
+                                    Not: 3.42</p>
+                                <span class="cv-date" data-tr="Endüstri 4.0 ve Siber Güvenlik Kulübü"
+                                    data-en="Industry 4.0 and Cybersecurity Club">Endüstri 4.0 ve Siber Güvenlik
+                                    Kulübü</span>
+                                <span class="cv-date" data-tr="Onur Belgesi/2022-2023"
+                                    data-en="Honor Certificate/2022-2023">Onur Belgesi/2022-2023 </span>
+                                <span class="cv-date" data-tr="Yüksek Onur Belgesi/2020-2021"
+                                    data-en="High Honor Certificate/2020-2021">Yüksek Onur Belgesi/2020-2021</span>
+                            </div>
+                            <div class="cv-item">
+                                <strong data-tr="Bilişim Teknolojileri - Web Tasarım ve Programlama"
+                                    data-en="Information Technologies - Web Design and Programming">Bilişim
+                                    Teknolojileri - Web Tasarım ve Programlama</strong>
+                                <p data-tr="Orhangazi MTAL" data-en="Orhangazi Vocational and Technical High School">
+                                    Orhangazi MTAL</p>
+                                <p data-tr="2015 - 2019 | Not: 88.82" data-en="2015 - 2019 | GPA: 88.82">2015 - 2019 |
+                                    Not: 88.82</p>
+                                <span class="cv-date" data-tr="Okul Birincisi 🥇"
+                                    data-en="Valedictorian / School Winner 🥇">Okul Birincisi 🥇</span>
+                                <span class="cv-date" data-tr="Okul Futsal Takımı" data-en="School Futsal Team">Okul
+                                    Futsal Takımı</span>
+                            </div>
+                        </section>
+
+
+
+                        <!-- Askerlik -->
+                        <section class="cv-section">
+                            <h2 data-tr="⭐ Askerlik" data-en="⭐ Military Service">⭐ Askerlik</h2>
+                            <div class="cv-item">
+                                <strong data-tr="Fiilen Yapıldı" data-en="Completed">Fiilen Yapıldı</strong>
+                                <p data-tr="1. Ordu Tatbikat Kontrol Merkezi"
+                                    data-en="1st Army Exercise Control Center">1. Ordu Tatbikat Kontrol Merkezi</p>
+                            </div>
+                        </section>
+
+                        <!-- Diller -->
+                        <section class="cv-section">
+                            <h2 data-tr="🌍 Diller" data-en="🌍 Languages">🌍 Diller</h2>
+                            <div class="cv-item">
+                                <p><strong data-tr="Türkçe:" data-en="Turkish:">Türkçe:</strong> <span data-tr="Ana Dil"
+                                        data-en="Native">Ana Dil</span></p>
+                                <p><strong data-tr="İngilizce:" data-en="English:">İngilizce:</strong> <span
+                                        data-tr="A2 (Geliştirilme aşamasında)" data-en="A2 (In development stage)">A2
+                                        (Geliştirilme aşamasında)</span></p>
+                            </div>
+                        </section>
+
+                        <!-- Beceriler -->
+                        <section class="cv-section">
+                            <h2 data-tr="💻 Teknik Beceriler" data-en="💻 Technical Skills">💻 Teknik Beceriler</h2>
+                            <div class="cv-skills">
+                                <span>Python</span>
+                                <span>JavaScript</span>
+                                <span>SQL</span>
+                                <span>R</span>
+                                <span>HTML/CSS</span>
+                                <span>Git</span>
+                                <span>Pandas</span>
+                                <span>NumPy</span>
+                                <span>OpenCV</span>
+                                <span>Matplotlib</span>
+                            </div>
+                        </section>
+
+                        <!-- Sertifikalar -->
+                        <section class="cv-section">
+                            <h2 data-tr="📜 Sertifikalar" data-en="📜 Certifications">📜 Sertifikalar</h2>
+                            <ul class="cv-list">
+                                <li data-tr="Bilgisayar İşletmenliği - MEB (2024)"
+                                    data-en="Computer Operation - Ministry of Education (2024)">Bilgisayar İşletmenliği
+                                    - MEB (2024)</li>
+                                <li data-tr="Python Bootcamp - Global AI Hub" data-en="Python Bootcamp - Global AI Hub">
+                                    Python Bootcamp - Global AI Hub</li>
+                                <li data-tr="Big Data & ML - Google Cloud" data-en="Big Data & ML - Google Cloud">Big
+                                    Data & ML - Google Cloud</li>
+                                <li data-tr="Veri Analizi - Global AI Hub" data-en="Data Analysis - Global AI Hub">Veri
+                                    Analizi - Global AI Hub</li>
+                                <li data-tr="Python for ML - Global AI Hub" data-en="Python for ML - Global AI Hub">
+                                    Python for ML - Global AI Hub</li>
+                            </ul>
+                        </section>
+                    </aside>
+
+                    <!-- Sağ Kolon -->
+                    <main class="cv-main">
+                        <!-- Deneyim -->
+                        <section class="cv-section">
+                            <h2 data-tr="💼 İş Deneyimi" data-en="💼 Work Experience">💼 İş Deneyimi</h2>
+
+                            <div class="cv-item">
+                                <div class="cv-item-header">
+                                    <strong data-tr="Kurucu" data-en="Founder">Kurucu</strong>
+                                    <span class="cv-date" data-tr="Ekim 2025 - Halen"
+                                        data-en="October 2025 - Present">Ekim 2025 - Halen</span>
+                                </div>
+                                <p class="cv-company">LOOP</p>
+                                <p data-tr="Kendi girişimim üzerinde çalışıyorum." data-en="Working on my own startup.">
+                                    Kendi girişimim üzerinde çalışıyorum.</p>
+                            </div>
+
+                            <div class="cv-item">
+                                <div class="cv-item-header">
+                                    <strong data-tr="Oyun Tasarımcısı" data-en="Game Designer">Oyun Tasarımcısı</strong>
+                                    <span class="cv-date" data-tr="Ocak 2024 - Aralık 2024"
+                                        data-en="January 2024 - December 2024">Ocak 2024 - Aralık 2024</span>
+                                </div>
+                                <p class="cv-company" data-tr="Yaşam Ağacı" data-en="Tree of Life">Yaşam Ağacı</p>
+                                <p data-tr="Kurtuluş mobil oyunu - senaryo, tasarım, test. Teknofest yarı finali!"
+                                    data-en="Kurtulus mobile game - scenario, design, test. Teknofest semi-finals!">
+                                    Kurtuluş mobil oyunu - senaryo, tasarım, test. Teknofest yarı finali!</p>
+                            </div>
+
+                            <div class="cv-item">
+                                <div class="cv-item-header">
+                                    <strong data-tr="Yönetim Kurulu Üyesi" data-en="Board Member">Yönetim Kurulu
+                                        Üyesi</strong>
+                                    <span class="cv-date" data-tr="Aralık 2023 - Temmuz 2024"
+                                        data-en="December 2023 - July 2024">Aralık 2023 - Temmuz 2024</span>
+                                </div>
+                                <p class="cv-company" data-tr="Endüstri 4.0 ve Siber Güvenlik Kulübü"
+                                    data-en="Industry 4.0 and Cybersecurity Club">Endüstri 4.0 ve Siber Güvenlik Kulübü
+                                </p>
+                                <p data-tr="Sosyal medya koordinatörlüğü ve kulüp yönetimi."
+                                    data-en="Social media coordination and club management.">Sosyal medya
+                                    koordinatörlüğü ve kulüp yönetimi.</p>
+                            </div>
+
+                            <div class="cv-item">
+                                <div class="cv-item-header">
+                                    <strong data-tr="Mentor" data-en="Mentor">Mentor</strong>
+                                    <span class="cv-date" data-tr="Ağustos 2022 - Ekim 2022"
+                                        data-en="August 2022 - October 2022">Ağustos 2022 - Ekim 2022</span>
+                                </div>
+                                <p class="cv-company">Global AI Hub</p>
+                                <p data-tr="Python ve yapay zeka eğitimlerinde mentorluk."
+                                    data-en="Mentoring in Python and artificial intelligence trainings.">Python ve yapay
+                                    zeka eğitimlerinde mentorluk.</p>
+                            </div>
+                        </section>
+
+                        <!-- Projeler -->
+                        <section class="cv-section">
+                            <h2 data-tr="🚀 Öne Çıkan Projeler" data-en="🚀 Highlighted Projects">🚀 Öne Çıkan Projeler
+                            </h2>
+
+                            <div class="cv-item">
+                                <strong data-tr="Kurtuluş Oyunu" data-en="Kurtulus Game">Kurtuluş Oyunu</strong>
+                                <p data-tr="BM Sürdürülebilir Kalkınma Hedefleri temalı mobil eğitim oyunu. <strong>Teknofest yarı finali!</strong>"
+                                    data-en="Mobile educational game themed on UN Sustainable Development Goals. <strong>Teknofest semi-finals!</strong>">
+                                    BM Sürdürülebilir Kalkınma Hedefleri temalı mobil eğitim oyunu. <strong>Teknofest
+                                        yarı finali!</strong></p>
+                                <div class="cv-tags"><span>Gamification</span><span>SDG</span><span>Pixel Art</span>
+                                </div>
+                            </div>
+
+                            <div class="cv-item">
+                                <strong data-tr="YouTube Metin Madenciliği" data-en="YouTube Text Mining">YouTube Metin
+                                    Madenciliği</strong>
+                                <p data-tr="57.000 YouTube yorumu üzerinde metin madenciliği ve duygu analizi."
+                                    data-en="Text mining and sentiment analysis on 57,000 YouTube comments.">57.000
+                                    YouTube yorumu üzerinde metin madenciliği ve duygu analizi.</p>
+                                <div class="cv-tags"><span>R</span><span>Text Mining</span><span>Sentiment
+                                        Analysis</span></div>
+                            </div>
+
+                            <div class="cv-item">
+                                <strong data-tr="Endemika" data-en="Endemika">Endemika</strong>
+                                <p data-tr="Bilecik'in endemik bitkileri için QR kodlu web platformu."
+                                    data-en="QR-coded web platform for endemic plants of Bilecik.">Bilecik'in endemik
+                                    bitkileri için QR kodlu web platformu.</p>
+                                <div class="cv-tags"><span>Web</span><span>QR Kod</span><span>AI Video</span></div>
+                            </div>
+
+                            <div class="cv-item">
+                                <strong data-tr="Crystal Miner" data-en="Crystal Miner">Crystal Miner</strong>
+                                <p data-tr="Eratosthenes Kalburu algoritmasını oyunlaştıran eğitici oyun."
+                                    data-en="Educational game gamifying the Sieve of Eratosthenes algorithm.">
+                                    Eratosthenes Kalburu algoritmasını oyunlaştıran eğitici oyun.</p>
+                                <div class="cv-tags"><span>JavaScript</span><span>Math Game</span></div>
+                            </div>
+                        </section>
+                    </main>
+                </div>
+
+                <!-- Footer -->
+                <footer class="cv-footer">
+                    <p data-tr="🌐 Bu CV, yusufgul.com adresindeki interaktif portfolyomun sade görünümüdür."
+                        data-en="🌐 This CV is the simplified view of my interactive portfolio at yusufgul.com.">🌐 Bu
+                        CV, yusufgul.com adresindeki interaktif portfolyomun sade görünümüdür.</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Twin Blur Overlay (for when chat is open) -->
+    <div class="twin-blur-overlay" id="twin-blur-overlay"></div>
+
     <!-- Warning Banner -->
     <div class="warning-banner" id="warning-banner">
-        <span>⚠️ DİKKAT: Bu sayfa sıradan bir CV değildir ⚠️</span>
+        <span data-tr="⚠️ DİKKAT: Bu sayfa sıradan bir CV değildir ⚠️"
+            data-en="⚠️ ATTENTION: This is not an ordinary CV ⚠️">⚠️ DİKKAT: Bu sayfa sıradan bir CV değildir ⚠️</span>
     </div>
 
     <!-- Section 1: Hero -->
     <section class="section hero-section" id="hero">
         <div class="hero-content">
-            <div class="warning-tag">UYARI</div>
-            <h1 class="glitch-text" data-text="BENİ İŞE ALMAYIN">BENİ İŞE ALMAYIN</h1>
-            <p class="hero-subtitle">...eğer aşağıdakilerden korkuyorsanız</p>
+            <!-- Mobile Contact Icons (only visible on mobile) -->
+            <div class="hero-contact-icons">
+                <a href="mailto:zyusuf_16@hotmail.com" class="hero-contact-item" title="E-posta">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/yusufgul/" target="_blank" class="hero-contact-item"
+                    title="LinkedIn">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+                <a href="https://github.com/yuusufgul16" target="_blank" class="hero-contact-item" title="GitHub">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/yuusufgul/" target="_blank" class="hero-contact-item"
+                    title="Instagram">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a>
+                <a href="https://dijital.bio/yusufgul" target="_blank" class="hero-contact-item" title="Dijital Bio">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                        </path>
+                    </svg>
+                </a>
+
+            </div>
+
+            <div class="warning-tag" data-tr="UYARI" data-en="WARNING">UYARI</div>
+            <h1 class="glitch-text" data-text="BENİ İŞE ALMAYIN" data-tr="BENİ İŞE ALMAYIN" data-en="DON'T HIRE ME">BENİ
+                İŞE ALMAYIN</h1>
+            <p class="hero-subtitle" data-tr="...eğer aşağıdakilerden korkuyorsanız"
+                data-en="...if you are afraid of the following">...eğer aşağıdakilerden korkuyorsanız</p>
             <a href="#reasons" class="scroll-indicator">
-                <span>Riski göze al</span>
+                <span data-tr="Riski göze al" data-en="Take the risk">Riski göze al</span>
                 <div class="scroll-arrow">↓</div>
             </a>
         </div>
@@ -39,9 +440,11 @@
 
     <!-- Section 2: Reasons (Coverflow Cards) -->
     <section class="section reasons-section" id="reasons">
+        <div class="reasons-bg state-default" id="reasons-bg"></div>
         <div class="section-header">
-            <h2>Beni işe almayın çünkü...</h2>
-            <p class="section-subtitle">Kartları keşfedin ve gerçeği görün</p>
+            <h2 data-tr="Beni işe almayın çünkü..." data-en="Don't hire me because...">Beni işe almayın çünkü...</h2>
+            <p class="section-subtitle" data-tr="Kartları keşfedin ve gerçeği görün"
+                data-en="Explore the cards and see the truth">Kartları keşfedin ve gerçeği görün</p>
         </div>
 
         <div class="coverflow-container">
@@ -53,13 +456,17 @@
                         <div class="card-inner">
                             <div class="card-front">
                                 <div class="card-icon">❓</div>
-                                <h3>Soru sormayı bırakmam</h3>
-                                <span class="flip-hint">Tıkla ve çevir</span>
+                                <h3 data-tr="Soru sormayı bırakmam" data-en="I won't stop asking questions">Soru sormayı
+                                    bırakmam</h3>
+                                <span class="flip-hint" data-tr="Tıkla ve çevir" data-en="Click and flip">Tıkla ve
+                                    çevir</span>
                             </div>
                             <div class="card-back">
                                 <div class="card-icon">💡</div>
-                                <h3>Öğrenmeye Aşığım</h3>
-                                <p>Her projede yeni teknolojiler keşfeder, sınırları zorlarım.</p>
+                                <h3 data-tr="Öğrenmeye Aşığım" data-en="I'm in Love with Learning">Öğrenmeye Aşığım</h3>
+                                <p data-tr="Her projede yeni teknolojiler keşfeder, sınırları zorlarım."
+                                    data-en="I explore new technologies in every project and push the boundaries.">Her
+                                    projede yeni teknolojiler keşfeder, sınırları zorlarım.</p>
                             </div>
                         </div>
                     </div>
@@ -68,13 +475,17 @@
                         <div class="card-inner">
                             <div class="card-front">
                                 <div class="card-icon">🔍</div>
-                                <h3>Detaylara takılırım</h3>
-                                <span class="flip-hint">Tıkla ve çevir</span>
+                                <h3 data-tr="Detaylara takılırım" data-en="I'm obsessed with details">Detaylara
+                                    takılırım</h3>
+                                <span class="flip-hint" data-tr="Tıkla ve çevir" data-en="Click and flip">Tıkla ve
+                                    çevir</span>
                             </div>
                             <div class="card-back">
                                 <div class="card-icon">✨</div>
-                                <h3>Mükemmeliyetçi</h3>
-                                <p>En küçük detayları bile gözden kaçırmam.</p>
+                                <h3 data-tr="Mükemmeliyetçi" data-en="Perfectionist">Mükemmeliyetçi</h3>
+                                <p data-tr="En küçük detayları bile gözden kaçırmam."
+                                    data-en="I don't miss even the smallest details.">En küçük detayları bile gözden
+                                    kaçırmam.</p>
                             </div>
                         </div>
                     </div>
@@ -83,13 +494,17 @@
                         <div class="card-inner">
                             <div class="card-front">
                                 <div class="card-icon">🌀</div>
-                                <h3>Farklı düşünürüm</h3>
-                                <span class="flip-hint">Tıkla ve çevir</span>
+                                <h3 data-tr="Farklı düşünürüm" data-en="I think differently">Farklı düşünürüm</h3>
+                                <span class="flip-hint" data-tr="Tıkla ve çevir" data-en="Click and flip">Tıkla ve
+                                    çevir</span>
                             </div>
                             <div class="card-back">
                                 <div class="card-icon">💫</div>
-                                <h3>Yenilikçi Bakış Açısı</h3>
-                                <p>Alışılmışın dışında çözümler üretirim.</p>
+                                <h3 data-tr="Yenilikçi Bakış Açısı" data-en="Innovative Perspective">Yenilikçi Bakış
+                                    Açısı</h3>
+                                <p data-tr="Alışılmışın dışında çözümler üretirim."
+                                    data-en="I create unconventional solutions.">Alışılmışın dışında çözümler üretirim.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -98,13 +513,17 @@
                         <div class="card-inner">
                             <div class="card-front">
                                 <div class="card-icon">📊</div>
-                                <h3>Verilere takıntılıyım</h3>
-                                <span class="flip-hint">Tıkla ve çevir</span>
+                                <h3 data-tr="Verilere takıntılıyım" data-en="I'm obsessed with data">Verilere
+                                    takıntılıyım</h3>
+                                <span class="flip-hint" data-tr="Tıkla ve çevir" data-en="Click and flip">Tıkla ve
+                                    çevir</span>
                             </div>
                             <div class="card-back">
                                 <div class="card-icon">📈</div>
-                                <h3>Veri Görselleştirme</h3>
-                                <p>Karmaşık bilgileri anlaşılır görsellere dönüştürürüm.</p>
+                                <h3 data-tr="Veri Görselleştirme" data-en="Data Visualization">Veri Görselleştirme</h3>
+                                <p data-tr="Karmaşık bilgileri anlaşılır görsellere dönüştürürüm."
+                                    data-en="I transform complex information into understandable visuals.">Karmaşık
+                                    bilgileri anlaşılır görsellere dönüştürürüm.</p>
                             </div>
                         </div>
                     </div>
@@ -113,13 +532,16 @@
                         <div class="card-inner">
                             <div class="card-front">
                                 <div class="card-icon">🛠️</div>
-                                <h3>Problem çıkarırım</h3>
-                                <span class="flip-hint">Tıkla ve çevir</span>
+                                <h3 data-tr="Problem çıkarırım" data-en="I cause problems">Problem çıkarırım</h3>
+                                <span class="flip-hint" data-tr="Tıkla ve çevir" data-en="Click and flip">Tıkla ve
+                                    çevir</span>
                             </div>
                             <div class="card-back">
                                 <div class="card-icon">⚡</div>
-                                <h3>Problem Çözücü</h3>
-                                <p>Kimsenin görmediği sorunları tespit eder, çözümler üretirim.</p>
+                                <h3 data-tr="Problem Çözücü" data-en="Problem Solver">Problem Çözücü</h3>
+                                <p data-tr="Kimsenin görmediği sorunları tespit eder, çözümler üretirim."
+                                    data-en="I detect problems no one sees and create solutions.">Kimsenin görmediği
+                                    sorunları tespit eder, çözümler üretirim.</p>
                             </div>
                         </div>
                     </div>
@@ -128,13 +550,16 @@
                         <div class="card-inner">
                             <div class="card-front">
                                 <div class="card-icon">🎨</div>
-                                <h3>Kuralları çiğnerim</h3>
-                                <span class="flip-hint">Tıkla ve çevir</span>
+                                <h3 data-tr="Kuralları çiğnerim" data-en="I break the rules">Kuralları çiğnerim</h3>
+                                <span class="flip-hint" data-tr="Tıkla ve çevir" data-en="Click and flip">Tıkla ve
+                                    çevir</span>
                             </div>
                             <div class="card-back">
                                 <div class="card-icon">✨</div>
-                                <h3>Yaratıcı Düşünür</h3>
-                                <p>Kalıpların dışında düşünür, yenilikçi çözümler üretirim.</p>
+                                <h3 data-tr="Yaratıcı Düşünür" data-en="Creative Thinker">Yaratıcı Düşünür</h3>
+                                <p data-tr="Kalıpların dışında düşünür, yenilikçi çözümler üretirim."
+                                    data-en="I think outside the box and create innovative solutions.">Kalıpların
+                                    dışında düşünür, yenilikçi çözümler üretirim.</p>
                             </div>
                         </div>
                     </div>
@@ -147,7 +572,8 @@
         <div class="coverflow-dots" id="coverflow-dots"></div>
 
         <div class="cards-progress">
-            <span id="cards-flipped">0</span>/6 kart açıldı
+            <span id="cards-flipped">0</span><span data-tr="/6 kart açıldı" data-en="/6 cards flipped">/6 kart
+                açıldı</span>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill"></div>
             </div>
@@ -157,8 +583,11 @@
     <!-- Section 3: Projects & Experience -->
     <section class="section projects-section" id="projects">
         <div class="section-header">
-            <h2>Kanıtlar</h2>
-            <p class="section-subtitle">Şu an deneyimlediğiniz bu platform, teknik standartlarımın ve vizyonumun canlı
+            <h2 data-tr="Kanıtlar" data-en="Proofs">Kanıtlar</h2>
+            <p class="section-subtitle"
+                data-tr="Şu an deneyimlediğiniz bu platform, teknik standartlarımın ve vizyonumun canlı bir kanıtıdır. Daha fazlasını görmek isterseniz aşağıdaki bölümlere göz atabilirsiniz."
+                data-en="This platform you are currently experiencing is a living proof of my technical standards and vision. If you want to see more, you can check the sections below.">
+                Şu an deneyimlediğiniz bu platform, teknik standartlarımın ve vizyonumun canlı
                 bir kanıtıdır.
                 Daha fazlasını görmek isterseniz aşağıdaki bölümlere göz atabilirsiniz.
             </p>
@@ -167,13 +596,13 @@
         <!-- Tab Buttons -->
         <div class="proof-tabs">
             <button class="proof-tab active" data-tab="projects">
-                <span>Projeler</span>
+                <span data-tr="Projeler" data-en="Projects">Projeler</span>
             </button>
             <button class="proof-tab" data-tab="experience">
-                <span>Deneyim</span>
+                <span data-tr="Deneyim" data-en="Experience">Deneyim</span>
             </button>
             <button class="proof-tab" data-tab="certifications">
-                <span>Sertifikalar</span>
+                <span data-tr="Sertifikalar" data-en="Certifications">Sertifikalar</span>
             </button>
         </div>
 
@@ -747,7 +1176,7 @@
                                 <circle cx="12" cy="10" r="2"></circle>
                             </svg>
                         </div>
-                        <h3>Sertifika Başlığı 1</h3>
+                        <h3>Bilgisayar İşletmenliği (Operatörlüğü)</h3>
                         <div class="project-toggle">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -756,11 +1185,11 @@
                         </div>
                     </div>
                     <div class="project-body">
-                        <p><strong>Kurum Adı</strong><br>
-                            Tarih</p>
+                        <p><strong>T.C. Milli Eğitim Bakanlığı</strong><br>
+                            Ekim 2024</p>
                         <div class="project-tags">
-                            <span>Tag 1</span>
-                            <span>Tag 2</span>
+                            <span>Bilgisayar</span>
+                            <span>Operatörlük</span>
                         </div>
                     </div>
                 </div>
@@ -776,7 +1205,7 @@
                                 <circle cx="12" cy="10" r="2"></circle>
                             </svg>
                         </div>
-                        <h3>Sertifika Başlığı 2</h3>
+                        <h3>Python Bootcamp</h3>
                         <div class="project-toggle">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -785,11 +1214,11 @@
                         </div>
                     </div>
                     <div class="project-body">
-                        <p><strong>Kurum Adı</strong><br>
-                            Tarih</p>
+                        <p><strong>Global AI Hub</strong><br>
+                            Eylül 2022</p>
                         <div class="project-tags">
-                            <span>Tag 1</span>
-                            <span>Tag 2</span>
+                            <span>Python</span>
+                            <span>Bootcamp</span>
                         </div>
                     </div>
                 </div>
@@ -805,7 +1234,7 @@
                                 <circle cx="12" cy="10" r="2"></circle>
                             </svg>
                         </div>
-                        <h3>Sertifika Başlığı 3</h3>
+                        <h3>Big Data And Machine Learning on Google Cloud</h3>
                         <div class="project-toggle">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -814,11 +1243,12 @@
                         </div>
                     </div>
                     <div class="project-body">
-                        <p><strong>Kurum Adı</strong><br>
-                            Tarih</p>
+                        <p><strong>Google</strong><br>
+                            Temmuz 2022</p>
                         <div class="project-tags">
-                            <span>Tag 1</span>
-                            <span>Tag 2</span>
+                            <span>Big Data</span>
+                            <span>Machine Learning</span>
+                            <span>Google Cloud</span>
                         </div>
                     </div>
                 </div>
@@ -834,7 +1264,7 @@
                                 <circle cx="12" cy="10" r="2"></circle>
                             </svg>
                         </div>
-                        <h3>Sertifika Başlığı 4</h3>
+                        <h3>Veri Analizi</h3>
                         <div class="project-toggle">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -843,11 +1273,11 @@
                         </div>
                     </div>
                     <div class="project-body">
-                        <p><strong>Kurum Adı</strong><br>
-                            Tarih</p>
+                        <p><strong>Global AI Hub</strong><br>
+                            Temmuz 2022</p>
                         <div class="project-tags">
-                            <span>Tag 1</span>
-                            <span>Tag 2</span>
+                            <span>Veri Analizi</span>
+                            <span>Data Analytics</span>
                         </div>
                     </div>
                 </div>
@@ -863,7 +1293,7 @@
                                 <circle cx="12" cy="10" r="2"></circle>
                             </svg>
                         </div>
-                        <h3>Sertifika Başlığı 5</h3>
+                        <h3>Python for Machine Learning</h3>
                         <div class="project-toggle">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -872,11 +1302,11 @@
                         </div>
                     </div>
                     <div class="project-body">
-                        <p><strong>Kurum Adı</strong><br>
-                            Tarih</p>
+                        <p><strong>Global AI Hub</strong><br>
+                            Haziran 2022</p>
                         <div class="project-tags">
-                            <span>Tag 1</span>
-                            <span>Tag 2</span>
+                            <span>Python</span>
+                            <span>Machine Learning</span>
                         </div>
                     </div>
                 </div>
@@ -892,7 +1322,7 @@
                                 <circle cx="12" cy="10" r="2"></circle>
                             </svg>
                         </div>
-                        <h3>Sertifika Başlığı 6</h3>
+                        <h3>Dijital Ortamda Bilgi</h3>
                         <div class="project-toggle">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -901,11 +1331,11 @@
                         </div>
                     </div>
                     <div class="project-body">
-                        <p><strong>Kurum Adı</strong><br>
-                            Tarih</p>
+                        <p><strong>Bilgi Teknolojileri ve İletişim Kurumu (BTK - ICT)</strong><br>
+                            Mart 2021</p>
                         <div class="project-tags">
-                            <span>Tag 1</span>
-                            <span>Tag 2</span>
+                            <span>BTK</span>
+                            <span>Dijital Okuryazarlık</span>
                         </div>
                     </div>
                 </div>
@@ -918,46 +1348,56 @@
         <div class="final-content">
             <div class="final-warning">SON UYARI</div>
 
-            <div class="final-message">
-                <p class="strike-text">Eğer sıradanlıktan hoşlanıyorsanız,<br>beni işe almayın.</p>
-                <p class="highlight-text">Ama yenilikten yanaysanız,<br><span class="red-text">birlikte geleceği
+            <div class="final-cta">
+                <p class="strike-text" data-tr="Eğer sıradanlıktan hoşlanıyorsanız,<br>beni işe almayın."
+                    data-en="If you enjoy mediocrity,<br>don't hire me.">Eğer sıradanlıktan hoşlanıyorsanız,<br>beni işe
+                    almayın.</p>
+                <p class="highlight-text"
+                    data-tr="Ama yenilikten yanaysanız,<br><span class='red-text'>birlikte geleceği tasarlayalım.</span>"
+                    data-en="But if you are on the side of innovation,<br><span class='red-text'>let's design the future together.</span>">
+                    Ama yenilikten yanaysanız,<br><span class="red-text">birlikte geleceği
                         tasarlayalım.</span></p>
             </div>
 
             <div class="final-question">
-                <h3>Peki, riski göze alıyor musunuz?</h3>
+                <h3 data-tr="Peki, riski göze alıyor musunuz?" data-en="Well, are you willing to take the risk?">Peki,
+                    riski göze alıyor musunuz?</h3>
             </div>
 
             <div class="cta-buttons">
                 <button class="cta-btn cta-no" id="btn-no">
-                    <span>Hayır, teşekkürler</span>
+                    <span data-tr="Hayır, teşekkürler" data-en="No, thanks">Hayır, teşekkürler</span>
                 </button>
                 <button class="cta-btn cta-yes" id="btn-yes">
-                    <span>Evet, iletişime geçelim</span>
+                    <span data-tr="Evet, iletişime geçelim" data-en="Yes, let's connect">Evet, iletişime geçelim</span>
                 </button>
             </div>
 
             <div class="contact-reveal" id="contact-reveal">
-                <h3>Cesur seçim! 🎉</h3>
+                <h3 data-tr="Cesur seçim! 🎉" data-en="Brave choice! 🎉">Cesur seçim! 🎉</h3>
                 <div class="contact-links">
                     <a href="mailto:zyusuf_16@hotmail.com" class="contact-link">
                         <span class="contact-icon">📧</span>
-                        <span>E-posta Gönder</span>
+                        <span data-tr="E-posta Gönder" data-en="Send Email">E-posta Gönder</span>
                     </a>
                     <a href="https://www.linkedin.com/in/yusufgul/" target="_blank" class="contact-link">
                         <span class="contact-icon">💼</span>
-                        <span>LinkedIn</span>
+                        <span data-tr="LinkedIn" data-en="LinkedIn">LinkedIn</span>
                     </a>
                     <a href="https://github.com/yuusufgul16" target="_blank" class="contact-link">
                         <span class="contact-icon">🐙</span>
-                        <span>GitHub</span>
+                        <span data-tr="GitHub" data-en="GitHub">GitHub</span>
+                    </a>
+                    <a href="https://dijital.bio/yusufgul" target="_blank" class="contact-link">
+                        <span class="contact-icon">🌐</span>
+                        <span data-tr="Dijital Bio" data-en="Digital Bio">Dijital Bio</span>
                     </a>
                 </div>
             </div>
         </div>
 
         <div class="escape-count" id="escape-count">
-            <span id="escape-number">0</span> kişi "Hayır" dedi ve kaçtı 😱
+            Şu ana kadar <span id="escape-number">0</span> kişi iletişime geçti 🤝
         </div>
     </section>
 
@@ -965,7 +1405,7 @@
 
     <!-- Floating Socials -->
     <div class="fixed-socials">
-        <span class="social-label">İletişime Geç</span>
+        <span class="social-label" data-tr="İletişime Geç" data-en="Contact Me">İletişime Geç</span>
         <a href="mailto:zyusuf_16@hotmail.com" class="social-item" title="E-posta">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -997,6 +1437,15 @@
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
             </svg>
         </a>
+        <a href="https://dijital.bio/yusufgul" target="_blank" class="social-item" title="Dijital Bio">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                </path>
+            </svg>
+        </a>
     </div>
 
     <!-- Floating Elements -->
@@ -1009,13 +1458,14 @@
 
     <!-- Digital Twin Feature -->
     <div id="twin-container">
-        <div id="twin-notification">
+        <div id="twin-notification" data-tr="Merhaba! Ben Yusuf. Merak ettiğin bir şeyi sormak ister misin?"
+            data-en="Hi! I'm Yusuf. Would you like to ask me anything?">
             Merhaba! Ben Yusuf. Merak ettiğin bir şeyi sormak ister misin?
             <div class="notification-arrow"></div>
         </div>
-        <button id="twin-bubble" title="Dijital İkizimle Konuş">
+        <button id="twin-bubble" aria-label="Dijital İkiz ile Sohbet Et">
             <div class="bubble-icon">
-                <img src="avatar512-1.png" alt="Yusuf Avatar" id="twin-avatar">
+                <img src="avatar512-1.png" alt="Yusuf Gül Avatar" id="twin-avatar">
             </div>
             <div class="bubble-pulse"></div>
         </button>
@@ -1024,29 +1474,32 @@
             <div class="twin-header">
                 <div class="twin-info">
                     <div class="twin-status-dot"></div>
-                    <div class="twin-name">Yusuf</div>
-                    <div class="twin-status">Çevrimiçi</div>
+                    <div class="twin-name" data-tr="Yusuf Gül (Dijital İkiz)" data-en="Yusuf Gül (Digital Twin)">Yusuf
+                        Gül (Dijital İkiz)</div>
                 </div>
-                <button id="close-twin">✕</button>
+                <button id="close-twin">&times;</button>
             </div>
-
             <div id="twin-chat" class="twin-body">
-                <div class="message twin-message">
+                <div class="message twin-message"
+                    data-tr="Merhaba! Ben Yusuf. Merak ettiğin bir şeyi sormak ister misin?"
+                    data-en="Hi! I'm Yusuf. Would you like to ask me anything?">
                     Merhaba! Ben Yusuf. Merak ettiğin bir şeyi sormak ister misin?
                 </div>
             </div>
-
             <div class="twin-footer">
-                <div class="twin-options" id="twin-options">
-                    <button class="twin-opt" data-q="neden">Neden seni işe almalıyım?</button>
-                    <button class="twin-opt" data-q="stack">Hangi teknolojilere hakimsin?</button>
-                    <button class="twin-opt" data-q="remote">Uzaktan çalışmaya uygun musun?</button>
-                    <button class="twin-opt" data-q="hedef">Gelecek hedeflerin neler?</button>
+                <div id="twin-options" class="twin-options">
+                    <button class="twin-opt" data-q="neden" data-tr="Neden seni işe almalıyım?"
+                        data-en="Why should I hire you?">Neden seni işe almalıyım?</button>
+                    <button class="twin-opt" data-q="stack" data-tr="Hangi teknolojileri biliyorsun?"
+                        data-en="What is your tech stack?">Hangi teknolojileri biliyorsun?</button>
+                    <button class="twin-opt" data-q="remote" data-tr="Uzaktan çalışmaya açık mısın?"
+                        data-en="Are you open to remote work?">Uzaktan çalışmaya açık mısın?</button>
+                    <button class="twin-opt" data-q="hedef" data-tr="Gelecek hedeflerin neler?"
+                        data-en="What are your future goals?">Gelecek hedeflerin neler?</button>
                 </div>
-
                 <div class="twin-input-area">
-                    <input type="text" id="twin-input" class="twin-input" placeholder="Merak ettiğin bir şey sor..."
-                        autocomplete="off" />
+                    <input type="text" id="twin-input" class="twin-input" data-tr="Yusuf'a bir soru sor..."
+                        data-en="Ask Yusuf a question..." placeholder="Yusuf'a bir soru sor..." autocomplete="off" />
                     <button id="twin-send" class="twin-send" title="Gönder">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1058,6 +1511,8 @@
             </div>
         </div>
     </div>
+
+    <div id="twin-blur-overlay"></div>
 
     <script src="script.js"></script>
 </body>

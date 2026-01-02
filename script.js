@@ -606,17 +606,17 @@ function initDigitalTwin() {
         experience: [
             {
                 company: "LOOP",
-                role: "Kurucu",
+                role: "Kurucu (Hobi Projesi)",
                 duration: "Ekim 2025 - Halen",
-                type: "Kendi İşim",
-                description: "Kendi girişimim üzerinde hobi olarak çalışıyorum. Girişimcilik ve liderlik deneyimi kazanıyorum."
+                type: "Hobi Projesi / Girişim",
+                description: "Kendi girişimim ve projelerim üzerinde hobi olarak çalışıyorum. Süreçleri uçtan uca yöneterek deneyim kazanıyorum."
             },
             {
                 company: "Yaşam Ağacı",
-                role: "Oyun Tasarımcısı",
+                role: "Multidisipliner Geliştirici (Tasarım & Test & Senaryo)",
                 duration: "Ocak 2024 - Aralık 2024 (1 yıl)",
                 location: "Bilecik, Türkiye",
-                description: "BM Sürdürülebilir Kalkınma Hedefleri temalı mobil eğitim oyunu 'Kurtuluş'un senaryo, tasarım ve test süreçlerinde görev aldım. Teknofest yarı finaline çıktık."
+                description: "Kurtuluş oyununun senaryo yazımı, görsel/ses tasarımı ve test süreçleri gibi farklı alanlarda aktif rol aldım. Teknofest yarı final başarısı yakaladık."
             },
             {
                 company: "Endüstri 4.0 ve Siber Güvenlik Kulübü",
@@ -753,16 +753,16 @@ function initDigitalTwin() {
     // ===== Hazır Cevaplar (Gemini yoksa fallback) =====
     const answers = {
         tr: {
-            neden: "Çünkü ben sadece kod yazmıyorum, projeye bir ruh katıyorum. Sorunları henüz ortaya çıkmadan fark edip çözüm üretiyorum. Sıradan bir çalışan değil, projenin başarısı için en az senin kadar heyecan duyan bir takım arkadaşı arıyorsan doğru yerdesin. 🚀",
+            neden: "Çünkü hala bu soruyu sormanız, projenizi zirveye taşıyacak o 'eksik parçayı' henüz bulamadığınızı gösteriyor. Ben o parçayım. Sıradan bir kod yazıcısı değil; veriyi okuyan, tasarımı hisseden ve projenin başarısını kendi başarısı sayan bir oyun kurucuyum. Risk alın, farkı görün. 🚀",
             stack: "Öncelikle Modern JavaScript (ES6+), React ve Node.js ekosistemine çok hakimim. Tasarım tarafında CSS/SCSS ile harikalar yaratabilirim. Ayrıca Python ve Veri Analizi konularında da kendimi geliştirmeye devam ediyorum. Her zaman yeni teknolojileri öğrenmeye açığım! 🛠️",
-            remote: "Evet, kesinlikle! Uzun süredir uzaktan çalışma disiplinine sahibim. Asenkron iletişim araçlarını (Slack, Jira, GitHub vb.) ustalıkla kullanıyorum. Dünyanın neresinde olursan ol, aynı ofisteymişiz gibi verimli çalışabiliriz. 🏠",
-            hedef: "Kısa vadede, global projelerde yer alarak teknik yetkinliklerimi en üst seviyeye çıkarmak istiyorum. Uzun vadede ise, teknoloji dünyasında iz bırakacak kendi girişimimi hayata geçirmek ve genç geliştiricilere mentorluk yapmak en büyük hayalim. 🎯"
+            remote: "Uzaktan çalışmaya açığım ve bu disipline sahibim. GitHub üzerinde henüz az tecrübem olsa da kendimi hızla geliştiriyorum. Dünyanın neresinde olursan ol, aynı ofisteymişiz gibi verimli çalışabiliriz. 🏠",
+            hedef: "Kısa vadede, global projelerde yer alarak teknik yetkinliklerimi en üst seviyeye çıkarmak istiyorum. Uzun vadede ise, edindiğim teknik birikimi vizyoner ekiplere liderlik ederek aktarmayı ve fark yaratan ürünlerin mutfağında olmayı hedefliyorum. 🎯"
         },
         en: {
-            neden: "Because I don't just write code; I add soul to the project. I identify problems before they arise and create solutions. If you're looking for a teammate who's as excited about the project's success as you are, you're in the right place. 🚀",
+            neden: "Because the fact that you're still asking this shows you haven't found that 'missing piece' to take your project to the top. I am that piece. I'm not just a coder; I'm a playmaker who reads the data, feels the design, and considers the project's success as my own. Take the risk, see the difference. 🚀",
             stack: "I'm highly proficient in the Modern JavaScript (ES6+), React, and Node.js ecosystem. I can work wonders with CSS/SCSS on the design side. I'm also continuing to develop myself in Python and Data Analysis. I'm always open to learning new technologies! 🛠️",
-            remote: "Yes, absolutely! I've had a remote work discipline for a long time. I use asynchronous communication tools (Slack, Jira, GitHub, etc.) expertly. No matter where you are in the world, we can work as efficiently as if we were in the same office. 🏠",
-            hedef: "In the short term, I want to reach the highest level of technical competence by participating in global projects. In the long term, my biggest dream is to launch my own startup that will leave a mark in the tech world and mentor young developers. 🎯"
+            remote: "I am open to remote work and have that discipline. Although I have limited experience with GitHub for now, I am quickly improving. We can work efficiently as if we were in the same office. 🏠",
+            hedef: "In the short term, I want to reach the highest level of technical competence by participating in global projects. In the long term, I aim to lead visionary teams and be at the heart of developing products that make a real difference. 🎯"
         }
     };
 
@@ -880,10 +880,10 @@ function initDigitalTwin() {
             "ne biliyorsun": "Python, JavaScript, SQL, R, HTML/CSS biliyorum. Veri analizi, metin madenciliği, web geliştirme ve oyun tasarımı yapabiliyorum! 💻",
 
             // === İş Deneyimi ===
-            "deneyim": "LOOP'un kurucusuyum, Yaşam Ağacı'nda oyun tasarımı yaptım (Teknofest yarı finali!), Global AI Hub'da mentor oldum. LC Waikiki ve ORMO'da staj deneyimim var 💼",
-            "tecrübe": "LOOP'un kurucusuyum, Yaşam Ağacı'nda oyun tasarımı yaptım (Teknofest yarı finali!), Global AI Hub'da mentor oldum. LC Waikiki ve ORMO'da staj deneyimim var 💼",
-            "experience": "LOOP'un kurucusuyum, Yaşam Ağacı'nda oyun tasarımı yaptım (Teknofest yarı finali!), Global AI Hub'da mentor oldum 💼",
-            "nerede çalıştın": "LOOP (Kurucu), Yaşam Ağacı (Oyun Tasarımcısı), Global AI Hub (Mentor), LC Waikiki (Lojistik), ORMO Group ve Orhangazi Belediyesi'nde staj yaptım 🏢",
+            "deneyim": "LOOP hobi projem üzerinde çalışıyorum, Yaşam Ağacı'da multidisipliner görevler (tasarım, test, senaryo) üstlendim, Global AI Hub'da mentorluk yaptım. LC Waikiki'de operasyon tecrübem, ORMO ve Orhangazi Belediyesi'nde ise stajlarım var 💼",
+            "tecrübe": "LOOP hobi projem üzerinde çalışıyorum, Yaşam Ağacı'da multidisipliner görevler (tasarım, test, senaryo) üstlendim, Global AI Hub'da mentorluk yaptım. LC Waikiki'de operasyon tecrübem, ORMO ve Orhangazi Belediyesi'nde ise stajlarım var 💼",
+            "experience": "LOOP (Hobi), Yaşam Ağacı (Multidisipliner), Global AI Hub (Mentor), LC Waikiki (Operasyon) ve stajlarım (ORMO, Belediye) 💼",
+            "nerede çalıştın": "LOOP (Hobi), Yaşam Ağacı (Multidisipliner Geliştirici), Global AI Hub (Mentor) ve LC Waikiki (Lojistik Operasyon). Ayrıca ORMO Group ve Orhangazi Belediyesi'nde staj yaptım 🏢",
             "iş": "LOOP'un kurucusuyum, kendi girişimim üzerinde çalışıyorum. Daha önce Yaşam Ağacı'nda oyun tasarımı, Global AI Hub'da mentorluk yaptım 💼",
 
             // === Projeler ===
@@ -899,18 +899,18 @@ function initDigitalTwin() {
             "certificate": "Python Bootcamp, Big Data & ML on Google Cloud, Veri Analizi sertifikalarım var 📜",
 
             // === Çalışma Tercihleri ===
-            "remote": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Asenkron iletişim araçlarını verimli kullanabilirim 🏠",
-            "uzaktan": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Slack, GitHub gibi araçlarla etkili iletişim kurabilirim 🏠",
+            "remote": "Uzaktan çalışmaya açığım ve bu disipline sahibim. GitHub üzerinde henüz tecrübem az olsa da hızla öğreniyorum! 🏠",
+            "uzaktan": "Uzaktan çalışmaya açığım ve bu disipline sahibim. GitHub üzerinde henüz tecrübem az olsa da hızla öğreniyorum! 🏠",
             "hibrit": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Esneklik benim için önemli 🔄",
             "yerinde": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Her modele adapte olabilirim 🏢",
             "ofis": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Her modele adapte olabilirim 🏢",
             "çalışma şekli": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Esneklik ve adaptasyon konusunda güçlüyüm 💪",
 
             // === Hedefler ===
-            "hedef": "Kısa vadede global projelerde yer alarak teknik yetkinliklerimi geliştirmek, uzun vadede kendi tech startup'ımı kurmak istiyorum 🎯",
-            "gelecek": "Teknoloji dünyasında iz bırakacak projeler üretmek ve genç geliştiricilere mentorluk yapmak en büyük hayalim 🌟",
-            "plan": "Veri bilimi ve yapay zeka alanında uzmanlaşırken, kendi girişimimi büyütmeye devam etmek istiyorum 📈",
-            "kariyer": "Veri bilimi, oyun tasarımı ve web teknolojilerini birleştirerek yaratıcı projeler üretmek istiyorum. Girişimcilik de hedeflerim arasında 🚀",
+            "hedef": "Kısa vadede global projelerde yer alarak teknik yetkinliklerimi geliştirmek, uzun vadede ise vizyoner ekiplere liderlik ederek fark yaratan ürünlerin mutfağında olmayı hedefliyorum 🎯",
+            "gelecek": "Teknoloji dünyasında edindiğim birikimi aktarabileceğim bir liderlik pozisyonunda, yüksek performanslı ürünler geliştirmek en büyük motivasyonum 🌟",
+            "plan": "Teknik uzmanlığımı derinleştirirken, projelerin mutfağında sorumluluk alarak ekipleri ortak hedeflere taşıyacak bir vizyon geliştiriyorum 📈",
+            "kariyer": "Bilişim ve veri dünyasını birleştirerek, projelere liderlik etmek ve sadece geliştirmekle kalmayıp o projeyi sahiplenerek başarıya taşımak istiyorum 🚀",
 
             // === Kişilik ===
             "güçlü yön": "Hızlı adaptasyon, analitik düşünme, takım çalışması ve liderlik güçlü yönlerim 💪",
@@ -930,9 +930,9 @@ function initDigitalTwin() {
             "nasılsın": "İyiyim, teşekkürler! Sana nasıl yardımcı olabilirim? 😊",
 
             // === Neden İşe Almalıyım ===
-            "neden": "Çünkü sadece kod yazmıyorum, projeye ruh katıyorum. Sorunları ortaya çıkmadan fark edip çözüm üretiyorum. Takım arkadaşı arıyorsan doğru yerdesin! 🚀",
-            "neden işe alayım": "Problem çözme odaklıyım, hızlı öğreniyorum ve projenin başarısı için gerçekten heyecan duyuyorum. Teknofest yarı finaline çıkan projede çalıştım! 🏆",
-            "işe al": "Veri analizi, web geliştirme ve oyun tasarımı yapabiliyorum. Multidisipliner bakış açısı sunuyorum. Görüşmeye hazırım! 💼"
+            "neden": "Çünkü hala bu soruyu sormanız, projenizi zirveye taşıyacak o 'eksik parçayı' henüz bulamadığınızı gösteriyor. Ben o parçayım. Sıradan bir kod yazıcısı değil; veriyi okuyan, tasarımı hisseden ve projenin başarısını kendi başarısı sayan bir oyun kurucuyum. Risk alın, farkı görün. 🚀",
+            "neden işe alayım": "Sıradan bir çalışan değil, projenin mutfağında sorumluluk alan ve vizyon katan bir oyun kurucu arıyorsanız doğru yerdesiniz. Veri, kod ve tasarımı birleştirerek fark yaratıyorum! 🏆",
+            "işe al": "Beni işe almayın, projeye bir 'ortak' ve 'çözüm mimarı' ekleyin. Projenizin başarısı için en az sizin kadar heyecan duyacak o ismi buldunuz! 💼"
         },
         en: {
             "age": "That's personal information, but we can talk about my professional experience! 😊",
@@ -973,9 +973,9 @@ function initDigitalTwin() {
             "what do you know": "I know Python, JavaScript, SQL, R, HTML/CSS. I can do data analysis, text mining, web development, and game design! 💻",
 
             // === Work Experience ===
-            "experience": "I am the founder of LOOP, I did game design at Yaşam Ağacı (Teknofest semi-finals!), I mentored at Global AI Hub. I have internship experience at LC Waikiki and ORMO 💼",
-            "work experience": "I am the founder of LOOP, I did game design at Yaşam Ağacı (Teknofest semi-finals!), I mentored at Global AI Hub. I have internship experience at LC Waikiki and ORMO 💼",
-            "where did you work": "I worked at LOOP (Founder), Yaşam Ağacı (Game Designer), Global AI Hub (Mentor), LC Waikiki (Logistics), and interned at ORMO Group and Orhangazi Municipality 🏢",
+            "experience": "I work on LOOP as a hobby project, took on multidisciplinary roles (design, test, script) at Yaşam Ağacı, and mentored at Global AI Hub. I have operational experience at LC Waikiki and completed internships at ORMO Group and Orhangazi Municipality 💼",
+            "work experience": "I work on LOOP as a hobby project, took on multidisciplinary roles (design, test, script) at Yaşam Ağacı, and mentored at Global AI Hub. I have operational experience at LC Waikiki and completed internships at ORMO Group and Orhangazi Municipality 💼",
+            "where did you work": "LOOP (Hobby), Yaşam Ağacı (Multidisciplinary Developer), Global AI Hub (Mentor), and LC Waikiki (Logistics Operation). I also interned at ORMO Group and Orhangazi Municipality 🏢",
             "job": "I am the founder of LOOP, working on my own startup. Previously, I did game design at Yaşam Ağacı and mentored at Global AI Hub 💼",
 
             // === Projects ===
@@ -989,18 +989,18 @@ function initDigitalTwin() {
             "certification": "I have Python Bootcamp, Big Data & ML on Google Cloud, Data Analysis, Python for ML certifications. I also have a Computer Operator certificate from the Ministry of National Education 📜",
 
             // === Work Preferences ===
-            "remote work": "I am open to remote, hybrid, or on-site work! I can efficiently use asynchronous communication tools 🏠",
-            "remote": "I am open to remote, hybrid, or on-site work! I can communicate effectively with tools like Slack, GitHub 🏠",
+            "remote work": "I am open to remote work and have that discipline. I am currently improving my GitHub skills! 🏠",
+            "remote": "I am open to remote work and have that discipline. I am currently improving my GitHub skills! 🏠",
             "hybrid": "I am open to remote, hybrid, or on-site work! Flexibility is important to me 🔄",
             "on-site": "I am open to remote, hybrid, or on-site work! I can adapt to any model 🏢",
             "office": "I am open to remote, hybrid, or on-site work! I can adapt to any model 🏢",
             "work style": "I am open to remote, hybrid, or on-site work! I am strong in flexibility and adaptation 💪",
 
             // === Goals ===
-            "goal": "In the short term, I want to improve my technical competencies by participating in global projects, and in the long term, I want to establish my own tech startup 🎯",
-            "future": "My biggest dream is to produce projects that will leave a mark in the technology world and mentor young developers 🌟",
-            "plan": "While specializing in data science and artificial intelligence, I want to continue growing my own startup 📈",
-            "career": "I want to create creative projects by combining data science, game design, and web technologies. Entrepreneurship is also among my goals 🚀",
+            "goal": "In the short term, I want to improve my technical competencies in global projects; in the long term, I aim to lead visionary teams and be at the heart of developing impactful products 🎯",
+            "future": "My biggest motivation is to develop high-performance products in a leadership position where I can transfer my technical expertise 🌟",
+            "plan": "While deepening my technical expertise, I am developing a vision to lead teams toward shared goals by taking ownership of projects 📈",
+            "career": "I want to lead projects by combining IT and data, and not just develop but take full ownership of the project to drive it to success 🚀",
 
             // === Personality ===
             "strengths": "Fast adaptation, analytical thinking, teamwork, and leadership are my strengths 💪",
@@ -1013,9 +1013,9 @@ function initDigitalTwin() {
             "linkedin": "LinkedIn: linkedin.com/in/yusufgul 🔗",
 
             // === Why Hire Me ===
-            "why": "Because I don't just write code; I add soul to the project. I identify problems before they arise and create solutions. If you're looking for a teammate, you're in the right place! 🚀",
-            "why should i hire you": "I am problem-solving oriented, a fast learner, and genuinely excited about the success of the project. I worked on a project that reached the Teknofest semi-finals! 🏆",
-            "hire me": "I can do data analysis, web development, and game design. I offer a multidisciplinary perspective. I am ready for an interview! 💼"
+            "why": "Because the fact that you're still asking this shows you haven't found that 'missing piece' to take your project to the top. I am that piece. I'm not just a coder; I'm a playmaker who reads the data, feels the design, and considers the project's success as my own. Take the risk, see the difference. 🚀",
+            "why should i hire you": "If you are looking for a playmaker who takes responsibility and adds vision rather than just an ordinary employee, you are in the right place. I make a difference by combining data, code, and design! 🏆",
+            "hire me": "Don't just hire me, add a 'partner' and 'solution architect' to the project. You've found the person who will be as excited about the project's success as you are! 💼"
         }
     };
 

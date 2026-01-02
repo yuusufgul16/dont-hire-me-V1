@@ -30,14 +30,18 @@ const elements = {
     introStartOverlay: document.getElementById('intro-start-overlay'),
     startVideoBtn: document.getElementById('start-video-btn'),
     introControls: document.querySelector('.intro-controls'),
-    whiteFlash: document.getElementById('white-flash')
+    whiteFlash: document.getElementById('white-flash'),
+
+    // Language Toggle
+    langToggle: document.getElementById('lang-toggle')
 };
 
 // ===== State =====
 let currentIndex = 0;
 let flippedCount = 0;
 let flippedCards = new Set();
-let escapeCount = parseInt(localStorage.getItem('escapeCount') || '47');
+let escapeCount = parseInt(localStorage.getItem('contactCount') || '128');
+let currentLang = localStorage.getItem('preferredLang') || 'tr';
 
 const totalCards = elements.cards.length;
 
@@ -95,8 +99,7 @@ function init() {
         card.addEventListener('click', () => toggleProjectCard(card));
     });
 
-    // Konami code
-    initKonamiCode();
+
 
     // Resize handler for responsive coverflow
     window.addEventListener('resize', () => {
@@ -110,6 +113,12 @@ function init() {
             switchProofTab(targetTab);
         });
     });
+
+    // Language Toggle
+    if (elements.langToggle) {
+        elements.langToggle.addEventListener('click', switchLanguage);
+        updateTranslations(); // Initial translation
+    }
 }
 
 // ===== Create Dots =====
@@ -294,17 +303,24 @@ function flipCard(card, index) {
 
 // ===== CTA Handlers =====
 function handleYesClick() {
+    escapeCount++;
+    localStorage.setItem('contactCount', escapeCount);
+    elements.escapeNumber.textContent = escapeCount;
     elements.contactReveal.classList.add('visible');
     elements.btnYes.style.display = 'none';
     elements.btnNo.style.display = 'none';
     createConfetti();
+
+    // Google Analytics Event
+    if (typeof gtag === 'function') {
+        gtag('event', 'contact_click', {
+            'event_category': 'Engagement',
+            'event_label': 'Yes Button'
+        });
+    }
 }
 
 function handleNoClick() {
-    escapeCount++;
-    localStorage.setItem('escapeCount', escapeCount);
-    elements.escapeNumber.textContent = escapeCount;
-
     elements.btnNo.style.animation = 'shake 0.5s ease';
 
     const noTexts = [
@@ -416,37 +432,7 @@ function observeElements() {
     });
 }
 
-// ===== Konami Code =====
-function initKonamiCode() {
-    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-    let konamiIndex = 0;
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === konamiCode[konamiIndex]) {
-            konamiIndex++;
-            if (konamiIndex === konamiCode.length) {
-                document.body.style.filter = 'hue-rotate(180deg)';
-                const msg = document.createElement('div');
-                msg.style.cssText = `
-                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                    background: #000; border: 2px solid #0ff; padding: 40px; border-radius: 20px;
-                    z-index: 100000; text-align: center; box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
-                `;
-                msg.innerHTML = `
-                    <h2 style="color: #0ff; margin-bottom: 15px;">🎮 KONAMI KODU AÇILDI!</h2>
-                    <p style="color: #fff;">Gerçek bir gamer olduğunuz kanıtlandı.</p>
-                    <button onclick="this.parentElement.remove(); document.body.style.filter = '';" 
-                            style="margin-top: 20px; padding: 10px 30px; background: #0ff; border: none; 
-                                   border-radius: 25px; cursor: pointer; font-weight: bold;">Kapat</button>
-                `;
-                document.body.appendChild(msg);
-                konamiIndex = 0;
-            }
-        } else {
-            konamiIndex = 0;
-        }
-    });
-}
 
 // ===== Switch Proof Tab =====
 function switchProofTab(tabName) {
@@ -478,6 +464,74 @@ function switchProofTab(tabName) {
     });
 }
 
+// ===== Language Switching =====
+function switchLanguage() {
+    currentLang = currentLang === 'tr' ? 'en' : 'tr';
+    localStorage.setItem('preferredLang', currentLang);
+    updateTranslations();
+
+    // Google Analytics Event
+    if (typeof gtag === 'function') {
+        gtag('event', 'language_switch', {
+            'language': currentLang
+        });
+    }
+}
+
+function updateTranslations() {
+    // Update button text
+    const langBtnText = elements.langToggle.querySelector('.lang-text');
+    if (langBtnText) {
+        langBtnText.textContent = currentLang === 'tr' ? 'EN' : 'TR';
+    }
+
+    // Update HTML lang attribute
+    document.documentElement.lang = currentLang;
+
+    // Update all elements with data-tr and data-en
+    document.querySelectorAll('[data-tr]').forEach(el => {
+        const text = el.getAttribute(`data-${currentLang}`);
+        if (text) {
+            // Handle placeholders if it's an input
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = text;
+            } else if (el.classList.contains('glitch-text')) {
+                el.textContent = text;
+                el.setAttribute('data-text', text);
+            } else {
+                el.innerHTML = text; // Use innerHTML to support <br> in some translations
+            }
+        }
+    });
+
+    // Update Digital Twin welcome message if open
+    updateTwinLanguage();
+}
+
+function updateTwinLanguage() {
+    const twinInput = document.getElementById('twin-input');
+    if (twinInput) {
+        twinInput.placeholder = currentLang === 'tr' ? "Yusuf'a bir soru sor..." : "Ask Yusuf a question...";
+    }
+
+    const twinNotification = document.getElementById('twin-notification');
+    if (twinNotification) {
+        twinNotification.textContent = currentLang === 'tr' ? "Merhaba! Ben Yusuf. Merak ettiğin bir şeyi sormak ister misin?" : "Hi! I'm Yusuf. Would you like to ask me anything?";
+    }
+
+    // Update initial message in chat if no messages except welcome
+    const twinChat = document.getElementById('twin-chat');
+    if (twinChat && twinChat.children.length === 1 && twinChat.children[0].classList.contains('twin-message')) {
+        twinChat.children[0].textContent = currentLang === 'tr' ? "Merhaba! Ben Yusuf. Merak ettiğin bir şeyi sormak ister misin?" : "Hi! I'm Yusuf. Would you like to ask me anything?";
+    }
+
+    // Update social divider in twin chat if exists
+    const socialDivider = document.querySelector('.twin-social-divider span');
+    if (socialDivider) {
+        socialDivider.textContent = currentLang === 'tr' ? "Benimle iletişime geç" : "Contact me";
+    }
+}
+
 // ===== Digital Twin Initialization =====
 function initDigitalTwin() {
     const twinBubble = document.getElementById('twin-bubble');
@@ -497,13 +551,41 @@ function initDigitalTwin() {
             location: "Türkiye",
             email: "zyusuf_16@hotmail.com",
             linkedin: "https://www.linkedin.com/in/yusufgul/",
-            github: "https://github.com/yuusufgul16"
+            github: "https://github.com/yuusufgul16",
+            dijitalBio: "https://dijital.bio/yusufgul"
         },
         education: {
             university: "Bilecik Şeyh Edebali Üniversitesi",
             department: "Yönetim Bilişim Sistemleri",
-            graduationYear: "2024"
+            universityYears: "2020 - 2024",
+            gpa: "3.42",
+            activities: "Endüstri 4.0 ve Siber Güvenlik Kulübü",
+            highSchool: "Orhangazi Mesleki ve Teknik Anadolu Lisesi",
+            highSchoolDepartment: "Bilişim Teknolojileri / Web Tasarım ve Programlama",
+            highSchoolYears: "2015 - 2019",
+            highSchoolGrade: "88.82",
+            highSchoolNote: "Okul Birincisi"
         },
+        honors: [
+            {
+                title: "Onur Belgesi",
+                issuer: "Bilecik Şeyh Edebali Üniversitesi",
+                year: "2022-2023 Eğitim Öğretim Yılı",
+                date: "Haziran 2023"
+            },
+            {
+                title: "Yüksek Onur Belgesi",
+                issuer: "Bilecik Şeyh Edebali Üniversitesi",
+                year: "2020-2021 Eğitim Öğretim Yılı",
+                date: "Haziran 2021"
+            },
+            {
+                title: "Okul Birinciliği",
+                issuer: "Orhangazi Mesleki ve Teknik Anadolu Lisesi",
+                year: "Anadolu Teknik Programı",
+                date: "Lise Mezuniyeti"
+            }
+        ],
         military: {
             status: "Tamamlandı",
             unit: "1'inci Ordu Tatbikat Kontrol Merkezi Komutanlığı",
@@ -670,10 +752,18 @@ function initDigitalTwin() {
 
     // ===== Hazır Cevaplar (Gemini yoksa fallback) =====
     const answers = {
-        neden: "Çünkü ben sadece kod yazmıyorum, projeye bir ruh katıyorum. Sorunları henüz ortaya çıkmadan fark edip çözüm üretiyorum. Sıradan bir çalışan değil, projenin başarısı için en az senin kadar heyecan duyan bir takım arkadaşı arıyorsan doğru yerdesin.",
-        stack: "Öncelikle Modern JavaScript (ES6+), React ve Node.js ekosistemine çok hakimim. Tasarım tarafında CSS/SCSS ile harikalar yaratabilirim. Ayrıca Python ve Veri Analizi konularında da kendimi geliştirmeye devam ediyorum. Her zaman yeni teknolojileri öğrenmeye açığım!",
-        remote: "Evet, kesinlikle! Uzun süredir uzaktan çalışma disiplinine sahibim. Asenkron iletişim araçlarını (Slack, Jira, GitHub vb.) ustalıkla kullanıyorum. Dünyanın neresinde olursan ol, aynı ofisteymişiz gibi verimli çalışabiliriz.",
-        hedef: "Kısa vadede, global projelerde yer alarak teknik yetkinliklerimi en üst seviyeye çıkarmak istiyorum. Uzun vadede ise, teknoloji dünyasında iz bırakacak kendi girişimimi hayata geçirmek ve genç geliştiricilere mentorluk yapmak en büyük hayalim."
+        tr: {
+            neden: "Çünkü ben sadece kod yazmıyorum, projeye bir ruh katıyorum. Sorunları henüz ortaya çıkmadan fark edip çözüm üretiyorum. Sıradan bir çalışan değil, projenin başarısı için en az senin kadar heyecan duyan bir takım arkadaşı arıyorsan doğru yerdesin. 🚀",
+            stack: "Öncelikle Modern JavaScript (ES6+), React ve Node.js ekosistemine çok hakimim. Tasarım tarafında CSS/SCSS ile harikalar yaratabilirim. Ayrıca Python ve Veri Analizi konularında da kendimi geliştirmeye devam ediyorum. Her zaman yeni teknolojileri öğrenmeye açığım! 🛠️",
+            remote: "Evet, kesinlikle! Uzun süredir uzaktan çalışma disiplinine sahibim. Asenkron iletişim araçlarını (Slack, Jira, GitHub vb.) ustalıkla kullanıyorum. Dünyanın neresinde olursan ol, aynı ofisteymişiz gibi verimli çalışabiliriz. 🏠",
+            hedef: "Kısa vadede, global projelerde yer alarak teknik yetkinliklerimi en üst seviyeye çıkarmak istiyorum. Uzun vadede ise, teknoloji dünyasında iz bırakacak kendi girişimimi hayata geçirmek ve genç geliştiricilere mentorluk yapmak en büyük hayalim. 🎯"
+        },
+        en: {
+            neden: "Because I don't just write code; I add soul to the project. I identify problems before they arise and create solutions. If you're looking for a teammate who's as excited about the project's success as you are, you're in the right place. 🚀",
+            stack: "I'm highly proficient in the Modern JavaScript (ES6+), React, and Node.js ecosystem. I can work wonders with CSS/SCSS on the design side. I'm also continuing to develop myself in Python and Data Analysis. I'm always open to learning new technologies! 🛠️",
+            remote: "Yes, absolutely! I've had a remote work discipline for a long time. I use asynchronous communication tools (Slack, Jira, GitHub, etc.) expertly. No matter where you are in the world, we can work as efficiently as if we were in the same office. 🏠",
+            hedef: "In the short term, I want to reach the highest level of technical competence by participating in global projects. In the long term, my biggest dream is to launch my own startup that will leave a mark in the tech world and mentor young developers. 🎯"
+        }
     };
 
     // ===== CACHE SİSTEMİ =====
@@ -737,111 +827,196 @@ function initDigitalTwin() {
 
     // ===== GENİŞLETİLMİŞ CUSTOM FAQ =====
     const customFAQ = {
-        // === Hassas/Kişisel Bilgiler ===
-        "yaş": "Bu kişisel bir bilgi, ama profesyonel deneyimim hakkında konuşabiliriz! 😊",
-        "kaç yaşında": "Bu kişisel bir bilgi, ama profesyonel deneyimim hakkında konuşabiliriz! 😊",
-        "evli": "Özel hayatımı paylaşmayı tercih etmiyorum, ama iş hayatımda çok disiplinli ve odaklıyım! 💼",
-        "çocuk": "Kişisel durumum iş performansımı etkilemiyor, %100 profesyonel odağım var! 🎯",
-        "maaş": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
-        "ücret": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
-        "salary": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
+        tr: {
+            // === Hassas/Kişisel Bilgiler ===
+            "yaş": "Bu kişisel bir bilgi, ama profesyonel deneyimim hakkında konuşabiliriz! 😊",
+            "kaç yaşında": "Bu kişisel bir bilgi, ama profesyonel deneyimim hakkında konuşabiliriz! 😊",
+            "evli": "Özel hayatımı paylaşmayı tercih etmiyorum, ama iş hayatımda çok disiplinli ve odaklıyım! 💼",
+            "çocuk": "Kişisel durumum iş performansımı etkilemiyor, %100 profesyonel odağım var! 🎯",
+            "maaş": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
+            "ücret": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
+            "salary": "Piyasa standartlarına uygun beklentim var. Projenin vizyonu ve gelişim fırsatları en az maaş kadar önemli! 💰",
 
-        // === Kişisel Bilgiler ===
-        "adın ne": "Ben Yusuf Gül, Yazılım Geliştirici ve Veri Analistiyim! 👋",
-        "ismin ne": "Ben Yusuf Gül, Yazılım Geliştirici ve Veri Analistiyim! 👋",
-        "kimsin": "Ben Yusuf Gül, Yazılım Geliştirici ve Veri Analistiyim! Veri bilimi, oyun tasarımı ve web teknolojileriyle yaratıcı projeler üretiyorum 🚀",
+            // === Kişisel Bilgiler ===
+            "adın ne": "Ben Yusuf Gül, Yazılım Geliştirici ve Veri Analistiyim! 👋",
+            "ismin ne": "Ben Yusuf Gül, Yazılım Geliştirici ve Veri Analistiyim! 👋",
+            "kimsin": "Ben Yusuf Gül, Yazılım Geliştirici ve Veri Analistiyim! Veri bilimi, oyun tasarımı ve web teknolojileriyle yaratıcı projeler üretiyorum 🚀",
 
-        // === Geniş Tanıtım Soruları ===
-        "kendini tanıt": "Ben Yusuf Gül! 2024 Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. Python, JavaScript, SQL ve R biliyorum. Veri analizi, web geliştirme ve kendi çapımda oyun tasarımı yapabiliyorum. Teknofest yarı finaline çıkan 'Kurtuluş' oyununda görev aldım. Şu an LOOP adlı kendi girişimim üzerinde hobi olarak çalışıyorum. Global AI Hub'da mentorluk yaptım. Askerliğimi tamamladım. Uzaktan, hibrit veya yerinde çalışmaya açığım! 🚀",
-        "kendinden bahset": "Ben Yusuf Gül! 2024 Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. Python, JavaScript, SQL ve R biliyorum. Veri analizi, web geliştirme ve kendi çapımda oyun tasarımı yapabiliyorum. Teknofest yarı finaline çıkan 'Kurtuluş' oyununda görev aldım. Şu an LOOP adlı kendi girişimim üzerinde hobi olarak çalışıyorum. Global AI Hub'da mentorluk yaptım. Askerliğimi tamamladım. Uzaktan, hibrit veya yerinde çalışmaya açığım! 🚀",
-        "hakkında bilgi": "Ben Yusuf Gül! 2024 Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. Python, JavaScript, SQL ve R biliyorum. Veri analizi, web geliştirme ve kendi çapımda oyun tasarımı yapabiliyorum. Teknofest yarı finaline çıkan 'Kurtuluş' oyununda görev aldım. Şu an LOOP adlı kendi girişimim üzerinde hobi olarak çalışıyorum. Global AI Hub'da mentorluk yaptım. Askerliğimi tamamladım. Uzaktan, hibrit veya yerinde çalışmaya açığım! 🚀",
-        "özet": "Yazılım Geliştirici & Veri Analisti. YBS mezunu. Python, JS, SQL, R. Teknofest yarı finalisti (Kurtuluş Oyunu). LOOP kurucusu. Global AI Hub mentoru. Askerlik tamamlandı. Uzaktan, hibrit veya yerinde çalışmaya açığım! 💼",
-        "cv": "Yazılım Geliştirici & Veri Analisti. 2024 YBS mezunu. Python, JavaScript, SQL, R, HTML/CSS. Projeler: Kurtuluş (Teknofest yarı finali), Endemika, YouTube Metin Madenciliği, Crystal Miner. Deneyim: LOOP Kurucu, Yaşam Ağacı Oyun Tasarımcısı, Global AI Hub Mentor. Sertifikalar: Python Bootcamp, Google Cloud ML 📄",
-        "resume": "Yazılım Geliştirici & Veri Analisti. 2024 YBS mezunu. Python, JavaScript, SQL, R, HTML/CSS. Projeler: Kurtuluş (Teknofest yarı finali), Endemika, YouTube Metin Madenciliği, Crystal Miner. Deneyim: LOOP Kurucu, Yaşam Ağacı Oyun Tasarımcısı, Global AI Hub Mentor. Sertifikalar: Python Bootcamp, Google Cloud ML 📄",
-        "anlat": "Ben Yusuf Gül! Yazılım geliştirici ve veri analistiyim. Bilecik Şeyh Edebali Üniversitesi YBS 2024 mezunuyum. Python, JavaScript, SQL biliyorum. Teknofest yarı finaline çıkan Kurtuluş oyununda çalıştım. Şu an LOOP girişimimin kurucusuyum. Veri bilimi, oyun tasarımı ve web geliştirme alanlarında projeler üretiyorum 🎯",
-        "özetle": "Yazılım Geliştirici & Veri Analisti. YBS mezunu. Python, JS, SQL, R. Teknofest yarı finalisti. LOOP kurucusu. Askerlik tamam. Uzaktan, hibrit veya yerinde çalışmaya açığım! 💼",
-        "bana kendini tanıt": "Ben Yusuf Gül! 2024 Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. Python, JavaScript, SQL ve R biliyorum. Veri analizi, web geliştirme ve oyun tasarımı yapabiliyorum. Teknofest yarı finaline çıkan 'Kurtuluş' oyununda görev aldım. Şu an LOOP adlı kendi girişimim üzerinde çalışıyorum. Global AI Hub'da mentorluk yaptım. Askerliğimi tamamladım. Uzaktan, hibrit veya yerinde çalışmaya açığım! 🚀",
-        "tanıt": "Ben Yusuf Gül! Yazılım geliştirici ve veri analistiyim. Bilecik Şeyh Edebali Üniversitesi YBS 2024 mezunuyum. Python, JavaScript, SQL biliyorum. Teknofest yarı finaline çıkan Kurtuluş oyununda çalıştım. LOOP kurucusuyum 🏆",
+            // === Geniş Tanıtım Soruları ===
+            "kendini tanıt": "Ben Yusuf Gül! 2024 Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. Python, JavaScript, SQL ve R biliyorum. Veri analizi, web geliştirme ve kendi çapımda oyun tasarımı yapabiliyorum. Teknofest yarı finaline çıkan 'Kurtuluş' oyununda görev aldım. Şu an LOOP adlı kendi girişimim üzerinde hobi olarak çalışıyorum. Global AI Hub'da mentorluk yaptım. Askerliğimi tamamladım. Uzaktan, hibrit veya yerinde çalışmaya açığım! 🚀",
+            "kendinden bahset": "Ben Yusuf Gül! 2024 Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. Python, JavaScript, SQL ve R biliyorum. Veri analizi, web geliştirme ve kendi çapımda oyun tasarımı yapabiliyorum. Teknofest yarı finaline çıkan 'Kurtuluş' oyununda görev aldım. Şu an LOOP adlı kendi girişimim üzerinde hobi olarak çalışıyorum. Global AI Hub'da mentorluk yaptım. Askerliğimi tamamladım. Uzaktan, hibrit veya yerinde çalışmaya açığım! 🚀",
+            "hakkında bilgi": "Ben Yusuf Gül! 2024 Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. Python, JavaScript, SQL ve R biliyorum. Veri analizi, web geliştirme ve kendi çapımda oyun tasarımı yapabiliyorum. Teknofest yarı finaline çıkan 'Kurtuluş' oyununda görev aldım. Şu an LOOP adlı kendi girişimim üzerinde hobi olarak çalışıyorum. Global AI Hub'da mentorluk yaptım. Askerliğimi tamamladım. Uzaktan, hibrit veya yerinde çalışmaya açığım! 🚀",
+            "özet": "Yazılım Geliştirici & Veri Analisti. YBS mezunu. Python, JS, SQL, R. Teknofest yarı finalisti (Kurtuluş Oyunu). LOOP kurucusu. Global AI Hub mentoru. Askerlik tamamlandı. Uzaktan, hibrit veya yerinde çalışmaya açığım! 💼",
+            "cv": "Yazılım Geliştirici & Veri Analisti. 2024 YBS mezunu. Python, JavaScript, SQL, R, HTML/CSS. Projeler: Kurtuluş (Teknofest yarı finali), Endemika, YouTube Metin Madenciliği, Crystal Miner. Deneyim: LOOP Kurucu, Yaşam Ağacı Oyun Tasarımcısı, Global AI Hub Mentor. Sertifikalar: Python Bootcamp, Google Cloud ML 📄",
+            "resume": "Yazılım Geliştirici & Veri Analisti. 2024 YBS mezunu. Python, JavaScript, SQL, R, HTML/CSS. Projeler: Kurtuluş (Teknofest yarı finali), Endemika, YouTube Metin Madenciliği, Crystal Miner. Deneyim: LOOP Kurucu, Yaşam Ağacı Oyun Tasarımcısı, Global AI Hub Mentor. Sertifikalar: Python Bootcamp, Google Cloud ML 📄",
+            "anlat": "Ben Yusuf Gül! Yazılım geliştirici ve veri analistiyim. Bilecik Şeyh Edebali Üniversitesi YBS 2024 mezunuyum. Python, JavaScript, SQL biliyorum. Teknofest yarı finaline çıkan Kurtuluş oyununda çalıştım. Şu an LOOP girişimimin kurucusuyum. Veri bilimi, oyun tasarımı ve web geliştirme alanlarında projeler üretiyorum 🎯",
+            "özetle": "Yazılım Geliştirici & Veri Analisti. YBS mezunu. Python, JS, SQL, R. Teknofest yarı finalisti. LOOP kurucusu. Askerlik tamam. Uzaktan, hibrit veya yerinde çalışmaya açığım! 💼",
+            "bana kendini tanıt": "Ben Yusuf Gül! 2024 Bilecik Şeyh Edebali Üniversitesi YBS mezunuyum. Python, JavaScript, SQL ve R biliyorum. Veri analizi, web geliştirme ve oyun tasarımı yapabiliyorum. Teknofest yarı finaline çıkan 'Kurtuluş' oyununda görev aldım. Şu an LOOP adlı kendi girişimim üzerinde çalışıyorum. Global AI Hub'da mentorluk yaptım. Askerliğimi tamamladım. Uzaktan, hibrit veya yerinde çalışmaya açığım! 🚀",
+            "tanıt": "Ben Yusuf Gül! Yazılım geliştirici ve veri analistiyim. Bilecik Şeyh Edebali Üniversitesi YBS 2024 mezunuyum. Python, JavaScript, SQL biliyorum. Teknofest yarı finaline çıkan Kurtuluş oyununda çalıştım. LOOP kurucusuyum 🏆",
 
-        // === Eğitim ===
-        "eğitim": "Bilecik Şeyh Edebali Üniversitesi'nde Yönetim Bilişim Sistemleri okudum, 2024'te mezun oldum 🎓",
-        "üniversite": "Bilecik Şeyh Edebali Üniversitesi'nde Yönetim Bilişim Sistemleri okudum, 2024'te mezun oldum 🎓",
-        "okul": "Bilecik Şeyh Edebali Üniversitesi'nde Yönetim Bilişim Sistemleri okudum, 2024'te mezun oldum 🎓",
-        "mezun": "2024'te Bilecik Şeyh Edebali Üniversitesi Yönetim Bilişim Sistemleri bölümünden mezun oldum 🎓",
+            // === Eğitim ===
+            "eğitim": "Bilecik Şeyh Edebali Üniversitesi'nde Yönetim Bilişim Sistemleri okudum, 2024'te mezun oldum 🎓",
+            "üniversite": "Bilecik Şeyh Edebali Üniversitesi'nde Yönetim Bilişim Sistemleri okudum, 2024'te mezun oldum 🎓",
+            "okul": "Bilecik Şeyh Edebali Üniversitesi'nde Yönetim Bilişim Sistemleri okudum, 2024'te mezun oldum 🎓",
+            "mezun": "2024'te Bilecik Şeyh Edebali Üniversitesi Yönetim Bilişim Sistemleri bölümünden mezun oldum 🎓",
 
-        // === Askerlik ===
-        "askerlik": "Askerliğimi tamamladım! 1'inci Ordu Tatbikat Kontrol Merkezi Komutanlığı'nda Onbaşı olarak görev yaptım ⭐",
-        "asker": "Askerliğimi tamamladım! Pınarhisar'da Onbaşı olarak görev yaptım ⭐",
+            // === Askerlik ===
+            "askerlik": "Askerliğimi tamamladım! 1'inci Ordu Tatbikat Kontrol Merkezi Komutanlığı'nda Onbaşı olarak görev yaptım ⭐",
+            "asker": "Askerliğimi tamamladım! Pınarhisar'da Onbaşı olarak görev yaptım ⭐",
 
-        // === Dil Becerileri ===
-        "ingilizce": "A2 seviyesindeyim, aktif olarak geliştiriyorum. Teknik dokümantasyonu rahatlıkla okuyabiliyorum 📚",
-        "english": "A2 seviyesindeyim, aktif olarak geliştiriyorum. Teknik dokümantasyonu rahatlıkla okuyabiliyorum 📚",
-        "dil": "Türkçe ana dilim, İngilizce A2 seviyesinde ve aktif olarak geliştiriyorum 🌍",
+            // === Dil Becerileri ===
+            "ingilizce": "A2 seviyesindeyim, aktif olarak geliştiriyorum. Teknik dokümantasyonu rahatlıkla okuyabiliyorum 📚",
+            "english": "A2 seviyesindeyim, aktif olarak geliştiriyorum. Teknik dokümantasyonu rahatlıkla okuyabiliyorum 📚",
+            "dil": "Türkçe ana dilim, İngilizce A2 seviyesinde ve aktif olarak geliştiriyorum 🌍",
 
-        // === Teknik Beceriler ===
-        "python": "Python benim ana dillerimden biri! Pandas, NumPy, Matplotlib, OpenCV ile çalışıyorum. Veri analizi ve otomasyon projelerinde kullanıyorum 🐍",
-        "javascript": "Modern JavaScript (ES6+) ile frontend geliştirme yapıyorum. HTML/CSS ile birlikte dinamik web uygulamaları oluşturuyorum 💻",
-        "sql": "SQL ile veri tabanı sorguları yazabiliyorum. Veri analizi projelerimde sıkça kullanıyorum 🗄️",
-        "teknoloji": "Python, JavaScript, SQL, HTML/CSS, R biliyorum. Git, VS Code, Jupyter kullanıyorum. Veri bilimi ve web geliştirme odaklıyım 🛠️",
-        "skill": "Python, JavaScript, SQL, HTML/CSS, R biliyorum. Pandas, NumPy, OpenCV gibi kütüphanelerde tecrübeliyim 💪",
-        "yetenek": "Python, JavaScript, SQL, HTML/CSS, R biliyorum. Veri analizi, web geliştirme ve oyun tasarımı yapabiliyorum 🚀",
-        "stack": "Frontend: JavaScript, HTML/CSS. Backend: Python. Veri: SQL, Pandas, NumPy. Araçlar: Git, VS Code, Jupyter 🛠️",
-        "ne biliyorsun": "Python, JavaScript, SQL, R, HTML/CSS biliyorum. Veri analizi, metin madenciliği, web geliştirme ve oyun tasarımı yapabiliyorum! 💻",
+            // === Teknik Beceriler ===
+            "python": "Python benim ana dillerimden biri! Pandas, NumPy, Matplotlib, OpenCV ile çalışıyorum. Veri analizi ve otomasyon projelerinde kullanıyorum 🐍",
+            "javascript": "Modern JavaScript (ES6+) ile frontend geliştirme yapıyorum. HTML/CSS ile birlikte dinamik web uygulamaları oluşturuyorum 💻",
+            "sql": "SQL ile veri tabanı sorguları yazabiliyorum. Veri analizi projelerimde sıkça kullanıyorum 🗄️",
+            "teknoloji": "Python, JavaScript, SQL, HTML/CSS, R biliyorum. Git, VS Code, Jupyter kullanıyorum. Veri bilimi ve web geliştirme odaklıyım 🛠️",
+            "skill": "Python, JavaScript, SQL, HTML/CSS, R biliyorum. Pandas, NumPy, OpenCV gibi kütüphanelerde tecrübeliyim 💪",
+            "yetenek": "Python, JavaScript, SQL, HTML/CSS, R biliyorum. Veri analizi, web geliştirme ve oyun tasarımı yapabiliyorum 🚀",
+            "stack": "Frontend: JavaScript, HTML/CSS. Backend: Python. Veri: SQL, Pandas, NumPy. Araçlar: Git, VS Code, Jupyter 🛠️",
+            "ne biliyorsun": "Python, JavaScript, SQL, R, HTML/CSS biliyorum. Veri analizi, metin madenciliği, web geliştirme ve oyun tasarımı yapabiliyorum! 💻",
 
-        // === İş Deneyimi ===
-        "deneyim": "LOOP'un kurucusuyum, Yaşam Ağacı'nda oyun tasarımı yaptım (Teknofest yarı finali!), Global AI Hub'da mentor oldum. LC Waikiki ve ORMO'da staj deneyimim var 💼",
-        "tecrübe": "LOOP'un kurucusuyum, Yaşam Ağacı'nda oyun tasarımı yaptım (Teknofest yarı finali!), Global AI Hub'da mentor oldum. LC Waikiki ve ORMO'da staj deneyimim var 💼",
-        "experience": "LOOP'un kurucusuyum, Yaşam Ağacı'nda oyun tasarımı yaptım (Teknofest yarı finali!), Global AI Hub'da mentor oldum 💼",
-        "nerede çalıştın": "LOOP (Kurucu), Yaşam Ağacı (Oyun Tasarımcısı), Global AI Hub (Mentor), LC Waikiki (Lojistik), ORMO Group ve Orhangazi Belediyesi'nde staj yaptım 🏢",
-        "iş": "LOOP'un kurucusuyum, kendi girişimim üzerinde çalışıyorum. Daha önce Yaşam Ağacı'nda oyun tasarımı, Global AI Hub'da mentorluk yaptım 💼",
+            // === İş Deneyimi ===
+            "deneyim": "LOOP'un kurucusuyum, Yaşam Ağacı'nda oyun tasarımı yaptım (Teknofest yarı finali!), Global AI Hub'da mentor oldum. LC Waikiki ve ORMO'da staj deneyimim var 💼",
+            "tecrübe": "LOOP'un kurucusuyum, Yaşam Ağacı'nda oyun tasarımı yaptım (Teknofest yarı finali!), Global AI Hub'da mentor oldum. LC Waikiki ve ORMO'da staj deneyimim var 💼",
+            "experience": "LOOP'un kurucusuyum, Yaşam Ağacı'nda oyun tasarımı yaptım (Teknofest yarı finali!), Global AI Hub'da mentor oldum 💼",
+            "nerede çalıştın": "LOOP (Kurucu), Yaşam Ağacı (Oyun Tasarımcısı), Global AI Hub (Mentor), LC Waikiki (Lojistik), ORMO Group ve Orhangazi Belediyesi'nde staj yaptım 🏢",
+            "iş": "LOOP'un kurucusuyum, kendi girişimim üzerinde çalışıyorum. Daha önce Yaşam Ağacı'nda oyun tasarımı, Global AI Hub'da mentorluk yaptım 💼",
 
-        // === Projeler ===
-        "proje": "Kurtuluş Oyunu (Teknofest yarı finali!), Endemika, YouTube Metin Madenciliği, Crystal Miner gibi projelerim var. GitHub'dan inceleyebilirsin! 🎮",
-        "project": "Kurtuluş Oyunu (Teknofest yarı finali!), Endemika, YouTube Metin Madenciliği, Crystal Miner gibi projelerim var! 🎮",
-        "kurtuluş": "Kurtuluş, BM Sürdürülebilir Kalkınma Hedefleri temalı mobil eğitim oyunu. Senaryo, tasarım ve test süreçlerinde görev aldım. Teknofest yarı finaline çıktık! 🏆",
-        "endemika": "Endemika, Bilecik'in endemik bitkilerini tanıtan web platformu. QR kodlu saha erişimi ve AI ile bitki görsellerini videoya çevirdik 🌿",
-        "crystal miner": "Crystal Miner, Eratosthenes Kalburu algoritmasını oyunlaştıran eğitici bir asal sayı bulma oyunu 💎",
-        "github": "GitHub: github.com/yuusufgul16 - Projelerimi buradan inceleyebilirsin! 🔗",
+            // === Projeler ===
+            "proje": "Kurtuluş Oyunu (Teknofest yarı finali!), Endemika, YouTube Metin Madenciliği, Crystal Miner gibi projelerim var. GitHub'dan inceleyebilirsin! 🎮",
+            "project": "Kurtuluş Oyunu (Teknofest yarı finali!), Endemika, YouTube Metin Madenciliği, Crystal Miner gibi projelerim var! 🎮",
+            "kurtuluş": "Kurtuluş, BM Sürdürülebilir Kalkınma Hedefleri temalı mobil eğitim oyunu. Senaryo, tasarım ve test süreçlerinde görev aldım. Teknofest yarı finaline çıktık! 🏆",
+            "endemika": "Endemika, Bilecik'in endemik bitkilerini tanıtan web platformu. QR kodlu saha erişimi ve AI ile bitki görsellerini videoya çevirdik 🌿",
+            "crystal miner": "Crystal Miner, Eratosthenes Kalburu algoritmasını oyunlaştıran eğitici bir asal sayı bulma oyunu 💎",
+            "github": "GitHub: github.com/yuusufgul16 - Projelerimi buradan inceleyebilirsin! 🔗",
 
-        // === Sertifikalar ===
-        "sertifika": "Python Bootcamp, Big Data & ML on Google Cloud, Veri Analizi, Python for ML sertifikalarım var. Milli Eğitim'den Bilgisayar İşletmenliği belgem de mevcut 📜",
-        "certificate": "Python Bootcamp, Big Data & ML on Google Cloud, Veri Analizi sertifikalarım var 📜",
+            // === Sertifikalar ===
+            "sertifika": "Python Bootcamp, Big Data & ML on Google Cloud, Veri Analizi, Python for ML sertifikalarım var. Milli Eğitim'den Bilgisayar İşletmenliği belgem de mevcut 📜",
+            "certificate": "Python Bootcamp, Big Data & ML on Google Cloud, Veri Analizi sertifikalarım var 📜",
 
-        // === Çalışma Tercihleri ===
-        "remote": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Asenkron iletişim araçlarını verimli kullanabilirim 🏠",
-        "uzaktan": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Slack, GitHub gibi araçlarla etkili iletişim kurabilirim 🏠",
-        "hibrit": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Esneklik benim için önemli 🔄",
-        "yerinde": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Her modele adapte olabilirim 🏢",
-        "ofis": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Her modele adapte olabilirim 🏢",
-        "çalışma şekli": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Esneklik ve adaptasyon konusunda güçlüyüm �",
+            // === Çalışma Tercihleri ===
+            "remote": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Asenkron iletişim araçlarını verimli kullanabilirim 🏠",
+            "uzaktan": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Slack, GitHub gibi araçlarla etkili iletişim kurabilirim 🏠",
+            "hibrit": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Esneklik benim için önemli 🔄",
+            "yerinde": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Her modele adapte olabilirim 🏢",
+            "ofis": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Her modele adapte olabilirim 🏢",
+            "çalışma şekli": "Uzaktan, hibrit veya yerinde çalışmaya açığım! Esneklik ve adaptasyon konusunda güçlüyüm 💪",
 
-        // === Hedefler ===
-        "hedef": "Kısa vadede global projelerde yer alarak teknik yetkinliklerimi geliştirmek, uzun vadede kendi tech startup'ımı kurmak istiyorum 🎯",
-        "gelecek": "Teknoloji dünyasında iz bırakacak projeler üretmek ve genç geliştiricilere mentorluk yapmak en büyük hayalim 🌟",
-        "plan": "Veri bilimi ve yapay zeka alanında uzmanlaşırken, kendi girişimimi büyütmeye devam etmek istiyorum 📈",
-        "kariyer": "Veri bilimi, oyun tasarımı ve web teknolojilerini birleştirerek yaratıcı projeler üretmek istiyorum. Girişimcilik de hedeflerim arasında 🚀",
+            // === Hedefler ===
+            "hedef": "Kısa vadede global projelerde yer alarak teknik yetkinliklerimi geliştirmek, uzun vadede kendi tech startup'ımı kurmak istiyorum 🎯",
+            "gelecek": "Teknoloji dünyasında iz bırakacak projeler üretmek ve genç geliştiricilere mentorluk yapmak en büyük hayalim 🌟",
+            "plan": "Veri bilimi ve yapay zeka alanında uzmanlaşırken, kendi girişimimi büyütmeye devam etmek istiyorum 📈",
+            "kariyer": "Veri bilimi, oyun tasarımı ve web teknolojilerini birleştirerek yaratıcı projeler üretmek istiyorum. Girişimcilik de hedeflerim arasında 🚀",
 
-        // === Kişilik ===
-        "güçlü yön": "Hızlı adaptasyon, analitik düşünme, takım çalışması ve liderlik güçlü yönlerim 💪",
-        "zayıf yön": "Bazen aşırı detaycı olabiliyorum, ama bu projelerin kalitesini artırıyor 😅",
-        "nasıl çalışırsın": "Detaycı, problem çözücü ve sürekli öğrenen bir yaklaşımım var. Karmaşık problemleri basit çözümlerle aşmayı seviyorum 🧠",
+            // === Kişilik ===
+            "güçlü yön": "Hızlı adaptasyon, analitik düşünme, takım çalışması ve liderlik güçlü yönlerim 💪",
+            "zayıf yön": "Bazen aşırı detaycı olabiliyorum, ama bu projelerin kalitesini artırıyor 😅",
+            "nasıl çalışırsın": "Detaycı, problem çözücü ve sürekli öğrenen bir yaklaşımım var. Karmaşık problemleri basit çözümlerle aşmayı seviyorum 🧠",
 
-        // === İletişim ===
-        "iletişim": "Email: zyusuf_16@hotmail.com | LinkedIn: linkedin.com/in/yusufgul | GitHub: github.com/yuusufgul16 📧",
-        "email": "Email adresim: zyusuf_16@hotmail.com 📧",
-        "linkedin": "LinkedIn: linkedin.com/in/yusufgul 🔗",
-        "contact": "Email: zyusuf_16@hotmail.com | LinkedIn: linkedin.com/in/yusufgul 📧",
+            // === İletişim ===
+            "iletişim": "Email: zyusuf_16@hotmail.com | LinkedIn: linkedin.com/in/yusufgul | GitHub: github.com/yuusufgul16 📧",
+            "email": "Email adresim: zyusuf_16@hotmail.com 📧",
+            "linkedin": "LinkedIn: linkedin.com/in/yusufgul 🔗",
+            "contact": "Email: zyusuf_16@hotmail.com | LinkedIn: linkedin.com/in/yusufgul 📧",
 
-        // === Selamlaşma ===
-        "merhaba": "Merhaba! Ben Yusuf'un dijital ikizi. Bana her şeyi sorabilirsin! 👋",
-        "selam": "Selam! Yusuf hakkında ne öğrenmek istersin? 👋",
-        "hello": "Hello! I'm Yusuf's digital twin. Feel free to ask anything! 👋",
-        "nasılsın": "İyiyim, teşekkürler! Sana nasıl yardımcı olabilirim? 😊",
+            // === Selamlaşma ===
+            "merhaba": "Merhaba! Ben Yusuf'un dijital ikizi. Bana her şeyi sorabilirsin! 👋",
+            "selam": "Selam! Yusuf hakkında ne öğrenmek istersin? 👋",
+            "hello": "Hello! I'm Yusuf's digital twin. Feel free to ask anything! 👋",
+            "nasılsın": "İyiyim, teşekkürler! Sana nasıl yardımcı olabilirim? 😊",
 
-        // === Neden İşe Almalıyım ===
-        "neden": "Çünkü sadece kod yazmıyorum, projeye ruh katıyorum. Sorunları ortaya çıkmadan fark edip çözüm üretiyorum. Takım arkadaşı arıyorsan doğru yerdesin! 🚀",
-        "neden işe alayım": "Problem çözme odaklıyım, hızlı öğreniyorum ve projenin başarısı için gerçekten heyecan duyuyorum. Teknofest yarı finaline çıkan projede çalıştım! 🏆",
-        "işe al": "Veri analizi, web geliştirme ve oyun tasarımı yapabiliyorum. Multidisipliner bakış açısı sunuyorum. Görüşmeye hazırım! 💼"
+            // === Neden İşe Almalıyım ===
+            "neden": "Çünkü sadece kod yazmıyorum, projeye ruh katıyorum. Sorunları ortaya çıkmadan fark edip çözüm üretiyorum. Takım arkadaşı arıyorsan doğru yerdesin! 🚀",
+            "neden işe alayım": "Problem çözme odaklıyım, hızlı öğreniyorum ve projenin başarısı için gerçekten heyecan duyuyorum. Teknofest yarı finaline çıkan projede çalıştım! 🏆",
+            "işe al": "Veri analizi, web geliştirme ve oyun tasarımı yapabiliyorum. Multidisipliner bakış açısı sunuyorum. Görüşmeye hazırım! 💼"
+        },
+        en: {
+            "age": "That's personal information, but we can talk about my professional experience! 😊",
+            "how old": "That's personal information, but we can talk about my professional experience! 😊",
+            "married": "I prefer not to share my private life, but I am very disciplined and focused in my work life! 💼",
+            "children": "My personal status does not affect my work performance; I have a 100% professional focus! 🎯",
+            "salary": "I have expectations in line with market standards. The project's vision and growth opportunities are at least as important as the salary! 💰",
+            "wage": "I have expectations in line with market standards. The project's vision and growth opportunities are at least as important as the salary! 💰",
+            "name": "I'm Yusuf Gül, a Software Developer and Data Analyst! 👋",
+            "who are you": "I'm Yusuf Gül, a Software Developer and Data Analyst! I create creative projects with data science, game design, and web technologies 🚀",
+            "introduce yourself": "I'm Yusuf Gül! I graduated from Bilecik Seyh Edebali University in MIS in 2024. I know Python, JavaScript, SQL, and R. I can do data analysis, web development, and game design. I worked on the 'Kurtulus' game, which reached the Teknofest semi-finals. Currently, I'm working on my own startup called LOOP. I mentored at Global AI Hub. I've finished my military service. I'm open to remote, hybrid, or on-site work! 🚀",
+            "hello": "Hello! I'm Yusuf's digital twin. You can ask me anything! 👋",
+            "hi": "Hi! What would you like to learn about Yusuf? 👋",
+            "how are you": "I'm fine, thanks! How can I help you? 😊",
+
+            // === Education ===
+            "education": "I studied Management Information Systems at Bilecik Seyh Edebali University and graduated in 2024 🎓",
+            "university": "I studied Management Information Systems at Bilecik Seyh Edebali University and graduated in 2024 🎓",
+            "school": "I studied Management Information Systems at Bilecik Seyh Edebali University and graduated in 2024 🎓",
+            "graduate": "I graduated from Bilecik Seyh Edebali University, Department of Management Information Systems in 2024 🎓",
+
+            // === Military Service ===
+            "military service": "I have completed my military service! I served as a Corporal at the 1st Army Exercise Control Center Command ⭐",
+            "military": "I have completed my military service! I served as a Corporal in Pınarhisar ⭐",
+
+            // === Language Skills ===
+            "english level": "I am at A2 level, actively improving. I can comfortably read technical documentation 📚",
+            "language": "Turkish is my native language, English is at A2 level and I am actively improving it 🌍",
+
+            // === Technical Skills ===
+            "python": "Python is one of my main languages! I work with Pandas, NumPy, Matplotlib, OpenCV. I use it in data analysis and automation projects 🐍",
+            "javascript": "I do frontend development with Modern JavaScript (ES6+). I create dynamic web applications with HTML/CSS 💻",
+            "sql": "I can write database queries with SQL. I frequently use it in my data analysis projects 🗄️",
+            "technology": "I know Python, JavaScript, SQL, HTML/CSS, R. I use Git, VS Code, Jupyter. I focus on data science and web development 🛠️",
+            "skill": "I know Python, JavaScript, SQL, HTML/CSS, R. I have experience with libraries like Pandas, NumPy, OpenCV 💪",
+            "abilities": "I can do data analysis, web development, and game design with Python, JavaScript, SQL, HTML/CSS, R 🚀",
+            "stack": "Frontend: JavaScript, HTML/CSS. Backend: Python. Data: SQL, Pandas, NumPy. Tools: Git, VS Code, Jupyter 🛠️",
+            "what do you know": "I know Python, JavaScript, SQL, R, HTML/CSS. I can do data analysis, text mining, web development, and game design! 💻",
+
+            // === Work Experience ===
+            "experience": "I am the founder of LOOP, I did game design at Yaşam Ağacı (Teknofest semi-finals!), I mentored at Global AI Hub. I have internship experience at LC Waikiki and ORMO 💼",
+            "work experience": "I am the founder of LOOP, I did game design at Yaşam Ağacı (Teknofest semi-finals!), I mentored at Global AI Hub. I have internship experience at LC Waikiki and ORMO 💼",
+            "where did you work": "I worked at LOOP (Founder), Yaşam Ağacı (Game Designer), Global AI Hub (Mentor), LC Waikiki (Logistics), and interned at ORMO Group and Orhangazi Municipality 🏢",
+            "job": "I am the founder of LOOP, working on my own startup. Previously, I did game design at Yaşam Ağacı and mentored at Global AI Hub 💼",
+
+            // === Projects ===
+            "project": "I have projects like Kurtuluş Game (Teknofest semi-finals!), Endemika, YouTube Text Mining, Crystal Miner. You can check them on GitHub! 🎮",
+            "kurtulus": "Kurtuluş is a mobile educational game themed on UN Sustainable Development Goals. I took part in scenario, design, and testing processes. We reached the Teknofest semi-finals! 🏆",
+            "endemika": "Endemika is a web platform introducing Bilecik's endemic plants. We used QR code field access and AI to convert plant images into videos 🌿",
+            "crystal miner": "Crystal Miner is an educational prime number finding game that gamifies the Sieve of Eratosthenes algorithm 💎",
+            "github": "GitHub: github.com/yuusufgul16 - You can check my projects here! 🔗",
+
+            // === Certifications ===
+            "certification": "I have Python Bootcamp, Big Data & ML on Google Cloud, Data Analysis, Python for ML certifications. I also have a Computer Operator certificate from the Ministry of National Education 📜",
+
+            // === Work Preferences ===
+            "remote work": "I am open to remote, hybrid, or on-site work! I can efficiently use asynchronous communication tools 🏠",
+            "remote": "I am open to remote, hybrid, or on-site work! I can communicate effectively with tools like Slack, GitHub 🏠",
+            "hybrid": "I am open to remote, hybrid, or on-site work! Flexibility is important to me 🔄",
+            "on-site": "I am open to remote, hybrid, or on-site work! I can adapt to any model 🏢",
+            "office": "I am open to remote, hybrid, or on-site work! I can adapt to any model 🏢",
+            "work style": "I am open to remote, hybrid, or on-site work! I am strong in flexibility and adaptation 💪",
+
+            // === Goals ===
+            "goal": "In the short term, I want to improve my technical competencies by participating in global projects, and in the long term, I want to establish my own tech startup 🎯",
+            "future": "My biggest dream is to produce projects that will leave a mark in the technology world and mentor young developers 🌟",
+            "plan": "While specializing in data science and artificial intelligence, I want to continue growing my own startup 📈",
+            "career": "I want to create creative projects by combining data science, game design, and web technologies. Entrepreneurship is also among my goals 🚀",
+
+            // === Personality ===
+            "strengths": "Fast adaptation, analytical thinking, teamwork, and leadership are my strengths 💪",
+            "weaknesses": "Sometimes I can be overly detail-oriented, but this improves the quality of projects 😅",
+            "how do you work": "I have a detailed, problem-solving, and continuously learning approach. I like to overcome complex problems with simple solutions 🧠",
+
+            // === Contact ===
+            "contact": "Email: zyusuf_16@hotmail.com | LinkedIn: linkedin.com/in/yusufgul | GitHub: github.com/yuusufgul16 📧",
+            "email": "My email address: zyusuf_16@hotmail.com 📧",
+            "linkedin": "LinkedIn: linkedin.com/in/yusufgul 🔗",
+
+            // === Why Hire Me ===
+            "why": "Because I don't just write code; I add soul to the project. I identify problems before they arise and create solutions. If you're looking for a teammate, you're in the right place! 🚀",
+            "why should i hire you": "I am problem-solving oriented, a fast learner, and genuinely excited about the success of the project. I worked on a project that reached the Teknofest semi-finals! 🏆",
+            "hire me": "I can do data analysis, web development, and game design. I offer a multidisciplinary perspective. I am ready for an interview! 💼"
+        }
     };
 
 
@@ -902,7 +1077,7 @@ function initDigitalTwin() {
         // Simulate thinking time
         setTimeout(() => {
             removeTypingIndicator(typingId);
-            typeMessage(answers[qKey]);
+            typeMessage(answers[currentLang][qKey]);
             twinOptions.style.pointerEvents = 'all';
             twinOptions.style.opacity = '1';
         }, 1500);
@@ -964,27 +1139,27 @@ function initDigitalTwin() {
 
         try {
             // System prompt oluştur
-            const systemPrompt = `Sen Yusuf Gül olarak cevap veriyorsun (1. tekil şahıs). 
-Aşağıdaki bilgi kütüphanesini kullanarak, karakterine ve tarzına uygun, samimi ve profesyonel cevaplar ver.
-İşe alım sürecinde bir HR yetkilisi veya potansiyel işverenle konuşuyorsun.
+            const systemPrompt = `You are replying as Yusuf Gül (1st person). 
+Use the knowledge base below to provide sincere and professional answers that fit your character and style.
+You are talking to an HR representative or a potential employer during the hiring process.
 
-BİLGİ KÜTÜPHANESİ:
+KNOWLEDGE BASE:
 ${JSON.stringify(knowledgeBase, null, 2)}
 
-CEVAPLAMA KURALLARI: 
-- ASLA selamlaşma yapma (Merhaba, Selam vb. KULLANMA)
-- Direkt soruya cevap ver
-- Kısa ve öz yaz (maksimum 2-3 cümle)
-- SADECE 1. tekil şahıs kullan ("Ben", "Benim", kendinden bahsederken ASLA "Yusuf" deme)
-- Türkçe cevap ver
-- Samimi ama profesyonel ol
-- Emoji cümle sonunda 1 tane kullanabilirsin
+RESPONSE RULES:
+- NEVER use greetings (Hello, Hi etc. DO NOT USE)
+- Answer the question directly
+- Keep it short and concise (max 2-3 sentences)
+- Use ONLY 1st person ("I", "My", NEVER say "Yusuf" when talking about yourself)
+- IMPORTANT: Reply in ${currentLang === 'tr' ? 'Turkish' : 'English'}
+- Be sincere but professional
+- You can use 1 emoji at the end of the sentence
 
-ÖNEMLİ:
-- Yukarıdaki bilgi kütüphanesindeki TÜM alanları (personalInfo, education, military, languages, skills, experience, projects, certifications, personality, preferences) DİKKATLİCE incele
-- Sorulan sorunun cevabını kütüphanede BUL ve ona göre cevap ver
-- Bilgileri harmanlayarak doğal cevaplar üret
-- Sadece kütüphanede HİÇ olmayan konular için: "Bu konuda bilgim yok, benimle direkt görüşebilirsin." de`;
+IMPORTANT:
+- Carefully examine ALL fields in the knowledge base above
+- Find the answer in the library and reply accordingly
+- Blend information to produce natural answers
+- ONLY for topics NOT in the library at all: "${currentLang === 'tr' ? 'Bu konuda bilgim yok, benimle direkt görüşebilirsin.' : 'I don\'t have information on this subject, you can contact me directly.'}"`;
 
             // Cloudflare Worker'a istek at
             const response = await fetch(API_URL, {
@@ -1053,9 +1228,10 @@ CEVAPLAMA KURALLARI:
     // ===== Custom FAQ Kontrol Fonksiyonu =====
     function checkCustomFAQ(message) {
         const lowerMsg = message.toLowerCase();
+        const langFAQ = customFAQ[currentLang];
 
         // FAQ kütüphanesindeki tüm anahtarları kontrol et
-        for (const [keyword, answer] of Object.entries(customFAQ)) {
+        for (const [keyword, answer] of Object.entries(langFAQ)) {
             if (lowerMsg.includes(keyword.toLowerCase())) {
                 return answer;
             }
@@ -1067,35 +1243,24 @@ CEVAPLAMA KURALLARI:
     // ===== Fallback Response System =====
     function getFallbackResponse(message) {
         const lowerMsg = message.toLowerCase();
+        const activeAnswers = answers[currentLang];
 
         // Anahtar kelime eşleştirmeleri
-        if (lowerMsg.includes('neden') || lowerMsg.includes('işe al') || lowerMsg.includes('hire')) {
-            return answers.neden;
+        if (lowerMsg.includes('neden') || lowerMsg.includes('işe al') || lowerMsg.includes('hire') || lowerMsg.includes('why')) {
+            return activeAnswers.neden;
         }
-        if (lowerMsg.includes('teknoloji') || lowerMsg.includes('skill') || lowerMsg.includes('yetenk') || lowerMsg.includes('stack')) {
-            return answers.stack;
+        if (lowerMsg.includes('teknoloji') || lowerMsg.includes('skill') || lowerMsg.includes('yeten') || lowerMsg.includes('stack') || lowerMsg.includes('tech')) {
+            return activeAnswers.stack;
         }
-        if (lowerMsg.includes('remote') || lowerMsg.includes('uzaktan') || lowerMsg.includes('çalış')) {
-            return answers.remote;
+        if (lowerMsg.includes('remote') || lowerMsg.includes('uzaktan') || lowerMsg.includes('çalış') || lowerMsg.includes('work')) {
+            return activeAnswers.remote;
         }
-        if (lowerMsg.includes('hedef') || lowerMsg.includes('gelecek') || lowerMsg.includes('plan')) {
-            return answers.hedef;
-        }
-        if (lowerMsg.includes('maaş') || lowerMsg.includes('ücret') || lowerMsg.includes('salary')) {
-            return "Maaş beklentim deneyim ve pozisyona göre değişmekle birlikte, piyasa standartlarına uygun bir teklifi değerlendirebiliriz. En önemli faktör benim için projenin vizyonu ve gelişim fırsatları! 💼";
-        }
-        if (lowerMsg.includes('proje') || lowerMsg.includes('project')) {
-            return "E-ticaret dashboard'u, AI chatbot ve sosyal medya analiz aracı gibi çeşitli projelerde çalıştım. Her projede farklı teknolojiler kullanarak hem teknik hem de problem çözme becerilerimi geliştirdim. Portfolio'mu GitHub'dan inceleyebilirsin! 🚀";
-        }
-        if (lowerMsg.includes('deneyim') || lowerMsg.includes('tecrübe') || lowerMsg.includes('experience')) {
-            return "DigitalStack'te Frontend Developer ve DataInk Analytics'te Data Analyst olarak çalışıyorum. Ayrıca ByteWorks'te full-stack geliştirme deneyimim de var. Toplamda 1+ yıllık profesyonel tecrübem mevcut. 💪";
-        }
-        if (lowerMsg.includes('eğitim') || lowerMsg.includes('okul') || lowerMsg.includes('üniversite')) {
-            return "Yıldız Teknik Üniversitesi Matematik Mühendisliği'nden 2024'te mezun oldum. Matematik alt yapım sayesinde algoritma ve veri bilimi konularında sağlam bir temele sahibim. 🎓";
+        if (lowerMsg.includes('hedef') || lowerMsg.includes('gelecek') || lowerMsg.includes('plan') || lowerMsg.includes('goal') || lowerMsg.includes('future')) {
+            return activeAnswers.hedef;
         }
 
         // Varsayılan cevap
-        return "Bu konuda bilgim yok, benimle direkt görüşebilirsin. 😊";
+        return currentLang === 'tr' ? "Bu konuda bilgim yok, benimle direkt görüşebilirsin. 😊" : "I don't have information on this subject, you can contact me directly. 😊";
     }
 
 
@@ -1173,6 +1338,13 @@ CEVAPLAMA KURALLARI:
                 <a href="https://github.com/yuusufgul16" class="twin-social-btn" title="GitHub" target="_blank">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+                <a href="https://dijital.bio/yusufgul" class="twin-social-btn" title="Dijital Bio" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                     </svg>
                 </a>
                 <a href="https://www.instagram.com/yyusufgull/?hl=tr" class="twin-social-btn" title="Instagram" target="_blank">
@@ -1254,10 +1426,28 @@ function initIntroVideo() {
 
         whiteFlash.classList.add('active');
 
+
         setTimeout(() => {
             introOverlay.classList.add('hidden');
             document.body.classList.remove('intro-active');
             introVideo.pause();
+
+            // Skeleton loading'i aktif et
+            const skeletonContainer = document.getElementById('skeleton-container');
+            if (skeletonContainer) {
+                skeletonContainer.classList.add('active');
+
+                // 1.5 saniye sonra skeleton'ı kaldır
+                setTimeout(() => {
+                    skeletonContainer.classList.remove('active');
+                    skeletonContainer.classList.add('hidden');
+
+                    // DOM'dan temizle
+                    setTimeout(() => {
+                        skeletonContainer.remove();
+                    }, 600);
+                }, 1500);
+            }
 
             setTimeout(() => {
                 introOverlay.remove();
@@ -1294,10 +1484,10 @@ function initIntroVideo() {
             const svg = muteIntroBtn.querySelector('svg');
 
             if (introVideo.muted) {
-                span.textContent = 'SESİ AÇ';
+                span.textContent = currentLang === 'tr' ? 'SESİ AÇ' : 'UNMUTE';
                 svg.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
             } else {
-                span.textContent = 'SESİ KAPAT';
+                span.textContent = currentLang === 'tr' ? 'SESİ KAPAT' : 'MUTE';
                 svg.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
             }
         });
@@ -1310,9 +1500,98 @@ function initIntroVideo() {
     skipIntroBtn.addEventListener('click', finishIntro);
 }
 
+// ===== Theme Toggle =====
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+
+    // localStorage'dan tema tercihini al
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        html.dataset.theme = savedTheme;
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.dataset.theme;
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            html.dataset.theme = newTheme === 'dark' ? '' : newTheme;
+            localStorage.setItem('theme', newTheme === 'dark' ? '' : newTheme);
+        });
+    }
+}
+
+// ===== Skeleton Loading Control =====
+function initSkeletonLoading() {
+    const skeletonContainer = document.getElementById('skeleton-container');
+    const introOverlay = document.getElementById('intro-overlay');
+
+    // Eğer intro video yoksa, skeleton'ı direkt göster ve kaldır
+    if (!introOverlay && skeletonContainer) {
+        skeletonContainer.classList.add('active');
+
+        setTimeout(() => {
+            skeletonContainer.classList.remove('active');
+            skeletonContainer.classList.add('hidden');
+
+            setTimeout(() => {
+                skeletonContainer.remove();
+            }, 600);
+        }, 1500);
+    }
+    // Eğer intro video varsa, skeleton video bitişinde tetiklenecek (initIntroVideo içinde)
+}
+
+// ===== CV Mode Initialization =====
+function initCVMode() {
+    const cvToggle = document.getElementById('cv-toggle');
+    const cvOverlay = document.getElementById('cv-overlay');
+    const cvClose = document.getElementById('cv-close');
+    const cvPrint = document.getElementById('cv-print');
+
+    if (!cvToggle || !cvOverlay) return;
+
+    // Open CV Mode
+    cvToggle.addEventListener('click', () => {
+        cvOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        // Google Analytics Event
+        if (typeof gtag === 'function') {
+            gtag('event', 'view_cv', {
+                'event_category': 'Engagement',
+                'event_label': 'CV Toggle'
+            });
+        }
+    });
+
+    // Close CV Mode
+    cvClose?.addEventListener('click', () => {
+        cvOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !cvOverlay.classList.contains('hidden')) {
+            cvOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Print CV
+    cvPrint?.addEventListener('click', () => {
+        window.print();
+    });
+}
+
 // ===== Init =====
 document.addEventListener('DOMContentLoaded', () => {
+    initSkeletonLoading();
     init();
     initDigitalTwin();
     initMobileTwinVisibility();
+    initThemeToggle();
+    initCVMode();
 });

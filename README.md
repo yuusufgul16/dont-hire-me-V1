@@ -24,7 +24,7 @@ Bu proje, geleneksel CV formatlarından sıkılan ve kendini farklı bir şekild
 
 ## 🌐 Canlı Demo
 
-👉 **[Live Demo](URL_HERE)**
+👉 **[Live Demo](https://yuusufgul16.github.io/dont-hire-me/)**
 
 ## 📸 Ekran Görüntüleri
 
